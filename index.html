@@ -7,21 +7,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-    body { background-color: #f5f5f5; color: #333; line-height: 1.6; }
-    header { background: #1a1a1a; color: #fff; padding: 2rem 0; text-align: center; }
-    header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    header p { font-size: 1.2rem; }
+    body { background-color: #121212; color: #e0e0e0; line-height: 1.6; }
+    a { color: #1e90ff; text-decoration: none; }
+    a.button { display: inline-block; background: #1e90ff; color: #fff; padding: 0.6rem 1.2rem; border-radius: 5px; text-decoration: none; margin-top: 1rem; }
+    header { text-align: center; padding: 3rem 1rem; background: #1a1a1a; box-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+    header h1 { font-size: 2.8rem; margin-bottom: 0.5rem; color: #fff; }
+    header p { font-size: 1.2rem; margin-bottom: 1rem; }
     nav { display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; }
-    nav a { color: #fff; text-decoration: none; font-weight: 600; }
+    nav a { color: #fff; font-weight: 600; transition: 0.3s; }
+    nav a:hover { color: #1e90ff; }
     section { padding: 4rem 2rem; max-width: 900px; margin: auto; }
-    h2 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
-    p { margin-bottom: 1rem; }
+    h2 { font-size: 2rem; margin-bottom: 1.5rem; color: #fff; border-bottom: 2px solid #1e90ff; display: inline-block; padding-bottom: 0.3rem; }
+    p, li { font-size: 1rem; margin-bottom: 1rem; color: #ccc; }
+    ul { padding-left: 1.5rem; }
     .skills, .experience { display: grid; gap: 1rem; }
-    .skill-item { background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-    .experience-item { background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-    footer { background: #1a1a1a; color: #fff; text-align: center; padding: 2rem; margin-top: 4rem; }
-    a.button { display: inline-block; background: #0077b5; color: #fff; padding: 0.6rem 1.2rem; border-radius: 5px; text-decoration: none; margin-top: 1rem; }
-    blockquote { background: #e0f7fa; padding: 1rem; border-left: 4px solid #00796b; margin: 2rem 0; border-radius: 5px; }
+    .skill-item, .experience-item { background: #1a1a1a; padding: 1.2rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+    blockquote { background: #1e1e1e; padding: 1.5rem; border-left: 5px solid #1e90ff; border-radius: 8px; font-style: italic; color: #ccc; margin: 2rem 0; }
+    footer { background: #1a1a1a; color: #fff; text-align: center; padding: 2rem; margin-top: 4rem; font-size: 0.9rem; }
   </style>
 </head>
 <body>
@@ -34,6 +36,7 @@
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
       <a href="#experience">Experience</a>
+      <a href="#recommendation">Recommendation</a>
       <a href="#contact">Contact</a>
     </nav>
     <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank" class="button">LinkedIn</a>
@@ -42,12 +45,7 @@
   <!-- About Section -->
   <section id="about">
     <h2>About Me</h2>
-    <p>Hello! I am Dibesh Shrestha, a Senior Administrator and IT Consultant with over 10 years of experience managing complex IT infrastructures. I specialize in monitoring systems like Nagios, Zabbix, and Centreon, and excel at directly engaging with clients to resolve escalations efficiently. My strength lies in combining technical expertise with strong communication skills to ensure seamless IT operations and customer satisfaction.</p>
-    
-    <blockquote>
-      <strong>Zwischenzeugnis Highlights:</strong><br>
-      "Dibesh demonstrated exceptional expertise in monitoring systems and problem-solving skills, effectively leading the Zabbix migration for over 10 clients and coaching service desk teams. His professional engagement and ability to handle escalations directly with customers were highly praised."
-    </blockquote>
+    <p>Hello! I am Dibesh Shrestha, a Senior Administrator and IT Consultant with extensive experience managing complex monitoring infrastructures and IT systems. I specialize in Nagios, Centreon, and Zabbix, and excel in handling client escalations, incident resolution, and leading technical projects. My approach combines deep technical knowledge with excellent communication skills to deliver effective solutions and ensure client satisfaction.</p>
   </section>
 
   <!-- Skills Section -->
@@ -55,36 +53,44 @@
     <h2>Skills</h2>
     <div class="skills">
       <div class="skill-item"><strong>Monitoring Systems:</strong> Nagios, Zabbix (Certified), Centreon</div>
-      <div class="skill-item"><strong>IT Administration:</strong> Server management, network troubleshooting, system optimization</div>
+      <div class="skill-item"><strong>IT Administration:</strong> Server & network management, system optimization</div>
       <div class="skill-item"><strong>Incident Management:</strong> ServiceNow (SNOW), daily ticket resolution, escalation handling</div>
-      <div class="skill-item"><strong>Client Communication:</strong> Direct customer interaction, consultancy, project leadership</div>
-      <div class="skill-item"><strong>Team Coaching:</strong> Training service desk teams, mentoring juniors</div>
+      <div class="skill-item"><strong>Client Communication:</strong> Direct interaction, consultancy, project leadership</div>
+      <div class="skill-item"><strong>Team Coaching:</strong> Mentoring service desk teams, knowledge transfer</div>
     </div>
   </section>
 
   <!-- Experience Section -->
   <section id="experience">
-    <h2>Professional Experience</h2>
+    <h2>Experience</h2>
     <div class="experience">
       <div class="experience-item">
         <h3>Senior Administrator Monitoring</h3>
-        <p><strong>Company:</strong> [Your Current Company]</p>
+        <p><strong>Company:</strong> Cancom</p>
         <p><strong>Duration:</strong> Jan 2020 – Present</p>
         <ul>
-          <li>Managed Nagios (24 servers, 10+ clusters) and Centreon monitoring systems.</li>
-          <li>Led the migration from Nagios to Zabbix for 10+ clients (10,000+ hosts).</li>
-          <li>Resolved ~30 daily incidents and provided direct client support.</li>
-          <li>Coached service desk teams on monitoring and troubleshooting.</li>
-          <li>Received recognition for solving critical ServiceNow issues efficiently.</li>
+          <li>Managed Nagios (24 servers, 10+ clusters) and Centreon systems, ensuring high availability and performance.</li>
+          <li>Technical lead for the migration from Nagios to Zabbix for multiple clients (10,000+ hosts).</li>
+          <li>Resolved ~30 incidents daily and handled critical client escalations efficiently.</li>
+          <li>Coached and mentored service desk teams, improving incident resolution times.</li>
+          <li>Recognized for calm and precise communication during high-pressure situations.</li>
         </ul>
       </div>
     </div>
   </section>
 
+  <!-- Recommendation Section -->
+  <section id="recommendation">
+    <h2>Recommendation</h2>
+    <blockquote>
+      "I have had the pleasure of supervising Mr. Shrestha at Cancom for several years in his role as Senior Administrator Monitoring. Dibesh was the technical owner and lead for our Nagios monitoring infrastructure and later managed Centreon and Zabbix. He communicates complex technical issues with clarity, handles client escalations effectively, and consistently performs at the highest level. I confidently recommend him for any position requiring deep technical skill and exceptional client-facing communication."
+    </blockquote>
+  </section>
+
   <!-- Contact Section -->
   <section id="contact">
     <h2>Contact</h2>
-    <p>You can reach me via LinkedIn for professional inquiries or consulting opportunities.</p>
+    <p>Feel free to reach out via LinkedIn for professional inquiries or consulting opportunities.</p>
     <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank" class="button">Connect on LinkedIn</a>
   </section>
 
@@ -95,4 +101,3 @@
 
 </body>
 </html>
-
