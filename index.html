@@ -1,10 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Website</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name — Creative Developer</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #0e0e11;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 120px 10vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 7rem);
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      max-width: 700px;
+      font-size: 1.1rem;
+      opacity: 0.85;
+      line-height: 1.6;
+    }
+
+    .hero span {
+      color: #7df9ff;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      margin-top: 60px;
+    }
+
+    .card {
+      background: #16161d;
+      padding: 30px;
+      border-radius: 20px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      opacity: 0.6;
+    }
+
+    /* Scroll animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: all 1s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
-    <h1>Hello, world!</h1>
-    <p>Welcome to my website hosted on GitHub Pages!</p>
+
+  <!-- HERO -->
+  <section class="hero reveal">
+    <h1>Hello, I’m <span>Your Name</span></h1>
+    <p>I create immersive digital experiences blending design, motion, and code.</p>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="reveal">
+    <h2>About</h2>
+    <p>
+      I’m a creative developer focused on building visually striking, interactive websites.
+      Inspired by modern portfolio experiences like ashishbakshi.com and bhoellerer.de.
+    </p>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="reveal">
+    <h2>Selected Work</h2>
+    <div class="projects">
+      <div class="card">Project One<br><small>Creative Website</small></div>
+      <div class="card">Project Two<br><small>Brand Experience</small></div>
+      <div class="card">Project Three<br><small>Experimental UI</small></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="reveal">
+    <h2>Contact</h2>
+    <p>Email me at <strong>youremail@domain.com</strong></p>
+  </section>
+
+  <footer>
+    © 2025 Your Name
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+
+    function revealOnScroll() {
+      for (let i = 0; i < reveals.length; i++) {
+        const windowHeight = window.innerHeight;
+        const elementTop = reveals[i].getBoundingClientRect().top;
+        const elementVisible = 150;
+
+        if (elementTop < windowHeight - elementVisible) {
+          reveals[i].classList.add('active');
+        }
+      }
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+  </script>
+
 </body>
 </html>
