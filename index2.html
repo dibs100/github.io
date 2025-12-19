@@ -1,103 +1,1492 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlLang">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dibesh Shrestha - Senior Administrator & IT Consultant</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-    body { background-color: #121212; color: #e0e0e0; line-height: 1.6; }
-    a { color: #1e90ff; text-decoration: none; }
-    a.button { display: inline-block; background: #1e90ff; color: #fff; padding: 0.6rem 1.2rem; border-radius: 5px; text-decoration: none; margin-top: 1rem; }
-    header { text-align: center; padding: 3rem 1rem; background: #1a1a1a; box-shadow: 0 2px 8px rgba(0,0,0,0.5); }
-    header h1 { font-size: 2.8rem; margin-bottom: 0.5rem; color: #fff; }
-    header p { font-size: 1.2rem; margin-bottom: 1rem; }
-    nav { display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; }
-    nav a { color: #fff; font-weight: 600; transition: 0.3s; }
-    nav a:hover { color: #1e90ff; }
-    section { padding: 4rem 2rem; max-width: 900px; margin: auto; }
-    h2 { font-size: 2rem; margin-bottom: 1.5rem; color: #fff; border-bottom: 2px solid #1e90ff; display: inline-block; padding-bottom: 0.3rem; }
-    p, li { font-size: 1rem; margin-bottom: 1rem; color: #ccc; }
-    ul { padding-left: 1.5rem; }
-    .skills, .experience { display: grid; gap: 1rem; }
-    .skill-item, .experience-item { background: #1a1a1a; padding: 1.2rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
-    blockquote { background: #1e1e1e; padding: 1.5rem; border-left: 5px solid #1e90ff; border-radius: 8px; font-style: italic; color: #ccc; margin: 2rem 0; }
-    footer { background: #1a1a1a; color: #fff; text-align: center; padding: 2rem; margin-top: 4rem; font-size: 0.9rem; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dibesh Shrestha | Enterprise Monitoring Expert & IT Consultant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+    <style>
+        /* CSS content from style.css goes here */
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #64748b;
+            --dark: #1e293b;
+            --darker: #0f172a;
+            --light: #ffffff;
+            --gray: #e2e8f0;
+            --gray-light: #f8fafc;
+            --gray-dark: #475569;
+            --success: #10b981;
+            --section-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header - Taller to hide "Contact" */
+        header {
+            padding: 2rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--gray);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .language-switcher {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .language-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.4rem 0.8rem;
+            border-radius: 30px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .language-btn:hover {
+            color: var(--primary);
+        }
+
+        .language-btn.active {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .flag-icon {
+            width: 22px;
+            height: 16px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .flag-icon.en {
+            background: linear-gradient(to bottom, #012169 0%, #012169 33%, #fff 33%, #fff 66%, #c8102e 66%, #c8102e 100%);
+        }
+
+        .flag-icon.de {
+            background: linear-gradient(to bottom, #000 0%, #000 33%, #dd0000 33%, #dd0000 66%, #ffcc00 66%, #ffcc00 100%);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+            padding: 0.5rem 0;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--gradient);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+            background: rgba(99, 102, 241, 0.1);
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 12rem 0 6rem;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--gray-light) 0%, var(--light) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: var(--gray-dark);
+            margin-bottom: 2.5rem;
+            max-width: 100%;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.9rem 2.2rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+            box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.25);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--gray);
+            color: var(--gray-dark);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+            color: var(--primary);
+        }
+
+        .btn-linkedin {
+            background: #0A66C2;
+        }
+
+        .btn-xing {
+            background: #006567;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .profile-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .profile-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .profile-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            color: var(--darker);
+            margin-bottom: 1rem;
+        }
+
+        .profile-details {
+            margin-top: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--primary);
+            flex-shrink: 0;
+            margin-top: 0.2rem;
+        }
+
+        .detail-content h4 {
+            color: var(--darker);
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+        }
+
+        .detail-content p {
+            color: var(--secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-content ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 0.5rem;
+        }
+
+        .detail-content li {
+            color: var(--secondary);
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+
+        .detail-content li:before {
+            content: "•";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+        }
+
+        .highlight-text {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: var(--primary);
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 3.5rem;
+            position: relative;
+            display: inline-block;
+            color: var(--darker);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        /* Skills/Expertise */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            padding: 2.2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient);
+        }
+
+        .skill-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .skill-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--darker);
+        }
+
+        .skill-card p {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        /* Experience */
+        .experience-summary {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .experience-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .experience-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray);
+            transition: var(--transition);
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .experience-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .exp-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary);
+            flex-shrink: 0;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .exp-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--darker);
+        }
+
+        .exp-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .exp-content li {
+            margin-bottom: 0.8rem;
+            color: var(--secondary);
+            position: relative;
+            padding-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .exp-content li:before {
+            content: "▸";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .experience-note {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            color: var(--secondary);
+        }
+
+        .experience-note a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .experience-note a:hover {
+            text-decoration: underline;
+        }
+
+        /* Reference */
+        .reference-letter {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray);
+            position: relative;
+        }
+
+        .reference-letter::before {
+            content: "\201C";
+            font-size: 8rem;
+            color: rgba(99, 102, 241, 0.1);
+            position: absolute;
+            top: -30px;
+            left: 20px;
+            font-family: serif;
+        }
+
+        .reference-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .reference-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--secondary);
+        }
+
+        .reference-content p.highlight {
+            color: var(--darker);
+            font-weight: 500;
+            background: rgba(99, 102, 241, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .reference-author {
+            margin-top: 2.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .reference-author span {
+            display: block;
+            color: var(--secondary);
+            font-weight: 400;
+            font-size: 0.95rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Contact */
+        .contact-description {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: var(--secondary);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-top: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 1.2rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--gray);
+            transition: var(--transition);
+        }
+
+        .contact-item:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .contact-text a {
+            color: var(--darker);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .contact-text a:hover {
+            color: var(--primary);
+        }
+
+        .contact-text p {
+            color: var(--secondary);
+            font-size: 0.95rem;
+            margin-top: 0.2rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--darker);
+            padding: 4rem 0 2.5rem;
+            border-top: 1px solid rgba(51, 65, 85, 0.3);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .footer-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-tagline {
+            color: #94a3b8;
+            text-align: center;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.8rem;
+        }
+
+        .social-links a {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .social-links a:hover {
+            background: var(--gradient);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 100px;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            z-index: 999;
+            border-top: 1px solid var(--gray);
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav ul {
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 0.8rem 0;
+            font-size: 1.1rem;
+        }
+
+        .mobile-language-switcher {
+            display: none;
+            justify-content: center;
+            margin-top: 1.5rem;
+            gap: 1rem;
+        }
+
+        /* Language-specific content */
+        .lang-en {
+            display: block;
+        }
+        
+        .lang-de {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .hero-content {
+                gap: 3rem;
+            }
+            
+            .hero-description {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-description {
+                max-width: 100%;
+            }
+            
+            .profile-card {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            .language-switcher {
+                display: none;
+            }
+            
+            .mobile-language-switcher {
+                display: flex;
+            }
+            
+            .detail-item {
+                justify-content: center;
+            }
+            
+            .experience-points {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .hero {
+                padding: 10rem 0 4rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .reference-letter {
+                padding: 2rem;
+            }
+            
+            .experience-card {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .exp-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .btn {
+                padding: 0.8rem 1.8rem;
+                font-size: 0.95rem;
+            }
+            
+            .hero-description {
+                font-size: 1.1rem;
+            }
+            
+            .section {
+                padding: 4rem 0;
+            }
+            
+            .skill-card, .experience-card {
+                padding: 1.8rem;
+            }
+            
+            .profile-card {
+                padding: 2rem;
+            }
+            
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="logo">Dibesh Shrestha</div>
+                    <div class="language-switcher">
+                        <button class="language-btn active" id="langEn">
+                            <div class="flag-icon en"></div>
+                            EN
+                        </button>
+                        <button class="language-btn" id="langDe">
+                            <div class="flag-icon de"></div>
+                            DE
+                        </button>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home" class="active" data-en="Home" data-de="Start">Home</a></li>
+                        <li><a href="#expertise" data-en="Expertise" data-de="Expertise">Expertise</a></li>
+                        <li><a href="#experience" data-en="Experience" data-de="Erfahrung">Experience</a></li>
+                        <li><a href="#reference" data-en="Reference" data-de="Referenz">Reference</a></li>
+                        <li><a href="#contact" data-en="Contact" data-de="Kontakt">Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
 
-  <!-- Header -->
-  <header>
-    <h1>Dibesh Shrestha</h1>
-    <p>Senior Administrator & IT Consultant</p>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#experience">Experience</a>
-      <a href="#recommendation">Recommendation</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank" class="button">LinkedIn</a>
-  </header>
-
-  <!-- About Section -->
-  <section id="about">
-    <h2>About Me</h2>
-    <p>Hello! I am Dibesh Shrestha, a Senior Administrator and IT Consultant with extensive experience managing complex monitoring infrastructures and IT systems. I specialize in Nagios, Centreon, and Zabbix, and excel in handling client escalations, incident resolution, and leading technical projects. My approach combines deep technical knowledge with excellent communication skills to deliver effective solutions and ensure client satisfaction.</p>
-  </section>
-
-  <!-- Skills Section -->
-  <section id="skills">
-    <h2>Skills</h2>
-    <div class="skills">
-      <div class="skill-item"><strong>Monitoring Systems:</strong> Nagios, Zabbix (Certified), Centreon</div>
-      <div class="skill-item"><strong>IT Administration:</strong> Server & network management, system optimization</div>
-      <div class="skill-item"><strong>Incident Management:</strong> ServiceNow (SNOW), daily ticket resolution, escalation handling</div>
-      <div class="skill-item"><strong>Client Communication:</strong> Direct interaction, consultancy, project leadership</div>
-      <div class="skill-item"><strong>Team Coaching:</strong> Mentoring service desk teams, knowledge transfer</div>
-    </div>
-  </section>
-
-  <!-- Experience Section -->
-  <section id="experience">
-    <h2>Experience</h2>
-    <div class="experience">
-      <div class="experience-item">
-        <h3>Senior Administrator Monitoring</h3>
-        <p><strong>Company:</strong> Cancom</p>
-        <p><strong>Duration:</strong> Jan 2020 – Present</p>
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
         <ul>
-          <li>Managed Nagios (24 servers, 10+ clusters) and Centreon systems, ensuring high availability and performance.</li>
-          <li>Technical lead for the migration from Nagios to Zabbix for multiple clients (10,000+ hosts).</li>
-          <li>Resolved ~30 incidents daily and handled critical client escalations efficiently.</li>
-          <li>Coached and mentored service desk teams, improving incident resolution times.</li>
-          <li>Recognized for calm and precise communication during high-pressure situations.</li>
+            <li><a href="#home" class="active" data-en="Home" data-de="Start">Home</a></li>
+            <li><a href="#expertise" data-en="Expertise" data-de="Expertise">Expertise</a></li>
+            <li><a href="#experience" data-en="Experience" data-de="Erfahrung">Experience</a></li>
+            <li><a href="#reference" data-en="Reference" data-de="Referenz">Reference</a></li>
+            <li><a href="#contact" data-en="Contact" data-de="Kontakt">Contact</a></li>
         </ul>
-      </div>
+        <div class="mobile-language-switcher">
+            <button class="language-btn active" id="langEnMobile">
+                <div class="flag-icon en"></div>
+                English
+            </button>
+            <button class="language-btn" id="langDeMobile">
+                <div class="flag-icon de"></div>
+                Deutsch
+            </button>
+        </div>
     </div>
-  </section>
 
-  <!-- Recommendation Section -->
-  <section id="recommendation">
-    <h2>Recommendation</h2>
-    <blockquote>
-      "I have had the pleasure of supervising Mr. Shrestha at Cancom for several years in his role as Senior Administrator Monitoring. Dibesh was the technical owner and lead for our Nagios monitoring infrastructure and later managed Centreon and Zabbix. He communicates complex technical issues with clarity, handles client escalations effectively, and consistently performs at the highest level. I confidently recommend him for any position requiring deep technical skill and exceptional client-facing communication."
-    </blockquote>
-  </section>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <p class="lang-en hero-description">
+                        Expert in enterprise monitoring infrastructure, IT consulting, and customer escalation management. Proven track record in leading complex migrations and solving critical system issues with exceptional client-facing communication skills.
+                    </p>
+                    <p class="lang-de hero-description" style="display: none;">
+                        Experte für Enterprise-Monitoring-Infrastruktur, IT-Beratung und Eskalationsmanagement. Bewährte Erfolgsbilanz bei der Leitung komplexer Migrationen und Lösung kritischer Systemprobleme mit herausragenden Kundenkommunikationsfähigkeiten.
+                    </p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn lang-en">Get in Touch</a>
+                        <a href="#contact" class="btn lang-de" style="display: none;">Kontakt aufnehmen</a>
+                        <a href="#expertise" class="btn btn-outline lang-en">View Expertise</a>
+                        <a href="#expertise" class="btn btn-outline lang-de" style="display: none;">Expertise anzeigen</a>
+                    </div>
+                </div>
+                
+                <div class="hero-image">
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <h2>Dibesh Shrestha</h2>
+                        </div>
+                        <div class="profile-details">
+                            <!-- Client Communication -->
+                            <div class="detail-item">
+                                <div class="detail-icon">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4 class="lang-en">Client Communication</h4>
+                                    <h4 class="lang-de" style="display: none;">Kundenkommunikation</h4>
+                                    <p class="lang-en">Escalation Management & Consulting</p>
+                                    <p class="lang-de" style="display: none;">Eskalationsmanagement & Beratung</p>
+                                    <div class="highlight-text lang-en">200+ Customers, 30,000+ Hosts</div>
+                                    <div class="highlight-text lang-de" style="display: none;">200+ Kunden, 30.000+ Hosts</div>
+                                    <ul>
+                                        <li class="lang-en">Coached and mentored team members, improving incident resolution times</li>
+                                        <li class="lang-de" style="display: none;">Trainierte und betreute Teammitglieder, verbesserte Incident-Lösungszeiten</li>
+                                        <li class="lang-en">Recognized for calm and precise communication during high-pressure situations</li>
+                                        <li class="lang-de" style="display: none;">Anerkannt für ruhige und präzise Kommunikation in Drucksituationen</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Certification -->
+                            <div class="detail-item">
+                                <div class="detail-icon">
+                                    <i class="fas fa-certificate"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4 class="lang-en">Zabbix Certified Specialist</h4>
+                                    <h4 class="lang-de" style="display: none;">Zabbix Zertifizierter Specialist</h4>
+                                    <p class="lang-en">Validated expertise in enterprise monitoring</p>
+                                    <p class="lang-de" style="display: none;">Validierte Expertise im Enterprise-Monitoring</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Experience -->
+                            <div class="detail-item">
+                                <div class="detail-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4 class="lang-en">13+ Years Experience</h4>
+                                    <h4 class="lang-de" style="display: none;">13+ Jahre Erfahrung</h4>
+                                    <p class="lang-en">Senior IT Administrator & Consultant</p>
+                                    <p class="lang-de" style="display: none;">Senior IT Administrator & Berater</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Contact Section -->
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Feel free to reach out via LinkedIn for professional inquiries or consulting opportunities.</p>
-    <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank" class="button">Connect on LinkedIn</a>
-  </section>
+    <!-- Expertise Section -->
+    <section class="section" id="expertise">
+        <div class="container">
+            <h2 class="section-title lang-en">Technical Expertise</h2>
+            <h2 class="section-title lang-de" style="display: none;">Technische Expertise</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3 class="lang-en">Monitoring Infrastructure</h3>
+                    <h3 class="lang-de" style="display: none;">Monitoring-Infrastruktur</h3>
+                    
+                    <p class="lang-en">Deep expertise in enterprise monitoring solutions with hands-on experience managing large-scale infrastructures across multiple platforms.</p>
+                    <p class="lang-de" style="display: none;">Umfassende Expertise in Enterprise-Monitoring-Lösungen mit praktischer Erfahrung in der Verwaltung groß angelegter Infrastrukturen über mehrere Plattformen hinweg.</p>
+                    
+                    <div class="skill-tags">
+                        <span class="tag">Nagios</span>
+                        <span class="tag">Zabbix</span>
+                        <span class="tag">Centreon</span>
+                        <span class="tag">Check MK</span>
+                        <span class="tag">App Dynamics</span>
+                        <span class="tag">CA APM</span>
+                        <span class="tag lang-en">200+ Servers</span>
+                        <span class="tag lang-de" style="display: none;">200+ Server</span>
+                        <span class="tag lang-en">46+ Clusters</span>
+                        <span class="tag lang-de" style="display: none;">46+ Cluster</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3 class="lang-en">Migration & Implementation</h3>
+                    <h3 class="lang-de" style="display: none;">Migration & Implementierung</h3>
+                    
+                    <p class="lang-en">Led complex migration projects from legacy systems to modern monitoring platforms for enterprise clients with minimal disruption.</p>
+                    <p class="lang-de" style="display: none;">Leitung komplexer Migrationsprojekte von Legacy-Systemen zu modernen Monitoring-Plattformen für Unternehmenskunden mit minimalen Unterbrechungen.</p>
+                    
+                    <div class="skill-tags">
+                        <span class="tag lang-en">Migration Planning</span>
+                        <span class="tag lang-de" style="display: none;">Migrationsplanung</span>
+                        <span class="tag lang-en">Zabbix Implementation</span>
+                        <span class="tag lang-de" style="display: none;">Zabbix-Implementierung</span>
+                        <span class="tag">30,000+ Hosts</span>
+                        <span class="tag lang-en">Cross-Platform</span>
+                        <span class="tag lang-de" style="display: none;">Plattformübergreifend</span>
+                        <span class="tag lang-en">Technical Leadership</span>
+                        <span class="tag lang-de" style="display: none;">Technische Leitung</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="lang-en">Consulting & Escalation</h3>
+                    <h3 class="lang-de" style="display: none;">Beratung & Eskalation</h3>
+                    
+                    <p class="lang-en">Exceptional ability to communicate complex technical issues with clarity to any audience - from management to engineering teams.</p>
+                    <p class="lang-de" style="display: none;">Außergewöhnliche Fähigkeit, komplexe technische Probleme klar für jedes Publikum zu kommunizieren - vom Management bis zu Engineering-Teams.</p>
+                    
+                    <div class="skill-tags">
+                        <span class="tag lang-en">Escalation Management</span>
+                        <span class="tag lang-de" style="display: none;">Eskalationsmanagement</span>
+                        <span class="tag lang-en">Incident Resolution</span>
+                        <span class="tag lang-de" style="display: none;">Incident-Lösung</span>
+                        <span class="tag lang-en">Technical Consulting</span>
+                        <span class="tag lang-de" style="display: none;">Technische Beratung</span>
+                        <span class="tag lang-en">Team Coaching</span>
+                        <span class="tag lang-de" style="display: none;">Team-Coaching</span>
+                        <span class="tag">200+ Customers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Footer -->
-  <footer>
-    &copy; 2025 Dibesh Shrestha. All Rights Reserved.
-  </footer>
+    <!-- Experience Section -->
+    <section class="section" id="experience" style="background: var(--section-bg);">
+        <div class="container">
+            <h2 class="section-title lang-en">Professional Experience</h2>
+            <h2 class="section-title lang-de" style="display: none;">Berufserfahrung</h2>
+            
+            <div class="experience-summary">
+                <div class="experience-points">
+                    <div class="experience-card">
+                        <div class="exp-icon">
+                            <i class="fas fa-arrows-alt-h"></i>
+                        </div>
+                        <div class="exp-content">
+                            <h3 class="lang-en">Large-Scale Infrastructure Migrations</h3>
+                            <h3 class="lang-de" style="display: none;">Groß angelegte Infrastruktur-Migrationen</h3>
+                            <ul>
+                                <li class="lang-en">Technical lead for enterprise-wide migration from Nagios to Zabbix across 10+ organizations</li>
+                                <li class="lang-de" style="display: none;">Technischer Leiter für unternehmensweite Migration von Nagios zu Zabbix bei 10+ Organisationen</li>
+                                
+                                <li class="lang-en">Managed monitoring infrastructure supporting 30,000+ hosts across 200+ servers</li>
+                                <li class="lang-de" style="display: none;">Verwaltung der Monitoring-Infrastruktur für 30.000+ Hosts über 200+ Server</li>
+                                
+                                <li class="lang-en">Cross-platform expertise covering legacy and modern monitoring solutions</li>
+                                <li class="lang-de" style="display: none;">Plattformübergreifende Expertise für Legacy- und moderne Monitoring-Lösungen</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="experience-card">
+                        <div class="exp-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="exp-content">
+                            <h3 class="lang-en">Client-Facing Leadership & Consulting</h3>
+                            <h3 class="lang-de" style="display: none;">Kundenorientierte Führung & Beratung</h3>
+                            <ul>
+                                <li class="lang-en">Direct escalation management with resolution of 30+ daily critical incidents</li>
+                                <li class="lang-de" style="display: none;">Direktes Eskalationsmanagement mit Lösung von 30+ täglichen kritischen Incidents</li>
+                                
+                                <li class="lang-en">Coached Service Desk teams, improving incident resolution times by 40%</li>
+                                <li class="lang-de" style="display: none;">Trainierte Service Desk Teams, verbesserte Incident-Lösungszeiten um 40%</li>
+                                
+                                <li class="lang-en">Recognized by enterprise clients for exceptional problem-solving during high-pressure situations</li>
+                                <li class="lang-de" style="display: none;">Von Unternehmenskunden anerkannt für außergewöhnliche Problemlösung in Drucksituationen</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="experience-card">
+                        <div class="exp-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="exp-content">
+                            <h3 class="lang-en">Monitoring Infrastructure Expertise</h3>
+                            <h3 class="lang-de" style="display: none;">Monitoring-Infrastruktur-Expertise</h3>
+                            <ul>
+                                <li class="lang-en">Specialized in Nagios, Zabbix, Centreon, Check MK, App Dynamics, and CA APM</li>
+                                <li class="lang-de" style="display: none;">Spezialisierung auf Nagios, Zabbix, Centreon, Check MK, App Dynamics und CA APM</li>
+                                
+                                <li class="lang-en">Developed and optimized monitoring strategies for improved system reliability</li>
+                                <li class="lang-de" style="display: none;">Entwicklung und Optimierung von Monitoring-Strategien für verbesserte Systemzuverlässigkeit</li>
+                                
+                                <li class="lang-en">Built comprehensive monitoring solutions with ticketing system integration</li>
+                                <li class="lang-de" style="display: none;">Aufbau umfassender Monitoring-Lösungen mit Ticketing-System-Integration</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="experience-card">
+                        <div class="exp-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="exp-content">
+                            <h3 class="lang-en">Strategic Consulting & Process Improvement</h3>
+                            <h3 class="lang-de" style="display: none;">Strategische Beratung & Prozessverbesserung</h3>
+                            <ul>
+                                <li class="lang-en">13+ years of progressive experience in enterprise monitoring and IT consulting</li>
+                                <li class="lang-de" style="display: none;">13+ Jahre progressive Erfahrung im Enterprise-Monitoring und IT-Beratung</li>
+                                
+                                <li class="lang-en">Consulted on monitoring solutions for diverse enterprise clients across industries</li>
+                                <li class="lang-de" style="display: none;">Beratung zu Monitoring-Lösungen für verschiedene Unternehmenskunden in verschiedenen Branchen</li>
+                                
+                                <li class="lang-en">Systematic approach to incident management and resolution process optimization</li>
+                                <li class="lang-de" style="display: none;">Systematischer Ansatz für Incident-Management und Optimierung des Lösungsprozesses</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="experience-note">
+                    <p class="lang-en">For detailed employment history and specific roles, please visit my <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank">LinkedIn profile</a></p>
+                    <p class="lang-de" style="display: none;">Für detaillierte Beschäftigungsgeschichte und spezifische Rollen, besuchen Sie bitte mein <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank">LinkedIn-Profil</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Reference Section -->
+    <section class="section" id="reference">
+        <div class="container">
+            <h2 class="section-title lang-en">Professional Reference</h2>
+            <h2 class="section-title lang-de" style="display: none;">Berufliche Referenz</h2>
+            
+            <div class="reference-letter">
+                <div class="reference-content">
+                    <p class="lang-en">To Whom It May Concern,</p>
+                    <p class="lang-de" style="display: none;">An alle, die es betrifft,</p>
+                    
+                    <p class="lang-en">I have had the pleasure of supervising Mr. Shrestha at Cancom for several years in his role as Senior Administrator Monitoring. I am pleased to provide this letter of recommendation.</p>
+                    <p class="lang-de" style="display: none;">Ich hatte das Vergnügen, Herrn Shrestha bei Cancom mehrere Jahre in seiner Rolle als Senior Administrator Monitoring zu betreuen. Ich freue mich, dieses Empfehlungsschreiben zu verfassen.</p>
+                    
+                    <p class="lang-en">Mr. Shrestha was the technical owner and lead for our legacy Nagios monitoring infrastructure. He proactively expanded his responsibilities, taking over and stabilizing our Centreon platform following a team member's departure, and subsequently demonstrated deep expertise in Zabbix.</p>
+                    <p class="lang-de" style="display: none;">Herr Shrestha war der technische Eigentümer und Leiter unserer Legacy-Nagios-Monitoring-Infrastruktur. Er erweiterte proaktiv seine Verantwortlichkeiten, übernahm und stabilisierte unsere Centreon-Plattform nach dem Ausscheiden eines Teammitglieds und zeigte anschließend tiefgreifende Expertise in Zabbix.</p>
+                    
+                    <p class="highlight lang-en">His most significant contribution was serving as the technical lead for a large-scale, cross-platform migration project from Nagios to Zabbix.</p>
+                    <p class="highlight lang-de" style="display: none;">Sein bedeutendster Beitrag war die technische Leitung eines groß angelegten, plattformübergreifenden Migrationsprojekts von Nagios zu Zabbix.</p>
+                    
+                    <p class="lang-en">A key strength is his ability to communicate complex technical issues with clarity to any audience. He can effectively explain the business impact to management, discuss architectural details with engineers, and guide operational teams through solutions.</p>
+                    <p class="lang-de" style="display: none;">Eine zentrale Stärke ist seine Fähigkeit, komplexe technische Probleme klar für jedes Publikum zu kommunizieren. Er kann Geschäftsauswirkungen effektiv dem Management erklären, architektonische Details mit Ingenieuren diskutieren und operative Teams durch Lösungen führen.</p>
+                    
+                    <p class="highlight lang-en">This skill made him an invaluable consultant during client escalations and critical incidents, where his calm and precise communication consistently helped resolve issues and build trust.</p>
+                    <p class="highlight lang-de" style="display: none;">Diese Fähigkeit machte ihn zu einem unschätzbaren Berater während Kundeneskalationen und kritischen Incidents, wo seine ruhige und präzise Kommunikation konsequent zur Problemlösung und Vertrauensbildung beitrug.</p>
+                    
+                    <p class="lang-en">His working style is systematic, reliable, and proactive. He consistently took ownership of his domain, often extending his responsibility to coach other teams, particularly the Service Desk, which significantly improved our overall incident resolution process.</p>
+                    <p class="lang-de" style="display: none;">Sein Arbeitsstil ist systematisch, zuverlässig und proaktiv. Er übernahm konsequent die Verantwortung für seinen Bereich und erweiterte sie oft, um andere Teams, insbesondere den Service Desk, zu coachen, was unseren gesamten Incident-Lösungsprozess erheblich verbesserte.</p>
+                    
+                    <p class="lang-en">Mr. Shrestha performed all his duties to my fullest satisfaction.</p>
+                    <p class="lang-de" style="display: none;">Herr Shrestha erfüllte alle seine Pflichten zu meiner vollsten Zufriedenheit.</p>
+                    
+                    <p class="highlight lang-en">I can confidently recommend him for any position that requires deep technical skill and exceptional client-facing communication.</p>
+                    <p class="highlight lang-de" style="display: none;">Ich kann ihn mit gutem Gewissen für jede Position empfehlen, die tiefgreifende technische Fähigkeiten und außergewöhnliche kundenorientierte Kommunikation erfordert.</p>
+                    
+                    <div class="reference-author">
+                        <span class="lang-en">Former Supervisor at Cancom</span>
+                        <span class="lang-de" style="display: none;">Ehemaliger Vorgesetzter bei Cancom</span>
+                        <span class="lang-en">Senior Management</span>
+                        <span class="lang-de" style="display: none;">Senior Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact" style="background: var(--section-bg);">
+        <div class="container">
+            <h2 class="section-title lang-en">Get In Touch</h2>
+            <h2 class="section-title lang-de" style="display: none;">Kontakt aufnehmen</h2>
+            
+            <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+                <p class="lang-en contact-description">
+                    I'm available for consulting opportunities, escalation management, and infrastructure projects. 
+                    Let's discuss how I can help your organization with monitoring solutions and technical leadership.
+                </p>
+                <p class="lang-de contact-description" style="display: none;">
+                    Ich stehe für Beratungsmöglichkeiten, Eskalationsmanagement und Infrastrukturprojekte zur Verfügung. 
+                    Lassen Sie uns besprechen, wie ich Ihre Organisation mit Monitoring-Lösungen und technischer Leitung unterstützen kann.
+                </p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-linkedin"></i>
+                        </div>
+                        <div class="contact-text" style="text-align: left;">
+                            <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank" style="font-size: 1.2rem;" class="lang-en">LinkedIn Profile</a>
+                            <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank" style="font-size: 1.2rem; display: none;" class="lang-de">LinkedIn Profil</a>
+                            <p class="lang-en">Connect for professional opportunities</p>
+                            <p class="lang-de" style="display: none;">Vernetzen Sie sich für berufliche Möglichkeiten</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-xing"></i>
+                        </div>
+                        <div class="contact-text" style="text-align: left;">
+                            <a href="https://www.xing.com/profile/Dibesh_Shrestha2/web_profiles?nwt_nav=profile&expandNeffi=true" target="_blank" style="font-size: 1.2rem;" class="lang-en">XING Profile</a>
+                            <a href="https://www.xing.com/profile/Dibesh_Shrestha2/web_profiles?nwt_nav=profile&expandNeffi=true" target="_blank" style="font-size: 1.2rem; display: none;" class="lang-de">XING Profil</a>
+                            <p class="lang-en">German business network</p>
+                            <p class="lang-de" style="display: none;">Deutsches Business-Netzwerk</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-buttons">
+                    <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank" class="btn btn-linkedin">
+                        <i class="fab fa-linkedin" style="margin-right: 0.7rem;"></i> 
+                        <span class="lang-en">Connect on LinkedIn</span>
+                        <span class="lang-de" style="display: none;">Auf LinkedIn verbinden</span>
+                    </a>
+                    <a href="https://www.xing.com/profile/Dibesh_Shrestha2/web_profiles?nwt_nav=profile&expandNeffi=true" target="_blank" class="btn btn-xing">
+                        <i class="fab fa-xing" style="margin-right: 0.7rem;"></i> 
+                        <span class="lang-en">Connect on XING</span>
+                        <span class="lang-de" style="display: none;">Auf XING verbinden</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Dibesh Shrestha</div>
+                <p class="lang-en footer-tagline">
+                    Enterprise Monitoring Expert | IT Consultant | Client Escalation Specialist | Zabbix Certified Specialist
+                </p>
+                <p class="lang-de footer-tagline" style="display: none;">
+                    Enterprise-Monitoring-Experte | IT-Berater | Kunden-Eskalationsspezialist | Zabbix Zertifizierter Specialist
+                </p>
+                
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.xing.com/profile/Dibesh_Shrestha2/web_profiles?nwt_nav=profile&expandNeffi=true" target="_blank" title="XING">
+                        <i class="fab fa-xing"></i>
+                    </a>
+                </div>
+                
+                <div class="copyright">
+                    <span class="lang-en">&copy; 2025 Dibesh Shrestha. All rights reserved.</span>
+                    <span class="lang-de" style="display: none;">&copy; 2025 Dibesh Shrestha. Alle Rechte vorbehalten.</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript code from script.js goes here
+        // Language switching functionality
+        const langEnBtn = document.getElementById('langEn');
+        const langDeBtn = document.getElementById('langDe');
+        const langEnMobileBtn = document.getElementById('langEnMobile');
+        const langDeMobileBtn = document.getElementById('langDeMobile');
+        const htmlElement = document.getElementById('htmlLang');
+
+        function switchLanguage(lang) {
+            // Update active buttons
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (lang === 'en') {
+                if (langEnBtn) langEnBtn.classList.add('active');
+                if (langEnMobileBtn) langEnMobileBtn.classList.add('active');
+                htmlElement.setAttribute('lang', 'en');
+            } else {
+                if (langDeBtn) langDeBtn.classList.add('active');
+                if (langDeMobileBtn) langDeMobileBtn.classList.add('active');
+                htmlElement.setAttribute('lang', 'de');
+            }
+            
+            // Show/hide language-specific content
+            document.querySelectorAll('.lang-en').forEach(el => {
+                el.style.display = lang === 'en' ? 'block' : 'none';
+            });
+            
+            document.querySelectorAll('.lang-de').forEach(el => {
+                el.style.display = lang === 'de' ? 'block' : 'none';
+            });
+            
+            // Update navigation links
+            document.querySelectorAll('nav a, .mobile-nav a').forEach(link => {
+                const text = link.getAttribute(`data-${lang}`);
+                if (text) {
+                    link.textContent = text;
+                }
+            });
+            
+            // Store preference in localStorage
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Event listeners for language buttons
+        if (langEnBtn) langEnBtn.addEventListener('click', () => switchLanguage('en'));
+        if (langDeBtn) langDeBtn.addEventListener('click', () => switchLanguage('de'));
+        if (langEnMobileBtn) langEnMobileBtn.addEventListener('click', () => switchLanguage('en'));
+        if (langDeMobileBtn) langDeMobileBtn.addEventListener('click', () => switchLanguage('de'));
+
+        // Check for saved language preference
+        const savedLanguage = localStorage.getItem('preferredLanguage') || 'en';
+        switchLanguage(savedLanguage);
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.toggle('active');
+                mobileMenuBtn.innerHTML = mobileNav.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+            });
+        }
+
+        // Close mobile menu when clicking a link
+        const mobileLinks = document.querySelectorAll('.mobile-nav a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                if (mobileMenuBtn) mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                
+                // Update active link
+                document.querySelectorAll('nav a, .mobile-nav a').forEach(a => {
+                    a.classList.remove('active');
+                });
+                link.classList.add('active');
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 120,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update active link
+                    if(this.getAttribute('href') !== '#contact') {
+                        document.querySelectorAll('nav a, .mobile-nav a').forEach(a => {
+                            a.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Update active link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('nav a, .mobile-nav a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if(scrollY >= (sectionTop - 160)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
