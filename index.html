@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dibesh Shrestha | Enterprise Monitoring Expert & IT Consultant</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --teal-primary: #20B2AA; /* Light Sea Green - Modern Teal */
-            --teal-dark: #008B8B; /* Dark Cyan */
-            --teal-light: #48D1CC; /* Medium Turquoise */
-            --teal-bg: #E0F7FA; /* Very light teal for backgrounds */
+            --teal-primary: #20B2AA;
+            --teal-dark: #008B8B;
+            --teal-light: #48D1CC;
+            --teal-bg: #E0F7FA;
             --gray-dark: #333;
-            --gray-medium: #666;
-            --gray-light: #f5f5f5;
+            --gray-medium: #555;
+            --gray-light: #f8f9fa;
             --white: #ffffff;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             --transition: all 0.3s ease;
@@ -29,7 +30,7 @@
         body {
             color: var(--gray-dark);
             line-height: 1.6;
-            background-color: var(--white);
+            background-color: #f0f4f8;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
@@ -44,6 +45,7 @@
             border-bottom: 1px solid rgba(32, 178, 170, 0.2);
             margin-bottom: 40px;
             flex-wrap: wrap;
+            position: relative;
         }
         
         .logo-container {
@@ -53,7 +55,7 @@
         }
         
         .logo-icon {
-            background-color: var(--teal-primary);
+            background: linear-gradient(135deg, var(--teal-primary), var(--teal-dark));
             color: white;
             width: 50px;
             height: 50px;
@@ -63,6 +65,7 @@
             justify-content: center;
             font-size: 22px;
             font-weight: bold;
+            box-shadow: 0 4px 8px rgba(32, 178, 170, 0.3);
         }
         
         .name-title h1 {
@@ -99,13 +102,36 @@
             color: white;
         }
         
+        /* Hidden Admin Button */
+        .admin-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: transparent;
+            border: 1px solid rgba(32, 178, 170, 0.3);
+            color: rgba(32, 178, 170, 0.6);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0.3;
+        }
+        
+        .admin-btn:hover {
+            opacity: 1;
+            color: var(--teal-primary);
+            border-color: var(--teal-primary);
+        }
+        
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--teal-bg) 0%, rgba(224, 247, 250, 0.7) 100%);
+            background: linear-gradient(135deg, rgba(224, 247, 250, 0.9) 0%, rgba(224, 247, 250, 0.7) 100%);
             padding: 40px;
             border-radius: 15px;
             margin-bottom: 40px;
             border-left: 5px solid var(--teal-primary);
+            box-shadow: var(--shadow);
         }
         
         .hero p {
@@ -127,6 +153,10 @@
         /* Section Styling */
         section {
             margin-bottom: 50px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
         }
         
         h2 {
@@ -159,7 +189,7 @@
         }
         
         .card {
-            background: white;
+            background: var(--gray-light);
             border-radius: 10px;
             padding: 25px;
             box-shadow: var(--shadow);
@@ -200,7 +230,7 @@
         }
         
         .experience-item {
-            background-color: white;
+            background-color: var(--gray-light);
             padding: 20px;
             border-radius: 10px;
             box-shadow: var(--shadow);
@@ -236,7 +266,7 @@
         }
         
         .cert-item {
-            background-color: white;
+            background-color: var(--gray-light);
             padding: 20px;
             border-radius: 10px;
             box-shadow: var(--shadow);
@@ -339,6 +369,7 @@
         
         .social-links a:hover {
             color: var(--teal-dark);
+            transform: translateY(-3px);
         }
         
         /* Language Switching */
@@ -373,6 +404,18 @@
             .contact {
                 padding: 30px 20px;
             }
+            
+            section {
+                padding: 20px;
+            }
+            
+            .admin-btn {
+                position: relative;
+                right: auto;
+                top: auto;
+                margin-top: 10px;
+                align-self: flex-end;
+            }
         }
     </style>
 </head>
@@ -380,12 +423,13 @@
     <!-- Header with Language Toggle -->
     <header>
         <div class="logo-container">
-            <div class="logo-icon">DS</div>
+            <div class="logo-icon">📡</div>
             <div class="name-title">
                 <h1>Dibesh Shrestha</h1>
                 <p>Enterprise Monitoring Expert & IT Consultant</p>
             </div>
         </div>
+        <button class="admin-btn" onclick="alert('Admin login would go here')">Admin</button>
         <div class="language-toggle">
             <button class="lang-btn active" id="btn-en">EN</button>
             <button class="lang-btn" id="btn-de">DE</button>
@@ -532,6 +576,19 @@
                     <span class="lang-de">Ausgestellt Jan 2019</span>
                 </div>
             </div>
+            
+            <div class="cert-item">
+                <h4 class="lang-en active">AppDynamics Certified Implementer</h4>
+                <h4 class="lang-de">AppDynamics Zertifizierter Implementierer</h4>
+                <p class="lang-en active">AppDynamics</p>
+                <p class="lang-de">AppDynamics</p>
+                <div class="cert-meta">
+                    <span class="lang-en active">Issued Jun 2018</span>
+                    <span class="lang-de">Ausgestellt Jun 2018</span>
+                </div>
+                <p class="lang-en active" style="margin-top: 8px; font-size: 14px;">Foundation Workshop 4.4 & Kickstarter Certificate</p>
+                <p class="lang-de" style="margin-top: 8px; font-size: 14px;">Foundation Workshop 4.4 & Kickstarter Zertifikat</p>
+            </div>
         </div>
     </section>
 
@@ -573,22 +630,39 @@
         <p class="lang-en active">I'm available for consulting opportunities, escalation management, and infrastructure projects. Let's discuss how I can help your organization with monitoring solutions and technical leadership.</p>
         <p class="lang-de">Ich stehe für Beratungsmöglichkeiten, Eskalationsmanagement und Infrastrukturprojekte zur Verfügung. Lassen Sie uns besprechen, wie ich Ihre Organisation mit Monitoring-Lösungen und technischer Leitung unterstützen kann.</p>
         
-        <a href="#" class="contact-btn lang-en active">Contact Me</a>
-        <a href="#" class="contact-btn lang-de">Kontaktieren Sie mich</a>
+        <button class="contact-btn lang-en active" onclick="openContactModal()">Contact Me</button>
+        <button class="contact-btn lang-de" onclick="openContactModal()">Kontaktieren Sie mich</button>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="social-links">
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fas fa-envelope"></i></a>
-            <a href="#"><i class="fas fa-globe"></i></a>
+            <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.xing.com/profile/Dibesh_Shrestha2/web_profiles?nwt_nav=profile&expandNeffi=true" target="_blank" title="Xing"><i class="fab fa-xing"></i></a>
+            <a href="#" onclick="openContactModal()" title="Contact"><i class="fas fa-envelope"></i></a>
         </div>
-        <p class="lang-en active">© 2023 Dibesh Shrestha. Enterprise Monitoring Expert & IT Consultant.</p>
-        <p class="lang-de">© 2023 Dibesh Shrestha. Enterprise-Monitoring-Experte & IT-Berater.</p>
+        <p class="lang-en active">© 2025 Dibesh Shrestha. Enterprise Monitoring Expert & IT Consultant.</p>
+        <p class="lang-de">© 2025 Dibesh Shrestha. Enterprise-Monitoring-Experte & IT-Berater.</p>
         <p class="lang-en active" style="font-size: 14px; margin-top: 10px;">For detailed employment history and specific roles, please visit my LinkedIn profile</p>
         <p class="lang-de" style="font-size: 14px; margin-top: 10px;">Für detaillierte Beschäftigungsgeschichte und spezifische Rollen, besuchen Sie bitte mein LinkedIn-Profil</p>
     </footer>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 30px; border-radius: 10px; max-width: 500px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <h3 style="color: var(--teal-dark); margin-bottom: 20px;">Contact Information</h3>
+            <p>Please connect via LinkedIn or Xing for professional inquiries:</p>
+            <div style="margin: 20px 0;">
+                <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank" style="display: inline-flex; align-items: center; gap: 10px; background: #0077b5; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; margin-right: 10px;">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="https://www.xing.com/profile/Dibesh_Shrestha2/web_profiles?nwt_nav=profile&expandNeffi=true" target="_blank" style="display: inline-flex; align-items: center; gap: 10px; background: #006567; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
+                    <i class="fab fa-xing"></i> Xing
+                </a>
+            </div>
+            <button onclick="closeContactModal()" style="background: var(--teal-primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Close</button>
+        </div>
+    </div>
 
     <script>
         // Language switching functionality
@@ -617,6 +691,22 @@
                 el.classList.toggle('active', lang === 'de');
             });
         }
+        
+        // Contact modal functions
+        function openContactModal() {
+            document.getElementById('contactModal').style.display = 'flex';
+        }
+        
+        function closeContactModal() {
+            document.getElementById('contactModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('contactModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeContactModal();
+            }
+        });
         
         // Initialize with English
         setActiveLanguage('en');
