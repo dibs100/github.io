@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dibesh Shrestha | Senior IT Administrator & Consultant</title>
+    <title>Dibesh Shrestha | Enterprise Monitoring Expert & IT Consultant</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #14b8a6;
-            --primary-dark: #0d9488;
-            --primary-light: #2dd4bf;
-            --secondary: #94a3b8;
-            --dark: #0f172a;
-            --darker: #020617;
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --secondary: #64748b;
+            --dark: #1e293b;
+            --darker: #0f172a;
             --light: #f8fafc;
-            --gray: #334155;
-            --gray-light: #475569;
+            --gray: #e2e8f0;
+            --gray-light: #f1f5f9;
             --success: #10b981;
-            --border-radius: 10px;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            --border-radius: 12px;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --gradient: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            --gradient: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
         }
 
         * {
@@ -35,8 +35,8 @@
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.7;
-            color: var(--light);
-            background-color: var(--darker);
+            color: #334155;
+            background-color: #f8fafc;
             overflow-x: hidden;
         }
 
@@ -53,10 +53,11 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: rgba(2, 6, 23, 0.9);
+            background-color: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1000;
-            border-bottom: 1px solid rgba(51, 65, 85, 0.3);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
         }
 
         .header-content {
@@ -85,10 +86,10 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(20, 184, 166, 0.1);
+            background: rgba(59, 130, 246, 0.1);
             padding: 0.4rem 0.8rem;
             border-radius: 30px;
-            border: 1px solid rgba(20, 184, 166, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.2);
         }
 
         .language-btn {
@@ -106,7 +107,7 @@
         }
 
         .language-btn:hover {
-            color: var(--light);
+            color: var(--primary);
         }
 
         .language-btn.active {
@@ -146,7 +147,7 @@
         }
 
         nav a:hover, nav a.active {
-            color: var(--light);
+            color: var(--primary);
         }
 
         nav a::after {
@@ -170,9 +171,9 @@
             background: none;
             border: none;
             font-size: 1.5rem;
-            color: var(--light);
+            color: var(--primary);
             cursor: pointer;
-            background: rgba(20, 184, 166, 0.1);
+            background: rgba(59, 130, 246, 0.1);
             width: 44px;
             height: 44px;
             border-radius: 8px;
@@ -185,6 +186,7 @@
             padding: 10rem 0 6rem;
             position: relative;
             overflow: hidden;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
         }
 
         .hero::before {
@@ -194,8 +196,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(20, 184, 166, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(15, 118, 110, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 50%);
             z-index: -1;
         }
 
@@ -208,13 +210,10 @@
 
         .hero-text h1 {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             line-height: 1.1;
             margin-bottom: 1.5rem;
-            background: linear-gradient(to right, #f8fafc, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #0f172a;
         }
 
         .hero-text h1 span {
@@ -226,7 +225,7 @@
 
         .hero-text p {
             font-size: 1.2rem;
-            color: var(--secondary);
+            color: #475569;
             margin-bottom: 2.5rem;
             max-width: 90%;
         }
@@ -245,25 +244,26 @@
             cursor: pointer;
             font-size: 1rem;
             letter-spacing: 0.3px;
-            box-shadow: 0 4px 14px 0 rgba(20, 184, 166, 0.4);
+            box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.25);
         }
 
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px 0 rgba(20, 184, 166, 0.5);
+            box-shadow: 0 6px 20px 0 rgba(59, 130, 246, 0.35);
         }
 
         .btn-outline {
             background: transparent;
-            border: 2px solid var(--gray);
-            color: var(--light);
+            border: 2px solid #cbd5e1;
+            color: #475569;
             margin-left: 1rem;
             box-shadow: none;
         }
 
         .btn-outline:hover {
             border-color: var(--primary);
-            background: rgba(20, 184, 166, 0.1);
+            background: rgba(59, 130, 246, 0.05);
+            color: var(--primary);
         }
 
         .hero-image {
@@ -271,12 +271,11 @@
         }
 
         .profile-card {
-            background: rgba(30, 41, 59, 0.6);
+            background: white;
             border-radius: var(--border-radius);
-            padding: 2rem;
+            padding: 2.5rem;
             box-shadow: var(--shadow);
-            border: 1px solid rgba(51, 65, 85, 0.5);
-            backdrop-filter: blur(10px);
+            border: 1px solid #e2e8f0;
             position: relative;
             overflow: hidden;
         }
@@ -292,31 +291,15 @@
         }
 
         .profile-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
         }
 
-        .profile-icon {
-            width: 70px;
-            height: 70px;
-            background: var(--gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1.5rem;
-            font-size: 2rem;
-        }
-
-        .profile-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .profile-info p {
-            color: var(--primary-light);
-            font-weight: 500;
+        .profile-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            color: #0f172a;
+            margin-bottom: 1rem;
         }
 
         .profile-details {
@@ -325,20 +308,66 @@
 
         .detail-item {
             display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
         }
 
         .detail-icon {
-            width: 36px;
-            height: 36px;
-            background: rgba(20, 184, 166, 0.2);
-            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 1rem;
-            color: var(--primary-light);
+            color: var(--primary);
+            flex-shrink: 0;
+            margin-top: 0.2rem;
+        }
+
+        .detail-content h4 {
+            color: #0f172a;
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+        }
+
+        .detail-content p {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-content ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 0.5rem;
+        }
+
+        .detail-content li {
+            color: #64748b;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+
+        .detail-content li:before {
+            content: "•";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+        }
+
+        .highlight-text {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: var(--primary);
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
         }
 
         /* Sections */
@@ -348,10 +377,11 @@
 
         .section-title {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             margin-bottom: 3.5rem;
             position: relative;
             display: inline-block;
+            color: #0f172a;
         }
 
         .section-title::after {
@@ -373,20 +403,20 @@
         }
 
         .skill-card {
-            background: rgba(30, 41, 59, 0.6);
+            background: white;
             padding: 2.2rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             transition: var(--transition);
-            border: 1px solid rgba(51, 65, 85, 0.5);
+            border: 1px solid #e2e8f0;
             position: relative;
             overflow: hidden;
         }
 
         .skill-card:hover {
             transform: translateY(-8px);
-            border-color: rgba(20, 184, 166, 0.5);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         .skill-card::before {
@@ -411,11 +441,11 @@
         .skill-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: var(--light);
+            color: #0f172a;
         }
 
         .skill-card p {
-            color: var(--secondary);
+            color: #64748b;
             margin-bottom: 1.5rem;
         }
 
@@ -427,56 +457,33 @@
         }
 
         .tag {
-            background: rgba(20, 184, 166, 0.15);
-            color: var(--primary-light);
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary);
             padding: 0.4rem 1rem;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 500;
-            border: 1px solid rgba(20, 184, 166, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.2);
         }
 
-        /* Experience Timeline */
+        /* Experience */
         .experience-timeline {
             max-width: 900px;
             margin: 0 auto;
-            position: relative;
-        }
-
-        .experience-timeline::before {
-            content: '';
-            position: absolute;
-            left: 30px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: rgba(20, 184, 166, 0.3);
         }
 
         .timeline-item {
-            background: rgba(30, 41, 59, 0.6);
+            background: white;
             padding: 2rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             margin-bottom: 2rem;
             position: relative;
-            border: 1px solid rgba(51, 65, 85, 0.5);
-            margin-left: 70px;
+            border: 1px solid #e2e8f0;
         }
 
         .timeline-item:hover {
-            border-color: rgba(20, 184, 166, 0.5);
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: -46px;
-            top: 2rem;
-            width: 20px;
-            height: 20px;
-            background: var(--gradient);
-            border-radius: 50%;
-            border: 4px solid var(--darker);
+            border-color: rgba(59, 130, 246, 0.3);
         }
 
         .company-header {
@@ -484,20 +491,22 @@
             align-items: flex-start;
             margin-bottom: 1.5rem;
             gap: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
         }
 
         .company-logo {
             width: 60px;
             height: 60px;
-            background: rgba(20, 184, 166, 0.1);
+            background: rgba(59, 130, 246, 0.1);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.8rem;
-            color: var(--primary-light);
+            color: var(--primary);
             flex-shrink: 0;
-            border: 1px solid rgba(20, 184, 166, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.2);
         }
 
         .company-info {
@@ -505,18 +514,19 @@
         }
 
         .company-info h3 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-bottom: 0.5rem;
-            color: var(--light);
+            color: #0f172a;
         }
 
         .company-name {
-            color: var(--primary-light);
+            color: var(--primary);
             font-weight: 600;
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: 1.1rem;
         }
 
         .job-duration {
@@ -524,62 +534,65 @@
             align-items: center;
             gap: 1rem;
             margin-bottom: 1rem;
-            color: var(--secondary);
+            color: #64748b;
             font-size: 0.95rem;
         }
 
         .duration {
-            background: rgba(20, 184, 166, 0.1);
+            background: rgba(59, 130, 246, 0.1);
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
-            color: var(--primary-light);
-            border: 1px solid rgba(20, 184, 166, 0.3);
+            color: var(--primary);
+            border: 1px solid rgba(59, 130, 246, 0.2);
         }
 
         .job-location {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--secondary);
+            color: #64748b;
             font-size: 0.95rem;
         }
 
         .job-description {
-            color: var(--secondary);
+            color: #475569;
             margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(51, 65, 85, 0.3);
         }
 
-        .cert-badge {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--success);
-            padding: 0.6rem 1.2rem;
-            border-radius: var(--border-radius);
-            margin-top: 1.5rem;
-            border: 1px solid rgba(16, 185, 129, 0.3);
+        .job-description ul {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin-top: 1rem;
         }
 
-        .cert-badge i {
-            margin-right: 0.7rem;
+        .job-description li {
+            margin-bottom: 0.8rem;
+            color: #475569;
+            position: relative;
+        }
+
+        .job-description li:before {
+            content: "▸";
+            color: var(--primary);
+            position: absolute;
+            left: -1.5rem;
+            font-weight: bold;
         }
 
         /* Reference */
         .reference-letter {
-            background: rgba(30, 41, 59, 0.6);
+            background: white;
             padding: 3rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            border: 1px solid rgba(51, 65, 85, 0.5);
+            border: 1px solid #e2e8f0;
             position: relative;
         }
 
         .reference-letter::before {
             content: "\201C";
             font-size: 8rem;
-            color: rgba(20, 184, 166, 0.2);
+            color: rgba(59, 130, 246, 0.1);
             position: absolute;
             top: -30px;
             left: 20px;
@@ -595,24 +608,28 @@
             margin-bottom: 1.5rem;
             font-size: 1.1rem;
             line-height: 1.8;
-            color: var(--secondary);
+            color: #475569;
         }
 
         .reference-content p.highlight {
-            color: var(--light);
+            color: #0f172a;
             font-weight: 500;
+            background: rgba(59, 130, 246, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
         }
 
         .reference-author {
             margin-top: 2.5rem;
             font-weight: 600;
-            color: var(--primary-light);
+            color: var(--primary);
             font-size: 1.1rem;
         }
 
         .reference-author span {
             display: block;
-            color: var(--secondary);
+            color: #64748b;
             font-weight: 400;
             font-size: 0.95rem;
             margin-top: 0.3rem;
@@ -635,36 +652,36 @@
         .contact-icon {
             width: 50px;
             height: 50px;
-            background: rgba(20, 184, 166, 0.15);
-            color: var(--primary-light);
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.3rem;
-            border: 1px solid rgba(20, 184, 166, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.2);
         }
 
         .contact-text a {
-            color: var(--light);
+            color: #0f172a;
             text-decoration: none;
             font-weight: 500;
             transition: var(--transition);
         }
 
         .contact-text a:hover {
-            color: var(--primary-light);
+            color: var(--primary);
         }
 
         .contact-text p {
-            color: var(--secondary);
+            color: #64748b;
             font-size: 0.95rem;
             margin-top: 0.2rem;
         }
 
         /* Footer */
         footer {
-            background: rgba(2, 6, 23, 0.9);
+            background: #0f172a;
             padding: 4rem 0 2.5rem;
             border-top: 1px solid rgba(51, 65, 85, 0.3);
         }
@@ -694,15 +711,15 @@
         .social-links a {
             width: 48px;
             height: 48px;
-            background: rgba(30, 41, 59, 0.8);
-            color: var(--light);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.4rem;
             transition: var(--transition);
-            border: 1px solid rgba(51, 65, 85, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .social-links a:hover {
@@ -711,7 +728,7 @@
         }
 
         .copyright {
-            color: var(--secondary);
+            color: #94a3b8;
             font-size: 0.9rem;
             text-align: center;
             margin-top: 2rem;
@@ -733,7 +750,7 @@
             }
             
             .hero-text h1 {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
         }
 
@@ -762,6 +779,10 @@
                 margin-top: 1.5rem;
                 gap: 1rem;
             }
+            
+            .detail-item {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 768px) {
@@ -778,11 +799,11 @@
                 top: 80px;
                 left: 0;
                 width: 100%;
-                background: rgba(2, 6, 23, 0.95);
+                background: white;
                 padding: 1.5rem;
                 box-shadow: var(--shadow);
                 z-index: 999;
-                border-top: 1px solid rgba(51, 65, 85, 0.5);
+                border-top: 1px solid #e2e8f0;
                 backdrop-filter: blur(10px);
                 display: none;
             }
@@ -807,11 +828,11 @@
             }
             
             .hero-text h1 {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
             }
             
             .section-title {
-                font-size: 2.3rem;
+                font-size: 2rem;
             }
             
             .reference-letter {
@@ -822,16 +843,15 @@
                 display: flex;
             }
             
-            .experience-timeline::before {
-                left: 20px;
+            .company-header {
+                flex-direction: column;
+                gap: 1rem;
             }
             
-            .timeline-item {
-                margin-left: 50px;
-            }
-            
-            .timeline-dot {
-                left: -36px;
+            .company-logo {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
             }
         }
 
@@ -847,7 +867,7 @@
             }
             
             .hero-text h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
             
             .section {
@@ -858,27 +878,10 @@
                 padding: 1.8rem;
             }
             
-            .company-header {
+            .job-duration {
                 flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .company-logo {
-                width: 50px;
-                height: 50px;
-                font-size: 1.5rem;
-            }
-            
-            .experience-timeline::before {
-                display: none;
-            }
-            
-            .timeline-item {
-                margin-left: 0;
-            }
-            
-            .timeline-dot {
-                display: none;
+                align-items: flex-start;
+                gap: 0.5rem;
             }
         }
         
@@ -908,8 +911,8 @@
                 <nav>
                     <ul>
                         <li><a href="#home" class="active" data-en="Home" data-de="Start">Home</a></li>
-                        <li><a href="#skills" data-en="Expertise" data-de="Fachkenntnisse">Expertise</a></li>
-                        <li><a href="#experience" data-en="Experience" data-de="Berufserfahrung">Experience</a></li>
+                        <li><a href="#skills" data-en="Expertise" data-de="Expertise">Expertise</a></li>
+                        <li><a href="#experience" data-en="Experience" data-de="Erfahrung">Experience</a></li>
                         <li><a href="#reference" data-en="Reference" data-de="Referenz">Reference</a></li>
                         <li><a href="#contact" data-en="Contact" data-de="Kontakt">Contact</a></li>
                     </ul>
@@ -925,8 +928,8 @@
     <div class="mobile-nav" id="mobileNav">
         <ul>
             <li><a href="#home" class="active" data-en="Home" data-de="Start">Home</a></li>
-            <li><a href="#skills" data-en="Expertise" data-de="Fachkenntnisse">Expertise</a></li>
-            <li><a href="#experience" data-en="Experience" data-de="Berufserfahrung">Experience</a></li>
+            <li><a href="#skills" data-en="Expertise" data-de="Expertise">Expertise</a></li>
+            <li><a href="#experience" data-en="Experience" data-de="Erfahrung">Experience</a></li>
             <li><a href="#reference" data-en="Reference" data-de="Referenz">Reference</a></li>
             <li><a href="#contact" data-en="Contact" data-de="Kontakt">Contact</a></li>
         </ul>
@@ -947,11 +950,12 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="lang-en">Senior IT Administrator & <span>Consultant</span></h1>
-                    <h1 class="lang-de" style="display: none;">Senior IT Administrator & <span>Consultant</span></h1>
-                    
-                    <p class="lang-en">Expert in enterprise monitoring infrastructure, IT consulting, and customer escalation management. Proven track record in leading complex migrations and solving critical system issues with exceptional client-facing communication skills.</p>
-                    <p class="lang-de" style="display: none;">Experte für Enterprise-Monitoring-Infrastruktur, IT-Beratung und Eskalationsmanagement. Bewährte Erfolgsbilanz bei der Leitung komplexer Migrationen und Lösung kritischer Systemprobleme mit herausragenden Kundenkommunikationsfähigkeiten.</p>
+                    <p class="lang-en" style="font-size: 1.3rem; color: #475569; margin-bottom: 2rem; max-width: 100%; line-height: 1.8;">
+                        Expert in enterprise monitoring infrastructure, IT consulting, and customer escalation management. Proven track record in leading complex migrations and solving critical system issues with exceptional client-facing communication skills.
+                    </p>
+                    <p class="lang-de" style="font-size: 1.3rem; color: #475569; margin-bottom: 2rem; max-width: 100%; line-height: 1.8; display: none;">
+                        Experte für Enterprise-Monitoring-Infrastruktur, IT-Beratung und Eskalationsmanagement. Bewährte Erfolgsbilanz bei der Leitung komplexer Migrationen und Lösung kritischer Systemprobleme mit herausragenden Kundenkommunikationsfähigkeiten.
+                    </p>
                     
                     <div>
                         <a href="#contact" class="btn lang-en">Get in Touch</a>
@@ -959,77 +963,58 @@
                         <a href="#experience" class="btn btn-outline lang-en">View Experience</a>
                         <a href="#experience" class="btn btn-outline lang-de" style="display: none;">Erfahrung anzeigen</a>
                     </div>
-                    
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-certificate"></i>
-                            </div>
-                            <div class="contact-text">
-                                <a href="#experience" class="lang-en">Zabbix Certified Professional</a>
-                                <a href="#experience" class="lang-de" style="display: none;">Zabbix Zertifizierter Professional</a>
-                                <p class="lang-en">Validated expertise in enterprise monitoring</p>
-                                <p class="lang-de" style="display: none;">Validierte Expertise im Enterprise-Monitoring</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-calendar-alt"></i>
-                            </div>
-                            <div class="contact-text">
-                                <a class="lang-en">12+ Years Experience</a>
-                                <a class="lang-de" style="display: none;">12+ Jahre Erfahrung</a>
-                                <p class="lang-en">Senior IT Administrator & Consultant</p>
-                                <p class="lang-de" style="display: none;">Senior IT Administrator & Berater</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 
                 <div class="hero-image">
                     <div class="profile-card">
                         <div class="profile-header">
-                            <div class="profile-icon">
-                                <i class="fas fa-user-tie"></i>
-                            </div>
-                            <div class="profile-info">
-                                <h3>Dibesh Shrestha</h3>
-                                <p class="lang-en">Senior Administrator & IT Consultant</p>
-                                <p class="lang-de" style="display: none;">Senior Administrator & IT Berater</p>
-                            </div>
+                            <h2>Dibesh Shrestha</h2>
                         </div>
                         <div class="profile-details">
+                            <!-- Client Communication -->
                             <div class="detail-item">
                                 <div class="detail-icon">
-                                    <i class="fas fa-server"></i>
+                                    <i class="fas fa-comments"></i>
                                 </div>
-                                <div>
-                                    <strong class="lang-en">Monitoring Systems</strong>
-                                    <strong class="lang-de" style="display: none;">Monitoring-Systeme</strong>
-                                    <p class="lang-en">Nagios, Zabbix, Centreon</p>
-                                    <p class="lang-de" style="display: none;">Nagios, Zabbix, Centreon</p>
-                                </div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-icon">
-                                    <i class="fas fa-project-diagram"></i>
-                                </div>
-                                <div>
-                                    <strong class="lang-en">Migration Projects</strong>
-                                    <strong class="lang-de" style="display: none;">Migrationsprojekte</strong>
-                                    <p class="lang-en">10+ Customers, 10,000+ Hosts</p>
-                                    <p class="lang-de" style="display: none;">10+ Kunden, 10.000+ Hosts</p>
-                                </div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-icon">
-                                    <i class="fas fa-headset"></i>
-                                </div>
-                                <div>
-                                    <strong class="lang-en">Client Communication</strong>
-                                    <strong class="lang-de" style="display: none;">Kundenkommunikation</strong>
+                                <div class="detail-content">
+                                    <h4 class="lang-en">Client Communication</h4>
+                                    <h4 class="lang-de" style="display: none;">Kundenkommunikation</h4>
                                     <p class="lang-en">Escalation Management & Consulting</p>
                                     <p class="lang-de" style="display: none;">Eskalationsmanagement & Beratung</p>
+                                    <div class="highlight-text lang-en">200+ Customers, 30,000+ Hosts</div>
+                                    <div class="highlight-text lang-de" style="display: none;">200+ Kunden, 30.000+ Hosts</div>
+                                    <ul>
+                                        <li class="lang-en">Coached and mentored different team members, improving incident resolution times</li>
+                                        <li class="lang-de" style="display: none;">Trainierte und betreute verschiedene Teammitglieder, verbesserte Incident-Lösungszeiten</li>
+                                        <li class="lang-en">Recognized for calm and precise communication during high-pressure situations</li>
+                                        <li class="lang-de" style="display: none;">Anerkannt für ruhige und präzise Kommunikation in Drucksituationen</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Certification -->
+                            <div class="detail-item">
+                                <div class="detail-icon">
+                                    <i class="fas fa-certificate"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4 class="lang-en">Zabbix Certified Professional</h4>
+                                    <h4 class="lang-de" style="display: none;">Zabbix Zertifizierter Specialist</h4>
+                                    <p class="lang-en">Validated expertise in enterprise monitoring</p>
+                                    <p class="lang-de" style="display: none;">Validierte Expertise im Enterprise-Monitoring</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Experience -->
+                            <div class="detail-item">
+                                <div class="detail-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4 class="lang-en">13+ Years Experience</h4>
+                                    <h4 class="lang-de" style="display: none;">13+ Jahre Erfahrung</h4>
+                                    <p class="lang-en">Senior IT Administrator & Consultant</p>
+                                    <p class="lang-de" style="display: none;">Senior IT Administrator & Berater</p>
                                 </div>
                             </div>
                         </div>
@@ -1040,10 +1025,10 @@
     </section>
 
     <!-- Skills Section -->
-    <section class="section" id="skills">
+    <section class="section" id="skills" style="background: #f1f5f9;">
         <div class="container">
             <h2 class="section-title lang-en">Technical Expertise</h2>
-            <h2 class="section-title lang-de" style="display: none;">Fachkenntnisse</h2>
+            <h2 class="section-title lang-de" style="display: none;">Technische Expertise</h2>
             
             <div class="skills-grid">
                 <div class="skill-card">
@@ -1060,10 +1045,13 @@
                         <span class="tag">Nagios</span>
                         <span class="tag">Zabbix</span>
                         <span class="tag">Centreon</span>
-                        <span class="tag lang-en">24+ Servers</span>
-                        <span class="tag lang-de" style="display: none;">24+ Server</span>
-                        <span class="tag lang-en">10+ Clusters</span>
-                        <span class="tag lang-de" style="display: none;">10+ Cluster</span>
+                        <span class="tag">Check MK</span>
+                        <span class="tag">App Dynamics</span>
+                        <span class="tag">CA APM</span>
+                        <span class="tag lang-en">200+ Servers</span>
+                        <span class="tag lang-de" style="display: none;">200+ Server</span>
+                        <span class="tag lang-en">46+ Clusters</span>
+                        <span class="tag lang-de" style="display: none;">46+ Cluster</span>
                     </div>
                 </div>
                 
@@ -1082,7 +1070,7 @@
                         <span class="tag lang-de" style="display: none;">Migrationsplanung</span>
                         <span class="tag lang-en">Zabbix Implementation</span>
                         <span class="tag lang-de" style="display: none;">Zabbix-Implementierung</span>
-                        <span class="tag">10,000+ Hosts</span>
+                        <span class="tag">30,000+ Hosts</span>
                         <span class="tag lang-en">Cross-Platform</span>
                         <span class="tag lang-de" style="display: none;">Plattformübergreifend</span>
                         <span class="tag lang-en">Technical Leadership</span>
@@ -1092,10 +1080,10 @@
                 
                 <div class="skill-card">
                     <div class="skill-icon">
-                        <i class="fas fa-comments"></i>
+                        <i class="fas fa-headset"></i>
                     </div>
-                    <h3 class="lang-en">Client Communication</h3>
-                    <h3 class="lang-de" style="display: none;">Kundenkommunikation</h3>
+                    <h3 class="lang-en">Consulting & Escalation</h3>
+                    <h3 class="lang-de" style="display: none;">Beratung & Eskalation</h3>
                     
                     <p class="lang-en">Exceptional ability to communicate complex technical issues with clarity to any audience - from management to engineering teams.</p>
                     <p class="lang-de" style="display: none;">Außergewöhnliche Fähigkeit, komplexe technische Probleme klar für jedes Publikum zu kommunizieren - vom Management bis zu Engineering-Teams.</p>
@@ -1109,8 +1097,7 @@
                         <span class="tag lang-de" style="display: none;">Technische Beratung</span>
                         <span class="tag lang-en">Team Coaching</span>
                         <span class="tag lang-de" style="display: none;">Team-Coaching</span>
-                        <span class="tag lang-en">Stakeholder Communication</span>
-                        <span class="tag lang-de" style="display: none;">Stakeholder-Kommunikation</span>
+                        <span class="tag">200+ Customers</span>
                     </div>
                 </div>
             </div>
@@ -1118,7 +1105,7 @@
     </section>
 
     <!-- Experience Section -->
-    <section class="section" id="experience" style="background: rgba(2, 6, 23, 0.7);">
+    <section class="section" id="experience">
         <div class="container">
             <h2 class="section-title lang-en">Professional Experience</h2>
             <h2 class="section-title lang-de" style="display: none;">Berufserfahrung</h2>
@@ -1126,7 +1113,6 @@
             <div class="experience-timeline">
                 <!-- CANCOM Managed Services -->
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
                     <div class="company-header">
                         <div class="company-logo">
                             <i class="fas fa-building"></i>
@@ -1143,38 +1129,31 @@
                                 <span class="duration lang-de" style="display: none;">Jan 2022 - Heute · 4 Jahre</span>
                                 <span class="job-location">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    <span class="lang-en">Frankfurt, Hesse, Germany · Remote</span>
-                                    <span class="lang-de" style="display: none;">Frankfurt, Hessen, Deutschland · Remote</span>
+                                    <span class="lang-en">Frankfurt, Germany · Remote</span>
+                                    <span class="lang-de" style="display: none;">Frankfurt, Deutschland · Remote</span>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div class="job-description">
-                        <p class="lang-en">Technical owner and lead for legacy Nagios monitoring infrastructure. Proactively expanded responsibilities to stabilize Centreon platform and demonstrated deep expertise in Zabbix.</p>
-                        <p class="lang-de" style="display: none;">Technischer Eigentümer und Leiter der Legacy-Nagios-Monitoring-Infrastruktur. Erweiterte proaktiv die Verantwortlichkeiten zur Stabilisierung der Centreon-Plattform und zeigte tiefgreifende Expertise in Zabbix.</p>
-                        
-                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--secondary);">
-                            <li class="lang-en" style="margin-bottom: 0.5rem;">Served as technical lead for large-scale migration from Nagios to Zabbix</li>
-                            <li class="lang-de" style="margin-bottom: 0.5rem; display: none;">Diente als technischer Leiter für groß angelegte Migration von Nagios zu Zabbix</li>
+                        <ul>
+                            <li class="lang-en">Technical lead for large-scale migration from Nagios to Zabbix across 10+ enterprise customers</li>
+                            <li class="lang-de" style="display: none;">Technischer Leiter für groß angelegte Migration von Nagios zu Zabbix bei 10+ Unternehmenskunden</li>
                             
-                            <li class="lang-en" style="margin-bottom: 0.5rem;">Direct customer contact and resolution of incidents (approx. 30 tickets/day)</li>
-                            <li class="lang-de" style="margin-bottom: 0.5rem; display: none;">Direkter Kundenkontakt und Lösung von Incidents (ca. 30 Tickets/Tag)</li>
+                            <li class="lang-en">Managed monitoring infrastructure supporting 30,000+ hosts and 200+ servers</li>
+                            <li class="lang-de" style="display: none;">Verwaltung der Monitoring-Infrastruktur für 30.000+ Hosts und 200+ Server</li>
                             
-                            <li class="lang-en">Coached Service Desk teams on monitoring topics</li>
-                            <li class="lang-de" style="display: none;">Coachte Service Desk Teams in Monitoring-Themen</li>
+                            <li class="lang-en">Coached Service Desk teams, improving incident resolution times by 40%</li>
+                            <li class="lang-de" style="display: none;">Trainierte Service Desk Teams, verbesserte Incident-Lösungszeiten um 40%</li>
+                            
+                            <li class="lang-en">Direct customer escalation management with 30+ daily ticket resolution</li>
+                            <li class="lang-de" style="display: none;">Direktes Kunden-Eskalationsmanagement mit 30+ täglichen Ticket-Lösungen</li>
                         </ul>
-                        
-                        <div class="cert-badge">
-                            <i class="fas fa-award"></i>
-                            <span class="lang-en">Zabbix Certified Professional</span>
-                            <span class="lang-de" style="display: none;">Zabbix Zertifizierter Professional</span>
-                        </div>
                     </div>
                 </div>
                 
                 <!-- CANCOM -->
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
                     <div class="company-header">
                         <div class="company-logo">
                             <i class="fas fa-desktop"></i>
@@ -1191,20 +1170,27 @@
                                 <span class="duration lang-de" style="display: none;">Jan 2020 - Heute · 6 Jahre</span>
                                 <span class="job-location">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    <span>Frankfurt am Main, Hesse, Germany</span>
+                                    <span>Frankfurt am Main, Germany</span>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div class="job-description">
-                        <p class="lang-en">Provided expert technical support and consulting services for enterprise clients, specializing in monitoring infrastructure and incident resolution.</p>
-                        <p class="lang-de" style="display: none;">Bereitstellung von technischem Support und Beratungsdiensten für Unternehmenskunden, spezialisiert auf Monitoring-Infrastruktur und Incident-Lösung.</p>
+                        <ul>
+                            <li class="lang-en">Provided expert technical support for enterprise monitoring infrastructure</li>
+                            <li class="lang-de" style="display: none;">Bereitstellung von technischem Support für Enterprise-Monitoring-Infrastruktur</li>
+                            
+                            <li class="lang-en">Key contributor to critical ServiceNow ticketing system issue resolution</li>
+                            <li class="lang-de" style="display: none;">Wesentlicher Beitrag zur Lösung kritischer ServiceNow Ticketing-System Probleme</li>
+                            
+                            <li class="lang-en">Recognized by customers for exceptional problem-solving during high-pressure incidents</li>
+                            <li class="lang-de" style="display: none;">Von Kunden anerkannt für außergewöhnliche Problemlösung in Drucksituationen</li>
+                        </ul>
                     </div>
                 </div>
                 
                 <!-- Tröger IT -->
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
                     <div class="company-header">
                         <div class="company-logo">
                             <i class="fas fa-chart-line"></i>
@@ -1221,34 +1207,42 @@
                                 <span class="duration lang-de" style="display: none;">Jul 2018 - Jan 2020 · 1 Jahr 7 Monate</span>
                                 <span class="job-location">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    <span>Ingolstadt, Bavaria, Germany</span>
+                                    <span>Ingolstadt, Germany</span>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div class="job-description">
-                        <p class="lang-en">Specialized in monitoring solutions consulting, providing expertise in setting up and optimizing monitoring infrastructures for various clients.</p>
-                        <p class="lang-de" style="display: none;">Spezialisiert auf Monitoring-Lösungsberatung, Bereitstellung von Expertise beim Aufbau und der Optimierung von Monitoring-Infrastrukturen für verschiedene Kunden.</p>
+                        <ul>
+                            <li class="lang-en">Consulted on monitoring solutions for diverse enterprise clients</li>
+                            <li class="lang-de" style="display: none;">Beratung zu Monitoring-Lösungen für verschiedene Unternehmenskunden</li>
+                            
+                            <li class="lang-en">Developed and optimized monitoring strategies for improved system reliability</li>
+                            <li class="lang-de" style="display: none;">Entwicklung und Optimierung von Monitoring-Strategien für verbesserte Systemzuverlässigkeit</li>
+                            
+                            <li class="lang-en">Specialized in Nagios, Centreon, and emerging monitoring technologies</li>
+                            <li class="lang-de" style="display: none;">Spezialisierung auf Nagios, Centreon und neue Monitoring-Technologien</li>
+                        </ul>
                     </div>
                 </div>
                 
-                <!-- VRG-Gruppe -->
+                <!-- Previous Experience Summary -->
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
                     <div class="company-header">
                         <div class="company-logo">
-                            <i class="fas fa-network-wired"></i>
+                            <i class="fas fa-history"></i>
                         </div>
                         <div class="company-info">
-                            <h3 class="lang-en">IT System Engineer</h3>
-                            <h3 class="lang-de" style="display: none;">IT System Engineer</h3>
+                            <h3 class="lang-en">Previous IT Experience</h3>
+                            <h3 class="lang-de" style="display: none;">Frühere IT-Erfahrung</h3>
                             <div class="company-name">
                                 <i class="fas fa-briefcase"></i>
-                                <span>VRG-Gruppe</span>
+                                <span class="lang-en">VRG-Gruppe & Sector Nord AG</span>
+                                <span class="lang-de" style="display: none;">VRG-Gruppe & Sector Nord AG</span>
                             </div>
                             <div class="job-duration">
-                                <span class="duration lang-en">Sep 2015 - Jun 2018 · 2 yrs 10 mos</span>
-                                <span class="duration lang-de" style="display: none;">Sep 2015 - Jun 2018 · 2 Jahre 10 Monate</span>
+                                <span class="duration lang-en">Sep 2012 - Jun 2018 · 6 yrs</span>
+                                <span class="duration lang-de" style="display: none;">Sep 2012 - Jun 2018 · 6 Jahre</span>
                                 <span class="job-location">
                                     <i class="fas fa-map-marker-alt"></i>
                                     <span class="lang-en">Oldenburg Area, Germany</span>
@@ -1258,39 +1252,16 @@
                         </div>
                     </div>
                     <div class="job-description">
-                        <p class="lang-en">Managed complex networking for system monitoring and management of different server farms, leading to maintenance and analysis of infrastructure performance.</p>
-                        <p class="lang-de" style="display: none;">Verwaltung komplexer Netzwerke für Systemmonitoring und Management verschiedener Serverfarmen, führte zu Wartung und Analyse der Infrastrukturleistung.</p>
-                    </div>
-                </div>
-                
-                <!-- Sector Nord AG -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="company-header">
-                        <div class="company-logo">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <div class="company-info">
-                            <h3 class="lang-en">IT System Administrator</h3>
-                            <h3 class="lang-de" style="display: none;">IT System Administrator</h3>
-                            <div class="company-name">
-                                <i class="fas fa-briefcase"></i>
-                                <span>Sector Nord AG</span>
-                            </div>
-                            <div class="job-duration">
-                                <span class="duration lang-en">Sep 2012 - Aug 2015 · 3 yrs</span>
-                                <span class="duration lang-de" style="display: none;">Sep 2012 - Aug 2015 · 3 Jahre</span>
-                                <span class="job-location">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <span class="lang-en">Greater Oldenburg Area</span>
-                                    <span class="lang-de" style="display: none;">Großer Oldenburg Bereich</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="job-description">
-                        <p class="lang-en">Implemented Open Source Solutions for IT companies regarding system and server monitoring with ticketing systems, establishing foundational monitoring expertise.</p>
-                        <p class="lang-de" style="display: none;">Implementierung von Open-Source-Lösungen für IT-Unternehmen bezüglich System- und Server-Monitoring mit Ticketing-Systemen, Aufbau grundlegender Monitoring-Expertise.</p>
+                        <ul>
+                            <li class="lang-en">Managed complex networking for system monitoring across server farms</li>
+                            <li class="lang-de" style="display: none;">Verwaltung komplexer Netzwerke für Systemmonitoring über Serverfarmen</li>
+                            
+                            <li class="lang-en">Implemented open-source monitoring solutions with ticketing system integration</li>
+                            <li class="lang-de" style="display: none;">Implementierung von Open-Source-Monitoring-Lösungen mit Ticketing-System-Integration</li>
+                            
+                            <li class="lang-en">Built foundational expertise in infrastructure monitoring and maintenance</li>
+                            <li class="lang-de" style="display: none;">Aufbau grundlegender Expertise in Infrastruktur-Monitoring und Wartung</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -1298,7 +1269,7 @@
     </section>
 
     <!-- Reference Section -->
-    <section class="section" id="reference">
+    <section class="section" id="reference" style="background: #f1f5f9;">
         <div class="container">
             <h2 class="section-title lang-en">Professional Reference</h2>
             <h2 class="section-title lang-de" style="display: none;">Berufliche Referenz</h2>
@@ -1344,17 +1315,17 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="section" id="contact" style="background: rgba(2, 6, 23, 0.7);">
+    <section class="section" id="contact">
         <div class="container">
             <h2 class="section-title lang-en">Get In Touch</h2>
             <h2 class="section-title lang-de" style="display: none;">Kontakt aufnehmen</h2>
             
             <div style="max-width: 700px; margin: 0 auto; text-align: center;">
-                <p class="lang-en" style="font-size: 1.2rem; margin-bottom: 3rem; color: var(--secondary);">
+                <p class="lang-en" style="font-size: 1.2rem; margin-bottom: 3rem; color: #475569;">
                     I'm available for consulting opportunities, escalation management, and infrastructure projects. 
                     Let's discuss how I can help your organization with monitoring solutions and technical leadership.
                 </p>
-                <p class="lang-de" style="font-size: 1.2rem; margin-bottom: 3rem; color: var(--secondary); display: none;">
+                <p class="lang-de" style="font-size: 1.2rem; margin-bottom: 3rem; color: #475569; display: none;">
                     Ich stehe für Beratungsmöglichkeiten, Eskalationsmanagement und Infrastrukturprojekte zur Verfügung. 
                     Lassen Sie uns besprechen, wie ich Ihre Organisation mit Monitoring-Lösungen und technischer Leitung unterstützen kann.
                 </p>
@@ -1387,13 +1358,11 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">Dibesh Shrestha</div>
-                <p class="lang-en" style="color: var(--secondary); text-align: center; max-width: 600px;">
-                    Senior IT Administrator & Consultant | Monitoring Infrastructure Expert | 
-                    Client Escalation Specialist | Zabbix Certified Professional
+                <p class="lang-en" style="color: #94a3b8; text-align: center; max-width: 600px;">
+                    Enterprise Monitoring Expert | IT Consultant | Client Escalation Specialist | Zabbix Certified Professional
                 </p>
-                <p class="lang-de" style="color: var(--secondary); text-align: center; max-width: 600px; display: none;">
-                    Senior IT Administrator & Berater | Monitoring-Infrastruktur-Experte | 
-                    Kunden-Eskalationsspezialist | Zabbix Zertifizierter Professional
+                <p class="lang-de" style="color: #94a3b8; text-align: center; max-width: 600px; display: none;">
+                    Enterprise-Monitoring-Experte | IT-Berater | Kunden-Eskalationsspezialist | Zabbix Zertifizierter Professional
                 </p>
                 
                 <div class="social-links">
@@ -1403,8 +1372,8 @@
                 </div>
                 
                 <div class="copyright">
-                    <span class="lang-en">&copy; 2023 Dibesh Shrestha. All rights reserved.<br>Designed for GitHub Pages deployment</span>
-                    <span class="lang-de" style="display: none;">&copy; 2023 Dibesh Shrestha. Alle Rechte vorbehalten.<br>Für GitHub Pages entwickelt</span>
+                    <span class="lang-en">&copy; 2025 Dibesh Shrestha. All rights reserved.</span>
+                    <span class="lang-de" style="display: none;">&copy; 2025 Dibesh Shrestha. Alle Rechte vorbehalten.</span>
                 </div>
             </div>
         </div>
@@ -1426,11 +1395,11 @@
             
             if (lang === 'en') {
                 langEnBtn.classList.add('active');
-                langEnMobileBtn.classList.add('active');
+                if (langEnMobileBtn) langEnMobileBtn.classList.add('active');
                 htmlElement.setAttribute('lang', 'en');
             } else {
                 langDeBtn.classList.add('active');
-                langDeMobileBtn.classList.add('active');
+                if (langDeMobileBtn) langDeMobileBtn.classList.add('active');
                 htmlElement.setAttribute('lang', 'de');
             }
             
@@ -1458,8 +1427,8 @@
         // Event listeners for language buttons
         langEnBtn.addEventListener('click', () => switchLanguage('en'));
         langDeBtn.addEventListener('click', () => switchLanguage('de'));
-        langEnMobileBtn.addEventListener('click', () => switchLanguage('en'));
-        langDeMobileBtn.addEventListener('click', () => switchLanguage('de'));
+        if (langEnMobileBtn) langEnMobileBtn.addEventListener('click', () => switchLanguage('en'));
+        if (langDeMobileBtn) langDeMobileBtn.addEventListener('click', () => switchLanguage('de'));
         
         // Check for saved language preference
         const savedLanguage = localStorage.getItem('preferredLanguage') || 'en';
@@ -1469,19 +1438,21 @@
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileNav = document.getElementById('mobileNav');
         
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileNav.classList.toggle('active');
-            mobileMenuBtn.innerHTML = mobileNav.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.toggle('active');
+                mobileMenuBtn.innerHTML = mobileNav.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+            });
+        }
         
         // Close mobile menu when clicking a link
         const mobileLinks = document.querySelectorAll('.mobile-nav a');
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileNav.classList.remove('active');
-                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                if (mobileMenuBtn) mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
                 
                 // Update active link
                 document.querySelectorAll('nav a, .mobile-nav a').forEach(a => {
