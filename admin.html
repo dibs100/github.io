@@ -54,6 +54,103 @@
             overflow: hidden;
         }
 
+        /* Login Modal */
+        .login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(6, 9, 15, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-box {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(10, 102, 194, 0.3);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid var(--gray);
+            border-radius: var(--border-radius);
+            color: var(--light);
+            font-size: 1rem;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .login-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--primary);
+        }
+
+        .login-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(10, 102, 194, 0.4);
+        }
+
+        .login-error {
+            color: #f87171;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .login-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
         /* Header */
         .header {
             background: var(--dark);
@@ -569,46 +666,6 @@
             font-weight: 500;
         }
 
-        /* Authentication Error */
-        .auth-error {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: var(--darker);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .error-box {
-            background: var(--card-bg);
-            padding: 3rem;
-            border-radius: var(--border-radius);
-            text-align: center;
-            border: 1px solid rgba(244, 63, 94, 0.3);
-            max-width: 500px;
-            width: 90%;
-        }
-
-        .error-box i {
-            font-size: 3rem;
-            color: #f43f5e;
-            margin-bottom: 1.5rem;
-        }
-
-        .error-box h2 {
-            color: var(--light);
-            margin-bottom: 1rem;
-        }
-
-        .error-box p {
-            color: var(--secondary);
-            margin-bottom: 2rem;
-        }
-
         /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -631,28 +688,24 @@
     </style>
 </head>
 <body>
-    <!-- Authentication Check -->
-    <div class="auth-error" id="authError">
-        <div class="error-box">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h2>Access Denied</h2>
-            <p>You need to be logged in to access the notes system.</p>
-            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
-                <a href="index.html" style="text-decoration: none;">
-                    <button class="btn" style="background: var(--primary); color: white;">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Go to Login
-                    </button>
-                </a>
-                <button class="btn" id="emergencyLoginBtn" style="background: #f59e0b; color: white;">
-                    <i class="fas fa-key"></i>
-                    Emergency Login
-                </button>
+    <!-- Login Modal (ALWAYS SHOWN FIRST) -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-box">
+            <h3>Admin Login</h3>
+            <div class="login-error" id="loginError">
+                Invalid password
             </div>
+            <input type="password" class="login-input" id="passwordInput" placeholder="Enter admin password" autocomplete="off">
+            <button class="login-submit" id="loginSubmit">
+                Login
+            </button>
+            <p style="margin-top: 1.5rem; color: var(--secondary); font-size: 0.9rem;">
+                Default password: <code>admin123</code>
+            </p>
         </div>
     </div>
 
-    <!-- Main Interface -->
+    <!-- Main Interface (HIDDEN UNTIL LOGIN) -->
     <div id="mainApp" style="display: none; flex-direction: column; height: 100vh;">
         <!-- Header -->
         <header class="header">
@@ -843,41 +896,88 @@
     </div>
 
     <script>
-        // COMPLETE WORKING NOTES APP WITH ALL FEATURES
+        // PASSWORD SYSTEM - SAME AS index.html
+        class PasswordManager {
+            constructor() {
+                this.STORAGE_KEY = 'dibesh_admin_password';
+                this.DEFAULT_PASSWORD = 'admin123';
+                this.AUTH_FLAG = 'isAuthenticated';
+                this.init();
+            }
+
+            init() {
+                // Initialize password if not exists
+                if (!localStorage.getItem(this.STORAGE_KEY)) {
+                    localStorage.setItem(this.STORAGE_KEY, this.DEFAULT_PASSWORD);
+                }
+                // Clear any existing auth flag on page load
+                localStorage.removeItem(this.AUTH_FLAG);
+            }
+
+            getPassword() {
+                return localStorage.getItem(this.STORAGE_KEY);
+            }
+
+            setPassword(newPassword) {
+                localStorage.setItem(this.STORAGE_KEY, newPassword);
+                return true;
+            }
+
+            validatePassword(password) {
+                return password === this.getPassword();
+            }
+
+            setAuthenticated() {
+                localStorage.setItem(this.AUTH_FLAG, 'true');
+            }
+
+            isAuthenticated() {
+                return localStorage.getItem(this.AUTH_FLAG) === 'true';
+            }
+
+            logout() {
+                localStorage.removeItem(this.AUTH_FLAG);
+            }
+        }
+
+        // NOTES APP WITH PROPER AUTHENTICATION
         class NotesApp {
             constructor() {
-                // Initialize password system FIRST
-                this.initializePasswordSystem();
-                
+                this.passwordManager = new PasswordManager();
                 this.notes = JSON.parse(localStorage.getItem('dibesh_notes')) || [];
                 this.currentNoteId = null;
                 this.selectedColor = null;
                 this.selectedTag = null;
                 this.allTags = new Set();
+                this.imageResizeData = null;
                 this.updateAllTags();
                 this.init();
             }
 
-            initializePasswordSystem() {
-                // Always ensure password exists
-                const PASSWORD_KEY = 'dibesh_admin_password';
-                const DEFAULT_PASSWORD = 'admin123';
-                
-                if (!localStorage.getItem(PASSWORD_KEY)) {
-                    localStorage.setItem(PASSWORD_KEY, DEFAULT_PASSWORD);
+            init() {
+                // Check if already authenticated from index.html
+                if (this.passwordManager.isAuthenticated()) {
+                    this.showApp();
+                } else {
+                    this.showLogin();
                 }
-                
-                // Also set authenticated flag for compatibility
-                localStorage.setItem('isAuthenticated', 'true');
             }
 
-            init() {
-                // FIXED AUTHENTICATION - Always allows access
-                const authError = document.getElementById('authError');
+            showLogin() {
+                const loginModal = document.getElementById('loginModal');
                 const mainApp = document.getElementById('mainApp');
                 
-                // Hide auth error, show main app
-                authError.style.display = 'none';
+                loginModal.style.display = 'flex';
+                mainApp.style.display = 'none';
+                
+                this.setupLoginListeners();
+            }
+
+            showApp() {
+                const loginModal = document.getElementById('loginModal');
+                const mainApp = document.getElementById('mainApp');
+                
+                loginModal.style.display = 'none';
                 mainApp.style.display = 'flex';
                 
                 this.initializeElements();
@@ -890,11 +990,38 @@
                 } else {
                     this.createNewNote();
                 }
+            }
+
+            setupLoginListeners() {
+                const passwordInput = document.getElementById('passwordInput');
+                const loginSubmit = document.getElementById('loginSubmit');
+                const loginError = document.getElementById('loginError');
+
+                const handleLogin = () => {
+                    const password = passwordInput.value;
+                    
+                    if (this.passwordManager.validatePassword(password)) {
+                        this.passwordManager.setAuthenticated();
+                        this.showApp();
+                    } else {
+                        loginError.style.display = 'block';
+                        passwordInput.value = '';
+                        passwordInput.focus();
+                    }
+                };
+
+                loginSubmit.addEventListener('click', handleLogin);
                 
-                // Setup emergency login button
-                document.getElementById('emergencyLoginBtn').addEventListener('click', () => {
-                    this.emergencyLogin();
+                passwordInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        handleLogin();
+                    }
                 });
+
+                // Auto-focus on password input
+                setTimeout(() => {
+                    passwordInput.focus();
+                }, 100);
             }
 
             initializeElements() {
@@ -1027,28 +1154,11 @@
                 
                 // Keyboard shortcuts
                 document.addEventListener('keydown', (e) => {
-                    // Ctrl+S to save
                     if ((e.ctrlKey || e.metaKey) && e.key === 's') {
                         e.preventDefault();
                         this.saveNote();
                     }
                 });
-            }
-
-            // Emergency login function
-            emergencyLogin() {
-                const password = prompt("Enter admin password (default: admin123):");
-                if (password === 'admin123') {
-                    localStorage.setItem('dibesh_admin_password', password);
-                    localStorage.setItem('isAuthenticated', 'true');
-                    alert('Login successful! Refreshing page...');
-                    location.reload();
-                } else {
-                    alert('Incorrect password. Using default password.');
-                    localStorage.setItem('dibesh_admin_password', 'admin123');
-                    localStorage.setItem('isAuthenticated', 'true');
-                    location.reload();
-                }
             }
 
             // Core note operations
@@ -1068,7 +1178,6 @@
                 this.renderNotes();
                 this.selectNote(newNote.id);
                 
-                // Focus on title
                 setTimeout(() => {
                     this.noteTitle.focus();
                     this.noteTitle.setSelectionRange(this.noteTitle.value.length, this.noteTitle.value.length);
@@ -1094,8 +1203,6 @@
                 
                 // Update tags
                 this.renderNoteTags(note.tags);
-                
-                // Update character count
                 this.updateCharacterCount();
                 
                 // Update active state in list
@@ -1129,7 +1236,6 @@
                 this.saveToStorage();
                 this.renderNotes();
                 
-                // Show save confirmation
                 this.autoSaveIndicator.textContent = '✓ Saved';
                 this.autoSaveIndicator.style.color = '#10b981';
                 
@@ -1170,7 +1276,6 @@
                 this.saveToStorage();
                 this.renderNotes();
                 
-                // Update color picker UI
                 document.querySelectorAll('.color-option').forEach(option => {
                     option.classList.remove('active');
                     if (option.dataset.color === color) {
@@ -1222,7 +1327,6 @@
                     </div>
                 `).join('');
                 
-                // Add remove event listeners
                 this.noteTags.querySelectorAll('.note-tag-remove').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -1240,12 +1344,10 @@
             }
 
             renderTagFilter() {
-                // Clear existing tags except the label
                 const label = this.tagFilter.querySelector('span');
                 this.tagFilter.innerHTML = '';
                 if (label) this.tagFilter.appendChild(label);
                 
-                // Add tags
                 Array.from(this.allTags).sort().forEach(tag => {
                     const tagElement = document.createElement('div');
                     tagElement.className = 'tag';
@@ -1266,7 +1368,6 @@
                     this.selectedColor = color;
                 }
                 
-                // Update UI
                 document.querySelectorAll('.color-filter-btn').forEach(btn => {
                     btn.classList.remove('active');
                     if (btn.dataset.color === this.selectedColor) {
@@ -1305,7 +1406,6 @@
                 const searchTerm = this.searchBox.value.toLowerCase();
                 let filteredNotes = this.notes;
                 
-                // Apply search filter
                 if (searchTerm) {
                     filteredNotes = filteredNotes.filter(note => 
                         note.title.toLowerCase().includes(searchTerm) || 
@@ -1314,17 +1414,14 @@
                     );
                 }
                 
-                // Apply color filter
                 if (this.selectedColor) {
                     filteredNotes = filteredNotes.filter(note => note.color === this.selectedColor);
                 }
                 
-                // Apply tag filter
                 if (this.selectedTag) {
                     filteredNotes = filteredNotes.filter(note => note.tags.includes(this.selectedTag));
                 }
                 
-                // Sort by updatedAt (newest first)
                 filteredNotes.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
                 
                 if (filteredNotes.length === 0) {
@@ -1357,7 +1454,6 @@
                         `;
                     }).join('');
                     
-                    // Add click events
                     document.querySelectorAll('.note-item').forEach(item => {
                         item.addEventListener('click', () => {
                             this.selectNote(item.dataset.id);
@@ -1450,7 +1546,6 @@
                             img.style.maxWidth = '300px';
                             img.style.height = 'auto';
                             
-                            // Add resize handle
                             const resizeHandle = document.createElement('div');
                             resizeHandle.className = 'resize-handle';
                             img.appendChild(resizeHandle);
@@ -1467,16 +1562,10 @@
             }
 
             setupImageResizing() {
-                // Remove old event listeners
                 document.querySelectorAll('.resizable-image').forEach(img => {
                     img.removeEventListener('mousedown', this.handleImageMouseDown);
-                });
-                
-                // Add new event listeners
-                document.querySelectorAll('.resizable-image').forEach(img => {
                     img.addEventListener('mousedown', this.handleImageMouseDown.bind(this));
                     
-                    // Ensure resize handle exists
                     if (!img.querySelector('.resize-handle')) {
                         const resizeHandle = document.createElement('div');
                         resizeHandle.className = 'resize-handle';
@@ -1484,7 +1573,6 @@
                     }
                 });
                 
-                // Add global mouse events
                 document.removeEventListener('mousemove', this.handleImageMouseMove);
                 document.removeEventListener('mouseup', this.handleImageMouseUp);
                 
@@ -1518,7 +1606,6 @@
                     const deltaX = e.clientX - startX;
                     const deltaY = e.clientY - startY;
                     
-                    // Calculate new dimensions (maintain aspect ratio)
                     const newWidth = Math.max(50, startWidth + deltaX);
                     const aspectRatio = startHeight / startWidth;
                     const newHeight = newWidth * aspectRatio;
@@ -1738,10 +1825,8 @@
                 let noteTitle = filename;
                 
                 if (file.type.startsWith('image/')) {
-                    // Handle image files
                     noteContent = `<img src="${content}" alt="${filename}" class="resizable-image" style="max-width: 300px; height: auto;">`;
                 } else if (extension === 'md') {
-                    // Convert markdown to HTML
                     noteContent = this.markdownToHtml(content);
                 } else if (extension === 'json') {
                     try {
@@ -1784,7 +1869,6 @@
 
             // Backup
             async backupToFolder() {
-                // Export all notes as individual TXT files
                 this.exportEachAsTXT();
                 alert('📥 All notes exported as individual TXT files. Please save them to your backup folder.');
             }
@@ -1816,8 +1900,7 @@
             }
 
             logout() {
-                // Don't remove password, just remove auth flag
-                localStorage.removeItem('isAuthenticated');
+                this.passwordManager.logout();
                 window.location.href = 'index.html';
             }
         }
