@@ -210,10 +210,23 @@
         /* ===== HERO SECTION WITH IMAGE & ADDRESS ON RIGHT ===== */
         .hero {
             padding-top: 8rem;
-            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), url('https://images.unsplash.com/photo-1580519542036-c47de6196ba5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            background: linear-gradient(135deg, #f8f5f2 0%, #f0ebe6 100%);
             min-height: 80vh;
             display: flex;
             align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.05) 0%, rgba(139, 69, 19, 0.02) 100%);
+            z-index: 0;
         }
 
         .hero-container {
@@ -221,6 +234,8 @@
             justify-content: space-between;
             align-items: flex-start;
             gap: 4rem;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-content {
@@ -248,11 +263,12 @@
 
         .hero-sidebar {
             flex: 0 0 300px;
-            background: rgba(255, 255, 255, 0.95);
+            background: white;
             padding: 2rem;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             margin-top: 1rem;
+            border: 1px solid var(--gray-light);
         }
 
         .logo-image {
@@ -273,6 +289,24 @@
             font-weight: 600;
             margin-bottom: 1.5rem;
             display: block;
+        }
+
+        .logo-placeholder {
+            width: 200px;
+            height: 100px;
+            background: linear-gradient(135deg, #f8f5f2 0%, #e9e1d8 100%);
+            margin: 0 auto 1.5rem;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--primary-light);
+        }
+
+        .logo-placeholder-inner {
+            color: var(--primary);
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         }
 
         .address-box {
@@ -316,6 +350,7 @@
             height: 100%;
             display: flex;
             flex-direction: column;
+            border: 1px solid var(--gray-light);
         }
 
         .service-card:hover {
@@ -426,6 +461,7 @@
             text-align: center;
             position: relative;
             transition: var(--transition);
+            border: 1px solid var(--gray-light);
         }
 
         .step:hover {
@@ -462,6 +498,7 @@
             margin-bottom: 1rem;
             overflow: hidden;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--gray-light);
         }
 
         .accordion-header {
@@ -639,6 +676,12 @@
                 max-width: 400px;
                 margin: 0 auto;
             }
+            
+            .hero:before {
+                width: 100%;
+                height: 40%;
+                top: 0;
+            }
         }
 
         @media (max-width: 768px) {
@@ -744,7 +787,7 @@
         </div>
     </header>
 
-    <!-- HERO SECTION WITH IMAGE & ADDRESS ON RIGHT -->
+    <!-- HERO SECTION WITH IMAGE & ADDRESS ON RIGHT - CLEAN DESIGN -->
     <section class="hero">
         <div class="container hero-container">
             <div class="hero-content">
@@ -761,9 +804,11 @@
                 <div class="logo-image">
                     <div class="logo-text">Vintage-ing</div>
                     <a href="https://www.vintage-ing.de" class="logo-url">www.vintage-ing.de</a>
-                    <!-- Placeholder for logo image -->
-                    <div style="width: 200px; height: 100px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); margin: 0 auto 1.5rem; border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center;">
-                        <div style="color: white; font-size: 2.5rem;">📻🔧</div>
+                    <!-- Clean logo placeholder without currency symbols -->
+                    <div class="logo-placeholder">
+                        <div class="logo-placeholder-inner">
+                            <i class="fas fa-radio"></i> <i class="fas fa-tools"></i>
+                        </div>
                     </div>
                 </div>
                 
@@ -1017,7 +1062,7 @@
                 </div>
             </div>
             
-            <div style="max-width: 800px; margin: 3rem auto 0; padding: 1.5rem; background-color: white; border-radius: var(--border-radius); box-shadow: var(--box-shadow);">
+            <div style="max-width: 800px; margin: 3rem auto 0; padding: 1.5rem; background-color: white; border-radius: var(--border-radius); box-shadow: var(--box-shadow); border: 1px solid var(--gray-light);">
                 <h4 class="text-center" style="color: var(--primary);">Wichtiger Hinweis zu Preisen</h4>
                 <p class="text-center" style="margin-bottom: 0;">Da der Zeit- und Teileaufwand stark von Ausführung, Zustand und Ihren Wünschen abhängt, kann ich keine pauschalen Festpreise machen, ohne das Gerät auf meiner Werkbank zu sehen. Der Kostenvoranschlag nach der Begutachtung gibt Ihnen volle Transparenz.</p>
             </div>
@@ -1077,21 +1122,21 @@
                         <div class="contact-item">
                             <i class="fas fa-user"></i>
                             <div class="contact-text">
-                                <strong>Vintage-ing</strong>
+                                <strong>Vintage-ing:</strong>
                                 <span class="contact-detail">Ihr Ansprechpartner für Vintage-Audio</span>
                             </div>
                         </div>
                         <div class="contact-item">
                             <i class="fas fa-map-marker-alt"></i>
                             <div class="contact-text">
-                                <strong>Standort</strong>
+                                <strong>Standort:</strong>
                                 <span class="contact-detail">Gießen & Umgebung</span>
                             </div>
                         </div>
                         <div class="contact-item">
                             <i class="fas fa-envelope"></i>
                             <div class="contact-text">
-                                <strong>E-Mail</strong>
+                                <strong>E-Mail:</strong>
                                 <span class="contact-detail">
                                     <a href="mailto:info@vintage-ing.de">info@vintage-ing.de</a>
                                 </span>
@@ -1100,7 +1145,7 @@
                         <div class="contact-item">
                             <i class="fas fa-phone"></i>
                             <div class="contact-text">
-                                <strong>Telefon</strong>
+                                <strong>Telefon:</strong>
                                 <span class="contact-detail">
                                     <a href="tel:+49123456789">+49 123 456789</a>
                                 </span>
@@ -1109,7 +1154,7 @@
                         <div class="contact-item">
                             <i class="fas fa-car"></i>
                             <div class="contact-text">
-                                <strong>Abholservice</strong>
+                                <strong>Abholservice:</strong>
                                 <span class="contact-detail">Gerne im Raum Gießen – besonders für Musiktruhen empfohlen.</span>
                             </div>
                         </div>
