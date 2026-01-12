@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vintage Röhren- & Transistorelektronik - Reparatur & Überholung | Vintage-ing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== BASE STYLES ===== */
+        :root {
+            --primary: #8b4513;
+            --primary-dark: #5d2c0c;
+            --primary-light: #a0522d;
+            --secondary: #2c3e50;
+            --accent: #e67e22;
+            --light: #f8f5f2;
+            --dark: #2c1810;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --success: #27ae60;
+            --border-radius: 8px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 1.2rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-center h2:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(139, 69, 19, 0.05);
+            transform: translateY(-3px);
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        /* ===== HEADER & NAVIGATION ===== */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            padding-top: 8rem;
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), url('https://images.unsplash.com/photo-1580519542036-c47de6196ba5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--gray);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* ===== SERVICES SECTION ===== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .card-content {
+            padding: 0 1.5rem 1.5rem;
+            flex-grow: 1;
+        }
+
+        .card-content p {
+            color: var(--gray);
+        }
+
+        .card-footer {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .toggle-details {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 0;
+            transition: var(--transition);
+        }
+
+        .toggle-details:hover {
+            color: var(--primary-dark);
+        }
+
+        .toggle-details i {
+            transition: var(--transition);
+        }
+
+        .toggle-details.active i {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            padding: 0 1.5rem;
+        }
+
+        .card-details.open {
+            max-height: 500px;
+            padding-bottom: 1.5rem;
+        }
+
+        .details-content {
+            background-color: var(--gray-light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+        }
+
+        .details-content ul {
+            padding-left: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .details-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .price-tag {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== PROCESS SECTION ===== */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .step h4 {
+            margin-bottom: 1rem;
+        }
+
+        /* ===== NOTES ACCORDION ===== */
+        .accordion {
+            max-width: 800px;
+            margin: 3rem auto 0;
+        }
+
+        .accordion-item {
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 1.5rem;
+            background-color: white;
+            border: none;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--secondary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .accordion-header:hover {
+            background-color: var(--gray-light);
+        }
+
+        .accordion-header.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(45deg);
+        }
+
+        .accordion-icon {
+            transition: var(--transition);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .accordion-content.open {
+            max-height: 500px;
+        }
+
+        .accordion-body {
+            padding: 1.5rem;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section h4 {
+            color: var(--gray-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: var(--accent);
+            width: 20px;
+        }
+
+        .footer-section a {
+            color: #ddd;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            border: 1px solid #4a5f7a;
+            background-color: #3a4a5f;
+            color: white;
+            font-family: inherit;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #a0b1c8;
+        }
+
+        .contact-form button {
+            width: 100%;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #4a5f7a;
+            color: #a0b1c8;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: var(--transition);
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .nav-links li {
+                margin: 0 0 1.5rem 0;
+            }
+            
+            .hero {
+                padding-top: 7rem;
+                min-height: 70vh;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 0.5rem;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .service-card, .step {
+                padding: 1.5rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container container">
+            <a href="#" class="logo">
+                <i class="fas fa-tools"></i> Vintage-ing
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#process">Ablauf</a></li>
+                <li><a href="#notes">Hinweise</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Vintage Röhrengeräte<br>Reparatur & Überholung</h1>
+                <p>Fachgerechte Reparatur und Aufarbeitung Ihrer Vintage-Audiogeräte. Röhrenradios, Plattenspieler, Verstärker, Kassettendecks und mehr. Professioneller Service aus Gießen.</p>
+                <div class="hero-buttons">
+                    <a href="#services" class="btn btn-primary">Unsere Services entdecken</a>
+                    <a href="#contact" class="btn btn-secondary">Kontakt aufnehmen</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="text-center">Unsere Services</h2>
+            <p class="text-center" style="max-width: 800px; margin: 0 auto 1rem;">Wir reparieren und überholen Vintage-Audiogeräte fachgerecht. Klicken Sie auf "Details anzeigen" für weitere Informationen.</p>
+            
+            <div class="services-grid">
+                <!-- Röhrenradios & Musiktruhen -->
+                <div class="service-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-radio"></i>
+                        </div>
+                        <h3>Röhrenradios & Musiktruhen</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>Professionelle Überholung und Reparatur Ihrer Röhrenradios und Musiktruhen. Inklusive Sicherheitsprüfung nach DGUV Vorschrift 3.</p>
+                        <div class="price-tag">Begutachtung: 40€</div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="toggle-details" data-target="details1">
+                            <span>Details anzeigen</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="card-details" id="details1">
+                        <div class="details-content">
+                            <h4>Standard-Überholung umfasst:</h4>
+                            <ul>
+                                <li>Ersatz von Netzschnur und Elektrolytkondensatoren</li>
+                                <li>Reinigung innen und außen</li>
+                                <li>Röhrenprüfung auf dem Röhrenprüfgerät</li>
+                                <li>Ersatz defekter Röhren (gebraucht >75% oder neu/neuwertig)</li>
+                                <li>Aufarbeitung von Holzgehäusen</li>
+                                <li>Optionale Nassreinigung des Chassis</li>
+                            </ul>
+                            <p><strong>Zusatzservice:</strong> Aufrüstung "viMUXBOX" für Musiktruhen mit umschaltbaren Eingängen für MM-Plattenspieler, Bluetooth oder optischem Digital-Audioeingang.</p>
+                            <p><strong>Preise:</strong> Technische Begutachtung inkl. Inbetriebnahme: 40€ pro Funktionseinheit (zzgl. 20€ für Musiktruhen). Stundensatz: 85€/h. Abholservice im Raum Gießen möglich.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plattenspieler -->
+                <div class="service-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-record-vinyl"></i>
+                        </div>
+                        <h3>Plattenspieler</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>Überholung und Reparatur Ihrer Vintage-Plattenspieler. Von PE Rex bis Dual Plattenwechsler – wir machen sie wieder betriebsbereit.</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="toggle-details" data-target="details2">
+                            <span>Details anzeigen</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="card-details" id="details2">
+                        <div class="details-content">
+                            <h4>Standard-Überholung umfasst:</h4>
+                            <ul>
+                                <li>Ersatz von Netzschnur bzw. -zuleitung</li>
+                                <li>Ersatz defekter Bauteile (Motorkondensatoren, Widerstände, Entstörkondensatoren)</li>
+                                <li>Reinigung des Chassis (innen trocken, außen nass)</li>
+                                <li>Instandsetzung der Mechanik (Entfernen von verharztem Fett, neue Schmiermittel)</li>
+                                <li>Erneuerung der Riemen</li>
+                                <li>Montage neuer Nadeln oder alternativer Tonabnehmersysteme</li>
+                            </ul>
+                            <p><strong>Zusatzleistung:</strong> Passgenaue Zargen aus Bucheholzrahmen und Multiplexplatte für Plattenspieler aus Musiktruhen.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Röhrenverstärker -->
+                <div class="service-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-volume-up"></i>
+                        </div>
+                        <h3>Röhrenverstärker</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>Fachgerechte Überholung Ihrer HiFi-Röhrenverstärker. Ersatz überalterter Bauteile, Röhrenprüfung und Reinigung für optimalen Klang.</p>
+                        <div class="price-tag">Begutachtung: 40€</div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="toggle-details" data-target="details3">
+                            <span>Details anzeigen</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="card-details" id="details3">
+                        <div class="details-content">
+                            <h4>Standard-Überholung umfasst:</h4>
+                            <ul>
+                                <li>Ersatz von Netzschnur und Elektrolytkondensatoren</li>
+                                <li>Ersatz defekter Folienkondensatoren und Widerstände</li>
+                                <li>Reinigung innen und außen</li>
+                                <li>Röhrenprüfung und ggf. Austausch</li>
+                                <li>Aufarbeitung der Gehäuse</li>
+                                <li>Optionale Nassreinigung des Chassis</li>
+                            </ul>
+                            <p><strong>Preise:</strong> Technische Begutachtung inkl. Inbetriebnahme (wenn möglich): 40€. Stundensatz: 85€/h.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Transistorverstärker -->
+                <div class="service-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3>Transistorverstärker</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>Reparatur früher Halbleitergeräte bis in die 80er Jahre. Ersatz überalterter Elektrolytkondensatoren gegen Brummen und "muffigen Klang".</p>
+                        <div class="price-tag">Begutachtung: 60€</div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="toggle-details" data-target="details4">
+                            <span>Details anzeigen</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="card-details" id="details4">
+                        <div class="details-content">
+                            <h4>Leistungsumfang:</h4>
+                            <ul>
+                                <li>Ersatz überalterter Elektrolytkondensatoren</li>
+                                <li>Fehlersuche und Reparatur</li>
+                                <li>Austausch defekter Steckverbinder</li>
+                                <li>Optimierung der Verdrahtung (z.B. Phono-Eingang)</li>
+                            </ul>
+                            <p><strong>Hinweis:</strong> Kein Service für Geräte ab ca. Mitte der 80er Jahre oder mit Mikroprozessorsteuerung. Verfügbarkeit von Schaltplänen ist Voraussetzung.</p>
+                            <p><strong>Preise:</strong> Technische Begutachtung: 60€. Stundensatz: 85€/h.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Kassettendecks -->
+                <div class="service-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-tape"></i>
+                        </div>
+                        <h3>Kassettendecks</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>Reparatur und Einstellung Ihrer Tape- und Kassettendecks. Riemenersatz, Reinigung und Justierung für optimalen Bandlauf.</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="toggle-details" data-target="details5">
+                            <span>Details anzeigen</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="card-details" id="details5">
+                        <div class="details-content">
+                            <h4>Leistungsumfang:</h4>
+                            <ul>
+                                <li>Ersatz defekter oder gelängter Riemen</li>
+                                <li>Aufwändige Reinigung bei "teeriger" Riemenmasse</li>
+                                <li>Austausch überalterter Elektrolytkondensatoren</li>
+                                <li>Justierung des Laufwerks</li>
+                                <li>Überprüfung von Gleichlauf und Tonkopforientierung mit Mess-Cassetten</li>
+                                <li>Azimuth-Einstellung (mit Höhenverlust-Hinweis)</li>
+                            </ul>
+                            <p><strong>Hinweis:</strong> Voraussetzung ist, dass der Riemensatz noch erhältlich ist. Kein Service für 3-Motorenlaufwerke oder mikroprozessorgesteuerte Laufwerke.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lautsprecherboxen -->
+                <div class="service-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-speaker"></i>
+                        </div>
+                        <h3>Lautsprecherboxen</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>Überholung älterer Lautsprecherboxen. Ersatz überalterter Weichen-Elkos, Reparatur von Lautsprechern und Aufarbeitung der Holzgehäuse.</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="toggle-details" data-target="details6">
+                            <span>Details anzeigen</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="card-details" id="details6">
+                        <div class="details-content">
+                            <h4>Leistungsumfang:</h4>
+                            <ul>
+                                <li>Ersatz überalterter Elektrolytkondensatoren der Frequenzweiche</li>
+                                <li>Ersatz defekter Bauteile (Spulen, Widerstände)</li>
+                                <li>Ersatz defekter Lautsprecher durch andere Typen</li>
+                                <li>Umbau von festen Kabeln zu Anschlussterminals</li>
+                                <li>Aufarbeitung der Holzgehäuse</li>
+                            </ul>
+                            <p><strong>Hinweis:</strong> Kein Service für Aktivboxen.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS SECTION -->
+    <section class="process-section" id="process" style="background-color: #f8f5f2;">
+        <div class="container">
+            <h2 class="text-center">So funktioniert's</h2>
+            <p class="text-center" style="max-width: 800px; margin: 0 auto 2rem;">Unser klarer und transparenter Ablauf für Ihre Reparatur.</p>
+            
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Kontakt & Vorstellung</h4>
+                    <p>Beschreiben Sie mir Ihr Gerät (Typ, Zustand, Fehlerbild) per Mail oder Telefon.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Technische Begutachtung</h4>
+                    <p>Ich prüfe das Gerät (40-60€ Pauschale) und erstelle einen detaillierten Kostenvoranschlag.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Reparaturauftrag</h4>
+                    <p>Sie entscheiden, ob die Reparatur durchgeführt wird. Die Begutachtungspauschale wird angerechnet.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4>Fachgerechte Reparatur</h4>
+                    <p>Ich führe die Arbeiten durch (85€/h + Material). Sie erhalten Ihr aufgearbeitetes Gerät zurück.</p>
+                </div>
+            </div>
+            
+            <div style="max-width: 800px; margin: 3rem auto 0; padding: 1.5rem; background-color: white; border-radius: var(--border-radius); box-shadow: var(--box-shadow);">
+                <h4 class="text-center" style="color: var(--primary);">Wichtiger Hinweis zu Preisen</h4>
+                <p class="text-center" style="margin-bottom: 0;">Da der Zeit- und Teileaufwand stark von Ausführung, Zustand und Ihren Wünschen abhängt, kann ich keine pauschalen Festpreise machen, ohne das Gerät auf meiner Werkbank zu sehen. Der Kostenvoranschlag nach der Begutachtung gibt Ihnen volle Transparenz.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOTES ACCORDION -->
+    <section class="notes" id="notes">
+        <div class="container">
+            <h2 class="text-center">Wichtige Hinweise</h2>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>Zu Röhren & Ersatzteilen</span>
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>„Neuwertig“ vs. „Neu“:</strong> Ungebrauchte Röhren aus altem Lagerbestand (teilweise ohne Einzelverpackung) bezeichne ich als "neuwertig". Aktuell produzierte, RoHS-konforme Röhren (dürfen auch in Geräten ab Baujahr 2006 verwendet werden) bezeichne ich als "neu". Für wenig genutzte Radios können auch günstigere gebrauchte Röhren mit Prüfwerten über 75% verwendet werden.</p>
+                            <p><strong>Beigestellte Bauteile:</strong> Wenn Sie mir Bauteile beistellen möchten, fallen diese nicht unter meine Gewährleistung. Beigestellte Röhren messe ich immer auf meinem Röhrenprüfgerät nach (2€ pro Röhrensystem).</p>
+                            <p><strong>Röhrenpreise:</strong> Alle Röhrenpreise sind Tagespreise.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>Wirtschaftlichkeit & Servicegrenzen</span>
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>Wirtschaftlichkeit:</strong> Ob eine Reparatur wirtschaftlich ist, entscheiden alleine Sie. Ich berechne Reparaturen immer unabhängig nach Material- und Arbeitsaufwand (auch bei hochpreisigen "gehypten" Geräten).</p>
+                            <p><strong>Servicegrenzen:</strong> Ich biete keinen Service an für:</p>
+                            <ul>
+                                <li>Geräte mit Mikroprozessorsteuerung (ab ca. Mitte der 80er Jahre)</li>
+                                <li>3-Motoren-Tapedecks</li>
+                                <li>Aktivboxen</li>
+                                <li>Geräte ohne verfügbare Schaltpläne oder Ersatzteile</li>
+                                <li>Einmessen auf bestimmte Bandsorten bei Kassettendecks</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Kontakt & Abholservice</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-user"></i> <strong>Vintage-ing</strong><br>Ihr Ansprechpartner für Vintage-Audio</p>
+                        <p><i class="fas fa-map-marker-alt"></i> <strong>Standort:</strong> Gießen & Umgebung</p>
+                        <p><i class="fas fa-envelope"></i> <strong>E-Mail:</strong> <a href="mailto:info@vintage-ing.de">info@vintage-ing.de</a></p>
+                        <p><i class="fas fa-phone"></i> <strong>Telefon:</strong> <a href="tel:+49123456789">+49 123 456789</a></p>
+                        <p><i class="fas fa-car"></i> <strong>Abholservice:</strong> Gerne im Raum Gießen – besonders für Musiktruhen empfohlen.</p>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Kurzanfrage stellen</h4>
+                    <form class="contact-form" id="contactForm">
+                        <input type="text" placeholder="Ihr Name" required>
+                        <input type="email" placeholder="Ihre E-Mail" required>
+                        <textarea placeholder="Beschreiben Sie kurz Ihr Gerät und Anliegen..." rows="4" required></textarea>
+                        <button type="submit" class="btn btn-primary">Anfrage senden</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2026 Vintage-ing. Alle Rechte vorbehalten. | R2.0</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Toggle service details
+        document.querySelectorAll('.toggle-details').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetId = button.getAttribute('data-target');
+                const details = document.getElementById(targetId);
+                const icon = button.querySelector('i');
+                
+                // Toggle the details visibility
+                details.classList.toggle('open');
+                
+                // Toggle button text and icon
+                if (details.classList.contains('open')) {
+                    button.querySelector('span').textContent = 'Details ausblenden';
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                    button.classList.add('active');
+                } else {
+                    button.querySelector('span').textContent = 'Details anzeigen';
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                    button.classList.remove('active');
+                }
+                
+                // Close other open details if needed (optional)
+                // document.querySelectorAll('.card-details.open').forEach(openDetail => {
+                //     if (openDetail !== details) {
+                //         openDetail.classList.remove('open');
+                //         const otherButton = document.querySelector(`[data-target="${openDetail.id}"]`);
+                //         otherButton.querySelector('span').textContent = 'Details anzeigen';
+                //         otherButton.querySelector('i').classList.remove('fa-chevron-up');
+                //         otherButton.querySelector('i').classList.add('fa-chevron-down');
+                //         otherButton.classList.remove('active');
+                //     }
+                // });
+            });
+        });
+        
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const accordionItem = header.parentElement;
+                const accordionContent = accordionItem.querySelector('.accordion-content');
+                const icon = header.querySelector('.accordion-icon');
+                
+                // Toggle active class on header
+                header.classList.toggle('active');
+                
+                // Toggle content visibility
+                accordionContent.classList.toggle('open');
+                
+                // Change icon
+                if (header.classList.contains('active')) {
+                    icon.textContent = '−';
+                } else {
+                    icon.textContent = '+';
+                }
+                
+                // Close other open accordion items (optional)
+                document.querySelectorAll('.accordion-header.active').forEach(otherHeader => {
+                    if (otherHeader !== header) {
+                        otherHeader.classList.remove('active');
+                        const otherContent = otherHeader.parentElement.querySelector('.accordion-content');
+                        otherContent.classList.remove('open');
+                        otherHeader.querySelector('.accordion-icon').textContent = '+';
+                    }
+                });
+            });
+        });
+        
+        // Contact form submission
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(this);
+                const name = this.querySelector('input[type="text"]').value;
+                const email = this.querySelector('input[type="email"]').value;
+                const message = this.querySelector('textarea').value;
+                
+                // In a real implementation, you would send this data to a server
+                // For this example, we'll just show an alert
+                alert(`Vielen Dank, ${name}! Ihre Anfrage wurde gesendet. Wir werden uns in Kürze unter ${email} bei Ihnen melden.`);
+                
+                // Reset form
+                this.reset();
+            });
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
