@@ -1516,6 +1516,34 @@
         window.addEventListener('DOMContentLoaded', () => {
             new NotesApp();
         });
+
+        // Emergency login function - add this at the very end
+function emergencyLogin() {
+    const password = prompt("Enter admin password (default: admin123):");
+    if (password === 'admin123') {
+        localStorage.setItem('dibesh_admin_password', password);
+        localStorage.setItem('isAuthenticated', 'true');
+        alert('Login successful! Refreshing page...');
+        location.reload();
+    } else {
+        alert('Incorrect password');
+    }
+}
+
+// Add emergency login button to auth error page
+document.addEventListener('DOMContentLoaded', function() {
+    const authError = document.getElementById('authError');
+    if (authError && authError.style.display === 'flex') {
+        // Add emergency login button
+        const errorBox = authError.querySelector('.error-box');
+        const emergencyBtn = document.createElement('button');
+        emergencyBtn.innerHTML = '<i class="fas fa-key"></i> Emergency Login';
+        emergencyBtn.style = 'margin-top: 1rem; padding: 0.8rem 1.5rem; background: #f59e0b; color: white; border: none; border-radius: var(--border-radius); cursor: pointer;';
+        emergencyBtn.onclick = emergencyLogin;
+        errorBox.appendChild(emergencyBtn);
+    }
+});
+        
     </script>
 </body>
 </html>
