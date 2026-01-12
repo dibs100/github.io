@@ -65,6 +65,7 @@
         }
 
         .header-content {
+            gap: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -178,7 +179,7 @@
             width: 100%;
         }
 
-        /* Login Button - Very Small */
+        /* Login Button - Very Small
         .login-btn {
             background: transparent;
             border: none;
@@ -190,12 +191,35 @@
             margin-left: 1rem;
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
-        }
+        } */
 
+         .login-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(10, 102, 194, 0.2);
+        border: 1px solid rgba(10, 102, 194, 0.3);
+        color: var(--primary-light);
+        font-size: 1rem;
+        opacity: 0.8;
+        margin-left: 0;
+        margin-right: 0.5rem;
+        transition: var(--transition);
+    }
+        /*
         .login-btn:hover {
             opacity: 0.8;
             background: rgba(10, 102, 194, 0.1);
-        }
+        } */
+
+        .login-btn:hover {
+        opacity: 1;
+        background: rgba(10, 102, 194, 0.3);
+        transform: scale(1.05);
+    }
 
         .mobile-menu-btn {
             display: none;
