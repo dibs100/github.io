@@ -179,47 +179,61 @@
             width: 100%;
         }
 
-        /* Login Button - Very Small
-        .login-btn {
-            background: transparent;
-            border: none;
-            color: var(--secondary);
-            cursor: pointer;
-            font-size: 0.8rem;
-            opacity: 0.5;
-            transition: var(--transition);
-            margin-left: 1rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-        } */
-
-         .login-btn {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: rgba(10, 102, 194, 0.2);
-        border: 1px solid rgba(10, 102, 194, 0.3);
-        color: var(--primary-light);
-        font-size: 1rem;
-        opacity: 0.8;
-        margin-left: 0;
-        margin-right: 0.5rem;
-        transition: var(--transition);
-    }
-        /*
-        .login-btn:hover {
+        /* Zabbix Button Styles */
+        .zabbix-btn {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1f4a7c 0%, #0d2c4f 100%);
+            border: 1px solid rgba(31, 74, 124, 0.4);
+            color: #4bb1f7;
+            font-size: 1rem;
+            font-weight: bold;
             opacity: 0.8;
-            background: rgba(10, 102, 194, 0.1);
-        } */
+            transition: var(--transition);
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+        }
+
+        .zabbix-btn:hover {
+            opacity: 1;
+            background: linear-gradient(135deg, #255c9c 0%, #113a66 100%);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(31, 74, 124, 0.3);
+        }
+
+        .zabbix-icon {
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Login Button */
+        .login-btn {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(10, 102, 194, 0.2);
+            border: 1px solid rgba(10, 102, 194, 0.3);
+            color: var(--primary-light);
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-left: 0;
+            margin-right: 0.5rem;
+            transition: var(--transition);
+        }
 
         .login-btn:hover {
-        opacity: 1;
-        background: rgba(10, 102, 194, 0.3);
-        transform: scale(1.05);
-    }
+            opacity: 1;
+            background: rgba(10, 102, 194, 0.3);
+            transform: scale(1.05);
+        }
 
         .mobile-menu-btn {
             display: none;
@@ -978,8 +992,9 @@
                 display: flex;
             }
             
+            .zabbix-btn,
             .login-btn {
-                display: none;
+                display: none !important;
             }
             
             nav {
@@ -1126,10 +1141,19 @@
                         <li><a href="#contact" data-en="Contact" data-de="Kontakt">Contact</a></li>
                     </ul>
                 </nav>
-                <div>
+                <!-- UPDATED: Added Zabbix button -->
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <!-- Zabbix Lab Button -->
+                    <button class="zabbix-btn" id="zabbixBtn" title="Zabbix Lab">
+                        <span class="zabbix-icon">Z</span>
+                    </button>
+                    
+                    <!-- Admin Login Button -->
                     <button class="login-btn" id="loginBtn" title="Admin Login">
                         <i class="fas fa-lock"></i>
                     </button>
+                    
+                    <!-- Mobile Menu Button -->
                     <button class="mobile-menu-btn" id="mobileMenuBtn">
                         <i class="fas fa-bars"></i>
                     </button>
@@ -1642,6 +1666,21 @@
                 mobileMenuBtn.innerHTML = mobileNav.classList.contains('active') 
                     ? '<i class="fas fa-times"></i>' 
                     : '<i class="fas fa-bars"></i>';
+            });
+        }
+
+        // Zabbix Lab button functionality
+        const zabbixBtn = document.getElementById('zabbixBtn');
+        if (zabbixBtn) {
+            zabbixBtn.addEventListener('click', () => {
+                // You can update this URL to your actual Zabbix lab URL
+                const zabbixUrl = "https://your-zabbix-lab-url.com";
+                
+                // For now, we'll show an alert and let you configure it
+                alert('Zabbix Lab link will be configured when your Zabbix site is ready.\n\nUpdate the URL in the JavaScript code (line ~714).');
+                
+                // When you have your Zabbix URL ready, uncomment this line:
+                // window.open(zabbixUrl, '_blank');
             });
         }
 
