@@ -207,7 +207,7 @@
             cursor: pointer;
         }
 
-        /* ===== HERO SECTION ===== */
+        /* ===== HERO SECTION WITH IMAGE & ADDRESS ON RIGHT ===== */
         .hero {
             padding-top: 8rem;
             background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), url('https://images.unsplash.com/photo-1580519542036-c47de6196ba5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
@@ -216,7 +216,15 @@
             align-items: center;
         }
 
+        .hero-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 4rem;
+        }
+
         .hero-content {
+            flex: 1;
             max-width: 600px;
         }
 
@@ -236,6 +244,59 @@
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
+        }
+
+        .hero-sidebar {
+            flex: 0 0 300px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-top: 1rem;
+        }
+
+        .logo-image {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-image .logo-text {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-image .logo-url {
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .address-box {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--gray-light);
+        }
+
+        .company-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .address-details {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .address-line {
+            display: block;
+            margin-bottom: 0.25rem;
         }
 
         /* ===== SERVICES SECTION ===== */
@@ -553,6 +614,18 @@
             .hero h1 {
                 font-size: 2.5rem;
             }
+            
+            .hero-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .hero-sidebar {
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 400px;
+                margin: 0 auto;
+            }
         }
 
         @media (max-width: 768px) {
@@ -587,7 +660,7 @@
             
             .hero {
                 padding-top: 7rem;
-                min-height: 70vh;
+                min-height: auto;
             }
             
             .hero h1 {
@@ -630,6 +703,10 @@
             .footer-content {
                 grid-template-columns: 1fr;
             }
+            
+            .hero-sidebar {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -654,15 +731,35 @@
         </div>
     </header>
 
-    <!-- HERO SECTION -->
+    <!-- HERO SECTION WITH IMAGE & ADDRESS ON RIGHT -->
     <section class="hero">
-        <div class="container">
+        <div class="container hero-container">
             <div class="hero-content">
                 <h1>Vintage Röhrengeräte<br>Reparatur & Überholung</h1>
                 <p>Fachgerechte Reparatur und Aufarbeitung Ihrer Vintage-Audiogeräte. Röhrenradios, Plattenspieler, Verstärker, Kassettendecks und mehr. Professioneller Service aus Gießen.</p>
                 <div class="hero-buttons">
                     <a href="#services" class="btn btn-primary">Unsere Services entdecken</a>
                     <a href="#contact" class="btn btn-secondary">Kontakt aufnehmen</a>
+                </div>
+            </div>
+            
+            <!-- IMAGE AND ADDRESS ON THE RIGHT -->
+            <div class="hero-sidebar">
+                <div class="logo-image">
+                    <div class="logo-text">Vintage-ing</div>
+                    <a href="https://www.vintage-ing.de" class="logo-url">www.vintage-ing.de</a>
+                    <!-- Placeholder for logo image -->
+                    <div style="width: 200px; height: 100px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); margin: 0 auto 1.5rem; border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center;">
+                        <div style="color: white; font-size: 2.5rem;">📻🔧</div>
+                    </div>
+                </div>
+                
+                <div class="address-box">
+                    <div class="company-name">Ingenieurbüro für Nachrichtentechnik<br>Stefan Graf</div>
+                    <div class="address-details">
+                        <span class="address-line">Gießener Straße 63</span>
+                        <span class="address-line">35444 Biebertal</span>
+                    </div>
                 </div>
             </div>
         </div>
