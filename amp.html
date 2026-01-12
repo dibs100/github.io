@@ -512,7 +512,7 @@
             border-top: 1px solid var(--gray-light);
         }
 
-        /* ===== FOOTER ===== */
+        /* ===== FOOTER - FIXED ALIGNMENT ===== */
         footer {
             background-color: var(--secondary);
             color: white;
@@ -536,19 +536,20 @@
             margin-bottom: 1.5rem;
         }
 
-        /* FIXED CONTACT INFO STYLING */
+        /* FIXED CONTACT INFO STYLING WITH PROPER ALIGNMENT */
         .contact-info {
             margin-top: 1rem;
         }
 
-        .contact-info p {
+        .contact-info .contact-item {
             display: flex;
             align-items: flex-start;
             margin-bottom: 1.2rem;
             line-height: 1.5;
+            min-height: 24px;
         }
 
-        .contact-info i {
+        .contact-info .contact-item i {
             margin-right: 12px;
             color: var(--accent);
             width: 20px;
@@ -557,14 +558,26 @@
             flex-shrink: 0;
         }
 
-        .contact-info strong {
-            margin-right: 6px;
-            flex-shrink: 0;
+        .contact-info .contact-item .contact-text {
+            flex-grow: 1;
+        }
+
+        .contact-info .contact-item strong {
+            display: block;
+            margin-bottom: 2px;
+            color: #fff;
+        }
+
+        .contact-info .contact-item .contact-detail {
+            color: #ddd;
+            display: block;
+            line-height: 1.4;
         }
 
         .contact-info a {
             color: #ddd;
             transition: var(--transition);
+            text-decoration: none;
         }
 
         .contact-info a:hover {
@@ -1054,18 +1067,52 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- FOOTER WITH FIXED ALIGNMENT -->
     <footer id="contact">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>Kontakt & Abholservice</h3>
                     <div class="contact-info">
-                        <p><i class="fas fa-user"></i> <strong>Vintage-ing</strong><br>Ihr Ansprechpartner für Vintage-Audio</p>
-                        <p><i class="fas fa-map-marker-alt"></i> <strong>Standort:</strong> Gießen & Umgebung</p>
-                        <p><i class="fas fa-envelope"></i> <strong>E-Mail:</strong> <a href="mailto:info@vintage-ing.de">info@vintage-ing.de</a></p>
-                        <p><i class="fas fa-phone"></i> <strong>Telefon:</strong> <a href="tel:+49123456789">+49 123 456789</a></p>
-                        <p><i class="fas fa-car"></i> <strong>Abholservice:</strong> Gerne im Raum Gießen – besonders für Musiktruhen empfohlen.</p>
+                        <div class="contact-item">
+                            <i class="fas fa-user"></i>
+                            <div class="contact-text">
+                                <strong>Vintage-ing</strong>
+                                <span class="contact-detail">Ihr Ansprechpartner für Vintage-Audio</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="contact-text">
+                                <strong>Standort:</strong>
+                                <span class="contact-detail">Gießen & Umgebung</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div class="contact-text">
+                                <strong>E-Mail:</strong>
+                                <span class="contact-detail">
+                                    <a href="mailto:info@vintage-ing.de">info@vintage-ing.de</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div class="contact-text">
+                                <strong>Telefon:</strong>
+                                <span class="contact-detail">
+                                    <a href="tel:+49123456789">+49 123 456789</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-car"></i>
+                            <div class="contact-text">
+                                <strong>Abholservice:</strong>
+                                <span class="contact-detail">Gerne im Raum Gießen – besonders für Musiktruhen empfohlen.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
