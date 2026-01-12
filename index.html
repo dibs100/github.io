@@ -79,9 +79,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            /* display: flex;
-            align-items: center;
-            gap: 10px; */
         }
 
         .logo-icon {
@@ -691,9 +688,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            /* display: flex;
-            align-items: center;
-            gap: 10px; */
         }
 
         .footer-tagline {
@@ -755,6 +749,18 @@
             max-width: 400px;
             text-align: center;
             position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .login-box h3 {
@@ -779,6 +785,23 @@
             border-color: var(--primary);
         }
 
+        .login-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .login-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(10, 102, 194, 0.4);
+        }
+
         .login-error {
             color: #f87171;
             margin-bottom: 1rem;
@@ -795,6 +818,72 @@
             color: var(--secondary);
             font-size: 1.5rem;
             cursor: pointer;
+        }
+
+        .login-footer {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            text-align: center;
+        }
+
+        .change-password-btn {
+            background: transparent;
+            border: none;
+            color: var(--primary-light);
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .change-password-btn:hover {
+            color: var(--primary);
+        }
+
+        /* Password Change Modal */
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(6, 9, 15, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-modal.active {
+            display: flex;
+        }
+
+        .password-box {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(10, 102, 194, 0.3);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .password-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .password-success {
+            color: var(--success);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
         }
 
         /* Mobile Navigation */
@@ -902,6 +991,12 @@
                 flex-direction: column;
                 align-items: center;
             }
+            
+            .login-box,
+            .password-box {
+                padding: 2rem;
+                margin: 1rem;
+            }
         }
 
         @media (max-width: 576px) {
@@ -924,11 +1019,6 @@
             .reference-card {
                 padding: 2rem;
             }
-            
-            .login-box {
-                padding: 2rem;
-                margin: 1rem;
-            }
         }
     </style>
 </head>
@@ -946,9 +1036,37 @@
                 <span class="lang-de" style="display: none;">Ungültiges Passwort</span>
             </div>
             <input type="password" class="login-input" id="passwordInput" placeholder="Enter admin password">
-            <button class="btn" id="loginSubmit">
+            <button class="login-submit" id="loginSubmit">
                 <span class="lang-en">Login</span>
                 <span class="lang-de" style="display: none;">Anmelden</span>
+            </button>
+            <div class="login-footer">
+                <button class="change-password-btn" id="changePasswordBtn">
+                    <span class="lang-en">Change Password</span>
+                    <span class="lang-de" style="display: none;">Passwort ändern</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password Change Modal -->
+    <div class="password-modal" id="passwordModal">
+        <div class="password-box">
+            <button class="login-close" id="passwordClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="lang-en">Change Password</h3>
+            <h3 class="lang-de" style="display: none;">Passwort ändern</h3>
+            <div class="password-success" id="passwordSuccess">
+                <span class="lang-en">Password changed successfully!</span>
+                <span class="lang-de" style="display: none;">Passwort erfolgreich geändert!</span>
+            </div>
+            <input type="password" class="login-input" id="currentPassword" placeholder="Current password">
+            <input type="password" class="login-input" id="newPassword" placeholder="New password">
+            <input type="password" class="login-input" id="confirmPassword" placeholder="Confirm new password">
+            <button class="login-submit" id="changePasswordSubmit">
+                <span class="lang-en">Change Password</span>
+                <span class="lang-de" style="display: none;">Passwort ändern</span>
             </button>
         </div>
     </div>
@@ -1404,6 +1522,38 @@
     </footer>
 
     <script>
+        // Password Management System
+        class PasswordManager {
+            constructor() {
+                this.STORAGE_KEY = 'dibesh_admin_password';
+                this.DEFAULT_PASSWORD = 'admin123'; // Default password
+                this.init();
+            }
+
+            init() {
+                // Check if password exists in localStorage, if not, set default
+                if (!localStorage.getItem(this.STORAGE_KEY)) {
+                    localStorage.setItem(this.STORAGE_KEY, this.DEFAULT_PASSWORD);
+                }
+            }
+
+            getPassword() {
+                return localStorage.getItem(this.STORAGE_KEY);
+            }
+
+            setPassword(newPassword) {
+                localStorage.setItem(this.STORAGE_KEY, newPassword);
+                return true;
+            }
+
+            validatePassword(password) {
+                return password === this.getPassword();
+            }
+        }
+
+        // Initialize Password Manager
+        const passwordManager = new PasswordManager();
+
         // Language switching functionality
         const langEnBtn = document.getElementById('langEn');
         const langDeBtn = document.getElementById('langDe');
@@ -1478,14 +1628,22 @@
         const loginSubmit = document.getElementById('loginSubmit');
         const passwordInput = document.getElementById('passwordInput');
         const loginError = document.getElementById('loginError');
+        const changePasswordBtn = document.getElementById('changePasswordBtn');
 
-        // Set your admin password here
-        const ADMIN_PASSWORD = "admin123"; // Change this to your desired password
+        // Password change modal
+        const passwordModal = document.getElementById('passwordModal');
+        const passwordClose = document.getElementById('passwordClose');
+        const changePasswordSubmit = document.getElementById('changePasswordSubmit');
+        const currentPasswordInput = document.getElementById('currentPassword');
+        const newPasswordInput = document.getElementById('newPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const passwordSuccess = document.getElementById('passwordSuccess');
 
         if (loginBtn) {
             loginBtn.addEventListener('click', () => {
                 loginModal.classList.add('active');
                 passwordInput.focus();
+                loginError.style.display = 'none';
             });
         }
 
@@ -1498,39 +1656,133 @@
         }
 
         if (loginSubmit) {
-            loginSubmit.addEventListener('click', () => {
-                if (passwordInput.value === ADMIN_PASSWORD) {
-                    // Successful login - redirect to admin page or show admin content
-                    alert('Login successful! Welcome to admin section.');
-                    loginModal.classList.remove('active');
-                    passwordInput.value = '';
-                    loginError.style.display = 'none';
-                    
-                    // Here you can redirect to an admin page or show hidden content
-                    // window.location.href = "admin.html";
-                } else {
-                    loginError.style.display = 'block';
-                    passwordInput.value = '';
-                    passwordInput.focus();
-                }
-            });
+            loginSubmit.addEventListener('click', handleLogin);
+        }
+
+        // Handle login function
+        function handleLogin() {
+            if (passwordManager.validatePassword(passwordInput.value)) {
+                // Successful login - redirect to admin page
+                localStorage.setItem('isAuthenticated', 'true');
+                window.location.href = "admin.html";
+            } else {
+                loginError.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
         }
 
         // Allow Enter key for login
         if (passwordInput) {
             passwordInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
-                    loginSubmit.click();
+                    handleLogin();
                 }
             });
         }
 
-        // Close modal when clicking outside
+        // Change password button
+        if (changePasswordBtn) {
+            changePasswordBtn.addEventListener('click', () => {
+                loginModal.classList.remove('active');
+                passwordModal.classList.add('active');
+                currentPasswordInput.focus();
+                passwordSuccess.style.display = 'none';
+                // Clear inputs
+                currentPasswordInput.value = '';
+                newPasswordInput.value = '';
+                confirmPasswordInput.value = '';
+            });
+        }
+
+        // Password modal close
+        if (passwordClose) {
+            passwordClose.addEventListener('click', () => {
+                passwordModal.classList.remove('active');
+            });
+        }
+
+        // Change password submit
+        if (changePasswordSubmit) {
+            changePasswordSubmit.addEventListener('click', () => {
+                const currentPassword = currentPasswordInput.value;
+                const newPassword = newPasswordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                // Validate current password
+                if (!passwordManager.validatePassword(currentPassword)) {
+                    alert('Current password is incorrect');
+                    currentPasswordInput.focus();
+                    return;
+                }
+
+                // Validate new password
+                if (newPassword.length < 6) {
+                    alert('New password must be at least 6 characters long');
+                    newPasswordInput.focus();
+                    return;
+                }
+
+                // Check if passwords match
+                if (newPassword !== confirmPassword) {
+                    alert('New passwords do not match');
+                    confirmPasswordInput.focus();
+                    return;
+                }
+
+                // Check if new password is same as current
+                if (newPassword === currentPassword) {
+                    alert('New password cannot be the same as current password');
+                    newPasswordInput.focus();
+                    return;
+                }
+
+                // Change password
+                passwordManager.setPassword(newPassword);
+                
+                // Show success message
+                passwordSuccess.style.display = 'block';
+                
+                // Clear inputs
+                currentPasswordInput.value = '';
+                newPasswordInput.value = '';
+                confirmPasswordInput.value = '';
+                
+                // Auto-close after 2 seconds
+                setTimeout(() => {
+                    passwordModal.classList.remove('active');
+                    passwordSuccess.style.display = 'none';
+                    
+                    // Show login modal again
+                    loginModal.classList.add('active');
+                    passwordInput.focus();
+                }, 2000);
+            });
+        }
+
+        // Allow Enter key for password change
+        [currentPasswordInput, newPasswordInput, confirmPasswordInput].forEach(input => {
+            if (input) {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        changePasswordSubmit.click();
+                    }
+                });
+            }
+        });
+
+        // Close modals when clicking outside
         loginModal.addEventListener('click', (e) => {
             if (e.target === loginModal) {
                 loginModal.classList.remove('active');
                 passwordInput.value = '';
                 loginError.style.display = 'none';
+            }
+        });
+
+        passwordModal.addEventListener('click', (e) => {
+            if (e.target === passwordModal) {
+                passwordModal.classList.remove('active');
             }
         });
 
@@ -1556,6 +1808,12 @@
                         });
                         this.classList.add('active');
                     }
+                    
+                    // Close mobile menu if open
+                    if (mobileNav.classList.contains('active')) {
+                        mobileNav.classList.remove('active');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
                 }
             });
         });
@@ -1580,6 +1838,14 @@
                     link.classList.add('active');
                 }
             });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target) && mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
         });
     </script>
 </body>
