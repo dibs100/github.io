@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Favicon for notes page -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
     <style>
         :root {
             --primary: #0A66C2;
@@ -24,6 +26,16 @@
             --border-radius: 8px;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
             --transition: all 0.2s ease;
+            
+            /* Color tags */
+            --color-red: #ef4444;
+            --color-blue: #3b82f6;
+            --color-green: #10b981;
+            --color-yellow: #f59e0b;
+            --color-purple: #8b5cf6;
+            --color-pink: #ec4899;
+            --color-orange: #f97316;
+            --color-teal: #14b8a6;
         }
 
         * {
@@ -103,6 +115,93 @@
             background: var(--primary-dark);
         }
 
+        /* Filter Bar */
+        .filter-bar {
+            padding: 0.5rem 1.5rem;
+            background: var(--dark);
+            border-bottom: 1px solid var(--gray);
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .color-filter {
+            display: flex;
+            gap: 0.3rem;
+            align-items: center;
+        }
+
+        .color-filter-btn {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .color-filter-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .color-filter-btn.active {
+            border-color: var(--light);
+            box-shadow: 0 0 0 1px var(--dark);
+        }
+
+        .color-red { background: var(--color-red); }
+        .color-blue { background: var(--color-blue); }
+        .color-green { background: var(--color-green); }
+        .color-yellow { background: var(--color-yellow); }
+        .color-purple { background: var(--color-purple); }
+        .color-pink { background: var(--color-pink); }
+        .color-orange { background: var(--color-orange); }
+        .color-teal { background: var(--color-teal); }
+
+        .tag-filter {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-left: 1rem;
+        }
+
+        .tag {
+            padding: 0.2rem 0.6rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .tag:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tag.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .clear-filters {
+            margin-left: auto;
+            font-size: 0.8rem;
+            color: var(--secondary);
+            cursor: pointer;
+            padding: 0.3rem 0.8rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .clear-filters:hover {
+            background: var(--card-bg);
+            color: var(--light);
+        }
+
         /* Main Layout - Full screen */
         .main-container {
             display: flex;
@@ -112,7 +211,7 @@
 
         /* Sidebar - Fixed width */
         .sidebar {
-            width: 300px;
+            width: 320px;
             background: var(--dark);
             border-right: 1px solid var(--gray);
             display: flex;
@@ -155,6 +254,7 @@
             cursor: pointer;
             transition: var(--transition);
             border: 1px solid transparent;
+            position: relative;
         }
 
         .note-item:hover {
@@ -165,6 +265,19 @@
         .note-item.active {
             border-color: var(--primary);
             background: rgba(10, 102, 194, 0.1);
+        }
+
+        .note-item-color {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+        }
+
+        .note-item-content {
+            margin-left: 0.5rem;
         }
 
         .note-item-title {
@@ -181,6 +294,21 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+
+        .note-item-tags {
+            display: flex;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .note-item-tag {
+            font-size: 0.7rem;
+            padding: 0.1rem 0.4rem;
+            background: rgba(10, 102, 194, 0.1);
+            border-radius: 10px;
+            color: var(--primary-light);
         }
 
         .note-item-date {
@@ -240,21 +368,101 @@
             color: white;
         }
 
+        /* Note Header with Color and Tags */
+        .note-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
         .note-title-input {
-            width: 100%;
+            flex: 1;
             background: transparent;
             border: none;
             color: var(--light);
             font-size: 1.5rem;
             font-weight: 700;
             padding: 0.5rem 0;
-            margin-bottom: 1rem;
             border-bottom: 2px solid var(--gray);
         }
 
         .note-title-input:focus {
             outline: none;
             border-bottom-color: var(--primary);
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 0.3rem;
+            align-items: center;
+        }
+
+        .color-option {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.active {
+            border-color: var(--light);
+            box-shadow: 0 0 0 1px var(--dark);
+        }
+
+        .tags-input-container {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: var(--dark);
+            border-radius: var(--border-radius);
+        }
+
+        .tags-input {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-size: 0.9rem;
+            padding: 0.3rem 0.5rem;
+            min-width: 150px;
+        }
+
+        .tags-input:focus {
+            outline: none;
+        }
+
+        .tags-input::placeholder {
+            color: var(--secondary);
+        }
+
+        .note-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.2rem 0.6rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .note-tag-remove {
+            cursor: pointer;
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        .note-tag-remove:hover {
+            opacity: 1;
         }
 
         .editor-content {
@@ -320,70 +528,6 @@
             display: block;
         }
 
-        /* Rich Text Editor Styles */
-        #noteEditor:focus {
-            outline: none;
-        }
-
-        #noteEditor h1, #noteEditor h2, #noteEditor h3 {
-            color: var(--light);
-            margin: 1.5rem 0 0.5rem 0;
-        }
-
-        #noteEditor h1 { font-size: 1.8rem; }
-        #noteEditor h2 { font-size: 1.5rem; }
-        #noteEditor h3 { font-size: 1.2rem; }
-
-        #noteEditor p {
-            margin: 0.5rem 0;
-        }
-
-        #noteEditor ul, #noteEditor ol {
-            margin: 0.5rem 0;
-            padding-left: 2rem;
-        }
-
-        #noteEditor blockquote {
-            border-left: 3px solid var(--primary);
-            padding-left: 1rem;
-            margin: 1rem 0;
-            color: var(--secondary);
-        }
-
-        #noteEditor code {
-            background: var(--dark);
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 0.9rem;
-        }
-
-        #noteEditor pre {
-            background: var(--dark);
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            overflow-x: auto;
-            margin: 1rem 0;
-        }
-
-        #noteEditor table {
-            border-collapse: collapse;
-            width: 100%;
-            margin: 1rem 0;
-            background: var(--dark);
-        }
-
-        #noteEditor th, #noteEditor td {
-            border: 1px solid var(--gray);
-            padding: 0.5rem;
-            text-align: left;
-        }
-
-        #noteEditor th {
-            background: rgba(10, 102, 194, 0.2);
-            font-weight: 600;
-        }
-
         /* Export Options */
         .export-options {
             display: none;
@@ -394,7 +538,7 @@
             border: 1px solid var(--gray);
             border-radius: var(--border-radius);
             padding: 0.5rem;
-            min-width: 200px;
+            min-width: 220px;
             z-index: 100;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
@@ -494,6 +638,12 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 280px;
+            }
+        }
+
         @media (max-width: 768px) {
             .main-container {
                 flex-direction: column;
@@ -508,6 +658,15 @@
             
             .editor-toolbar {
                 overflow-x: auto;
+            }
+            
+            .filter-bar {
+                flex-wrap: wrap;
+                padding: 0.5rem;
+            }
+            
+            .note-header {
+                flex-wrap: wrap;
             }
         }
     </style>
@@ -535,7 +694,7 @@
                 <div class="note-count" id="noteCount">0 notes</div>
             </div>
             <div class="header-actions">
-                <button class="btn" id="newNoteBtn" title="Create new note">
+                <button class="btn" id="newNoteBtn" title="Create new note (Ctrl+N)">
                     <i class="fas fa-plus"></i>
                     New
                 </button>
@@ -545,29 +704,25 @@
                         Export
                     </button>
                     <div class="export-options" id="exportOptions">
-                        <div class="export-option" data-format="txt">
+                        <div class="export-option" data-format="txt-all">
                             <i class="fas fa-file-alt"></i>
                             Export All as TXT
                         </div>
-                        <div class="export-option" data-format="json">
+                        <div class="export-option" data-format="txt-individual">
+                            <i class="fas fa-copy"></i>
+                            Export Each as TXT
+                        </div>
+                        <div class="export-option" data-format="json-all">
                             <i class="fas fa-code"></i>
                             Export All as JSON
                         </div>
-                        <div class="export-option" data-format="html">
+                        <div class="export-option" data-format="html-individual">
                             <i class="fas fa-file-code"></i>
-                            Export All as HTML
+                            Export Each as HTML
                         </div>
-                        <div class="export-option" data-format="markdown">
+                        <div class="export-option" data-format="md-individual">
                             <i class="fab fa-markdown"></i>
-                            Export All as Markdown
-                        </div>
-                        <div class="export-option" data-format="single-txt">
-                            <i class="fas fa-file"></i>
-                            Export Current as TXT
-                        </div>
-                        <div class="export-option" data-format="single-html">
-                            <i class="fas fa-file-code"></i>
-                            Export Current as HTML
+                            Export Each as Markdown
                         </div>
                     </div>
                 </div>
@@ -585,6 +740,30 @@
                 </button>
             </div>
         </header>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="color-filter">
+                <span style="color: var(--secondary); font-size: 0.8rem; margin-right: 0.5rem;">Colors:</span>
+                <div class="color-filter-btn color-red" data-color="red" title="Red notes"></div>
+                <div class="color-filter-btn color-blue" data-color="blue" title="Blue notes"></div>
+                <div class="color-filter-btn color-green" data-color="green" title="Green notes"></div>
+                <div class="color-filter-btn color-yellow" data-color="yellow" title="Yellow notes"></div>
+                <div class="color-filter-btn color-purple" data-color="purple" title="Purple notes"></div>
+                <div class="color-filter-btn color-pink" data-color="pink" title="Pink notes"></div>
+                <div class="color-filter-btn color-orange" data-color="orange" title="Orange notes"></div>
+                <div class="color-filter-btn color-teal" data-color="teal" title="Teal notes"></div>
+            </div>
+            
+            <div class="tag-filter" id="tagFilter">
+                <span style="color: var(--secondary); font-size: 0.8rem; margin-right: 0.5rem;">Tags:</span>
+                <!-- Tags will be dynamically added here -->
+            </div>
+            
+            <div class="clear-filters" id="clearFilters">
+                Clear Filters
+            </div>
+        </div>
 
         <!-- Main Content -->
         <div class="main-container">
@@ -654,8 +833,29 @@
                     </div>
                 </div>
 
-                <!-- Note Title -->
-                <input type="text" class="note-title-input" id="noteTitle" placeholder="Note Title" maxlength="200">
+                <!-- Note Header with Color and Tags -->
+                <div class="note-header">
+                    <input type="text" class="note-title-input" id="noteTitle" placeholder="Note Title" maxlength="200">
+                    
+                    <div class="color-picker">
+                        <div class="color-option color-red" data-color="red" title="Red"></div>
+                        <div class="color-option color-blue" data-color="blue" title="Blue"></div>
+                        <div class="color-option color-green" data-color="green" title="Green"></div>
+                        <div class="color-option color-yellow" data-color="yellow" title="Yellow"></div>
+                        <div class="color-option color-purple" data-color="purple" title="Purple"></div>
+                        <div class="color-option color-pink" data-color="pink" title="Pink"></div>
+                        <div class="color-option color-orange" data-color="orange" title="Orange"></div>
+                        <div class="color-option color-teal" data-color="teal" title="Teal"></div>
+                    </div>
+                </div>
+
+                <!-- Tags Input -->
+                <div class="tags-input-container">
+                    <input type="text" class="tags-input" id="tagsInput" placeholder="Add tags (press Enter or comma)">
+                    <div id="noteTags">
+                        <!-- Tags will be added here -->
+                    </div>
+                </div>
 
                 <!-- Rich Text Editor -->
                 <div class="editor-content">
@@ -672,7 +872,7 @@
         </div>
 
         <!-- Hidden file inputs -->
-        <input type="file" id="importFileInput" multiple accept=".md,.txt,.html,.json,.rtf,.doc,.docx" style="display: none;">
+        <input type="file" id="importFileInput" multiple accept=".md,.txt,.html,.json,.rtf,.doc,.docx,.png,.jpg,.jpeg,.gif,.pdf" style="display: none;">
     </div>
 
     <script>
@@ -704,6 +904,11 @@
                 this.AUTO_SAVE_DELAY = 1000; // 1 second auto-save
                 this.isSaving = false;
                 this.imageResizeData = null;
+                this.lastCursorPosition = null;
+                this.selectedColor = null;
+                this.selectedTag = null;
+                this.allTags = new Set();
+                this.updateAllTags();
                 this.init();
             }
 
@@ -729,6 +934,10 @@
                 this.charCount = document.getElementById('charCount');
                 this.autoSaveIndicator = document.getElementById('autoSaveIndicator');
                 this.storageInfo = document.getElementById('storageInfo');
+                this.tagsInput = document.getElementById('tagsInput');
+                this.noteTags = document.getElementById('noteTags');
+                this.tagFilter = document.getElementById('tagFilter');
+                this.clearFilters = document.getElementById('clearFilters');
                 
                 // Buttons
                 this.newNoteBtn = document.getElementById('newNoteBtn');
@@ -747,6 +956,7 @@
                 
                 // Load notes
                 this.renderNotes();
+                this.renderTagFilter();
                 
                 // Select first note if available
                 if (this.notes.length > 0) {
@@ -760,9 +970,6 @@
                 
                 // Show storage info
                 this.updateStorageInfo();
-                
-                // Set initial cursor position
-                this.setCursorToEnd();
             }
 
             setupEventListeners() {
@@ -788,7 +995,7 @@
                 this.importBtn.addEventListener('click', () => this.importFileInput.click());
                 this.importFileInput.addEventListener('change', (e) => this.importNotes(e));
                 
-                this.saveToFolderBtn.addEventListener('click', () => this.saveToLocalFolder());
+                this.saveToFolderBtn.addEventListener('click', () => this.backupToFolder());
                 
                 // Authentication
                 this.logoutBtn.addEventListener('click', () => this.logout());
@@ -803,10 +1010,14 @@
                 });
                 
                 this.noteEditor.addEventListener('input', () => {
+                    this.saveCursorPosition();
                     this.autoSave();
                     this.updateCharacterCount();
-                    this.setCursorToEnd(); // Keep cursor at end
                 });
+                
+                // Cursor position tracking
+                this.noteEditor.addEventListener('click', () => this.saveCursorPosition());
+                this.noteEditor.addEventListener('keyup', () => this.saveCursorPosition());
                 
                 // Keyboard shortcuts
                 document.addEventListener('keydown', (e) => {
@@ -814,6 +1025,12 @@
                     if ((e.ctrlKey || e.metaKey) && e.key === 's') {
                         e.preventDefault();
                         this.saveNote();
+                    }
+                    
+                    // Ctrl+N for new note
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+                        e.preventDefault();
+                        this.createNewNote();
                     }
                     
                     // Escape to blur editor
@@ -829,15 +1046,54 @@
                         const command = e.currentTarget.dataset.command;
                         const value = e.currentTarget.dataset.value;
                         this.executeCommand(command, value);
-                        this.setCursorToEnd();
+                        this.restoreCursorPosition();
                     });
                 });
                 
                 // Table insertion
                 this.insertTableBtn.addEventListener('click', () => {
                     this.insertTable();
-                    this.setCursorToEnd();
+                    this.restoreCursorPosition();
                 });
+                
+                // Color picker
+                document.querySelectorAll('.color-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        const color = e.target.dataset.color;
+                        this.setNoteColor(color);
+                    });
+                });
+                
+                // Color filter
+                document.querySelectorAll('.color-filter-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const color = e.target.dataset.color;
+                        this.toggleColorFilter(color);
+                    });
+                });
+                
+                // Tags
+                this.tagsInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ',') {
+                        e.preventDefault();
+                        const tag = this.tagsInput.value.trim();
+                        if (tag) {
+                            this.addTagToCurrentNote(tag);
+                            this.tagsInput.value = '';
+                        }
+                    }
+                });
+                
+                this.tagsInput.addEventListener('blur', () => {
+                    const tag = this.tagsInput.value.trim();
+                    if (tag) {
+                        this.addTagToCurrentNote(tag);
+                        this.tagsInput.value = '';
+                    }
+                });
+                
+                // Clear filters
+                this.clearFilters.addEventListener('click', () => this.clearAllFilters());
                 
                 // Handle image paste
                 this.noteEditor.addEventListener('paste', (e) => this.handlePaste(e));
@@ -853,35 +1109,62 @@
                 });
             }
 
-            // Cursor management
-            setCursorToEnd() {
+            // Cursor position management
+            saveCursorPosition() {
+                const selection = window.getSelection();
+                if (selection.rangeCount > 0) {
+                    const range = selection.getRangeAt(0);
+                    const preCaretRange = range.cloneRange();
+                    preCaretRange.selectNodeContents(this.noteEditor);
+                    preCaretRange.setEnd(range.endContainer, range.endOffset);
+                    this.lastCursorPosition = preCaretRange.toString().length;
+                }
+            }
+
+            restoreCursorPosition() {
+                if (this.lastCursorPosition === null) {
+                    this.setCursorToEnd();
+                    return;
+                }
+                
                 const selection = window.getSelection();
                 const range = document.createRange();
                 
-                // Move cursor to end of content
-                range.selectNodeContents(this.noteEditor);
-                range.collapse(false); // false = to end
+                let charIndex = 0;
+                const nodeStack = [this.noteEditor];
+                let node = null;
+                let foundStart = false;
+                let stop = false;
+                
+                while (!stop && (node = nodeStack.pop())) {
+                    if (node.nodeType === 3) {
+                        const nextCharIndex = charIndex + node.length;
+                        if (!foundStart && this.lastCursorPosition >= charIndex && this.lastCursorPosition <= nextCharIndex) {
+                            range.setStart(node, this.lastCursorPosition - charIndex);
+                            range.setEnd(node, this.lastCursorPosition - charIndex);
+                            foundStart = true;
+                        }
+                        charIndex = nextCharIndex;
+                    } else {
+                        let i = node.childNodes.length;
+                        while (i--) {
+                            nodeStack.push(node.childNodes[i]);
+                        }
+                    }
+                }
                 
                 selection.removeAllRanges();
                 selection.addRange(range);
-                
-                // Ensure editor has focus
                 this.noteEditor.focus();
             }
 
-            preserveCursorPosition(callback) {
+            setCursorToEnd() {
                 const selection = window.getSelection();
-                const range = selection.rangeCount > 0 ? selection.getRangeAt(0).cloneRange() : null;
-                
-                callback();
-                
-                if (range) {
-                    selection.removeAllRanges();
-                    selection.addRange(range);
-                } else {
-                    this.setCursorToEnd();
-                }
-                
+                const range = document.createRange();
+                range.selectNodeContents(this.noteEditor);
+                range.collapse(false);
+                selection.removeAllRanges();
+                selection.addRange(range);
                 this.noteEditor.focus();
             }
 
@@ -894,6 +1177,8 @@
                     id: this.generateId(),
                     title: 'Untitled Note',
                     content: '',
+                    color: null,
+                    tags: [],
                     createdAt: new Date().toISOString(),
                     updatedAt: new Date().toISOString()
                 };
@@ -903,7 +1188,7 @@
                 this.renderNotes();
                 this.selectNote(newNote.id);
                 
-                // Focus on title and set cursor at end
+                // Focus on title
                 setTimeout(() => {
                     this.noteTitle.focus();
                     this.noteTitle.setSelectionRange(this.noteTitle.value.length, this.noteTitle.value.length);
@@ -920,6 +1205,12 @@
                 this.noteTitle.value = note.title;
                 this.noteEditor.innerHTML = note.content || '<p><br></p>';
                 
+                // Update color
+                this.updateColorPicker(note.color);
+                
+                // Update tags
+                this.renderNoteTags(note.tags);
+                
                 // Update active state in list
                 document.querySelectorAll('.note-item').forEach(item => {
                     item.classList.remove('active');
@@ -931,11 +1222,157 @@
                 // Update character count
                 this.updateCharacterCount();
                 
-                // Set cursor to end
-                setTimeout(() => this.setCursorToEnd(), 50);
+                // Restore cursor position
+                setTimeout(() => this.restoreCursorPosition(), 50);
                 
                 // Setup image resizing for any images in the content
                 setTimeout(() => this.setupImageResizing(), 100);
+            }
+
+            updateColorPicker(color) {
+                document.querySelectorAll('.color-option').forEach(option => {
+                    option.classList.remove('active');
+                    if (option.dataset.color === color) {
+                        option.classList.add('active');
+                    }
+                });
+            }
+
+            setNoteColor(color) {
+                if (!this.currentNoteId) return;
+                
+                const noteIndex = this.notes.findIndex(n => n.id === this.currentNoteId);
+                if (noteIndex === -1) return;
+                
+                this.notes[noteIndex].color = color;
+                this.notes[noteIndex].updatedAt = new Date().toISOString();
+                
+                this.saveToStorage();
+                this.renderNotes();
+                this.updateColorPicker(color);
+            }
+
+            addTagToCurrentNote(tag) {
+                if (!this.currentNoteId) return;
+                
+                const noteIndex = this.notes.findIndex(n => n.id === this.currentNoteId);
+                if (noteIndex === -1) return;
+                
+                tag = tag.trim().toLowerCase();
+                if (!tag || this.notes[noteIndex].tags.includes(tag)) return;
+                
+                this.notes[noteIndex].tags.push(tag);
+                this.notes[noteIndex].updatedAt = new Date().toISOString();
+                
+                this.saveToStorage();
+                this.renderNoteTags(this.notes[noteIndex].tags);
+                this.updateAllTags();
+                this.renderTagFilter();
+                this.renderNotes();
+            }
+
+            removeTagFromCurrentNote(tag) {
+                if (!this.currentNoteId) return;
+                
+                const noteIndex = this.notes.findIndex(n => n.id === this.currentNoteId);
+                if (noteIndex === -1) return;
+                
+                this.notes[noteIndex].tags = this.notes[noteIndex].tags.filter(t => t !== tag);
+                this.notes[noteIndex].updatedAt = new Date().toISOString();
+                
+                this.saveToStorage();
+                this.renderNoteTags(this.notes[noteIndex].tags);
+                this.updateAllTags();
+                this.renderTagFilter();
+                this.renderNotes();
+            }
+
+            renderNoteTags(tags) {
+                this.noteTags.innerHTML = tags.map(tag => `
+                    <div class="note-tag">
+                        ${tag}
+                        <span class="note-tag-remove" data-tag="${tag}">×</span>
+                    </div>
+                `).join('');
+                
+                // Add remove event listeners
+                this.noteTags.querySelectorAll('.note-tag-remove').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const tag = e.target.dataset.tag;
+                        this.removeTagFromCurrentNote(tag);
+                    });
+                });
+            }
+
+            updateAllTags() {
+                this.allTags.clear();
+                this.notes.forEach(note => {
+                    note.tags.forEach(tag => this.allTags.add(tag));
+                });
+            }
+
+            renderTagFilter() {
+                // Clear existing tags except the label
+                const label = this.tagFilter.querySelector('span');
+                this.tagFilter.innerHTML = '';
+                if (label) this.tagFilter.appendChild(label);
+                
+                // Add tags
+                Array.from(this.allTags).sort().forEach(tag => {
+                    const tagElement = document.createElement('div');
+                    tagElement.className = 'tag';
+                    if (this.selectedTag === tag) {
+                        tagElement.classList.add('active');
+                    }
+                    tagElement.textContent = tag;
+                    tagElement.dataset.tag = tag;
+                    tagElement.addEventListener('click', () => this.toggleTagFilter(tag));
+                    this.tagFilter.appendChild(tagElement);
+                });
+            }
+
+            toggleColorFilter(color) {
+                if (this.selectedColor === color) {
+                    this.selectedColor = null;
+                } else {
+                    this.selectedColor = color;
+                }
+                
+                // Update UI
+                document.querySelectorAll('.color-filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.color === this.selectedColor) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                this.renderNotes();
+            }
+
+            toggleTagFilter(tag) {
+                if (this.selectedTag === tag) {
+                    this.selectedTag = null;
+                } else {
+                    this.selectedTag = tag;
+                }
+                
+                // Update UI
+                this.renderTagFilter();
+                this.renderNotes();
+            }
+
+            clearAllFilters() {
+                this.selectedColor = null;
+                this.selectedTag = null;
+                
+                // Update UI
+                document.querySelectorAll('.color-filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                this.renderTagFilter();
+                this.renderNotes();
             }
 
             saveNote() {
@@ -987,6 +1424,8 @@
                 if (confirm('Are you sure you want to delete this note?')) {
                     this.notes = this.notes.filter(n => n.id !== this.currentNoteId);
                     this.saveToStorage();
+                    this.updateAllTags();
+                    this.renderTagFilter();
                     this.renderNotes();
                     
                     // Create new note or select next
@@ -1032,11 +1471,23 @@
                 const searchTerm = this.searchBox.value.toLowerCase();
                 let filteredNotes = this.notes;
                 
+                // Apply search filter
                 if (searchTerm) {
-                    filteredNotes = this.notes.filter(note => 
+                    filteredNotes = filteredNotes.filter(note => 
                         note.title.toLowerCase().includes(searchTerm) || 
-                        this.stripHtml(note.content).toLowerCase().includes(searchTerm)
+                        this.stripHtml(note.content).toLowerCase().includes(searchTerm) ||
+                        note.tags.some(tag => tag.toLowerCase().includes(searchTerm))
                     );
+                }
+                
+                // Apply color filter
+                if (this.selectedColor) {
+                    filteredNotes = filteredNotes.filter(note => note.color === this.selectedColor);
+                }
+                
+                // Apply tag filter
+                if (this.selectedTag) {
+                    filteredNotes = filteredNotes.filter(note => note.tags.includes(this.selectedTag));
                 }
                 
                 // Sort by updatedAt (newest first)
@@ -1048,18 +1499,31 @@
                     this.notesList.innerHTML = `
                         <div style="text-align: center; padding: 2rem; color: var(--secondary);">
                             <i class="fas fa-sticky-note" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                            <p>${searchTerm ? 'No matching notes' : 'No notes yet'}</p>
+                            <p>${searchTerm || this.selectedColor || this.selectedTag ? 'No matching notes' : 'No notes yet'}</p>
                         </div>
                     `;
                 } else {
-                    this.notesList.innerHTML = filteredNotes.map(note => `
-                        <div class="note-item ${note.id === this.currentNoteId ? 'active' : ''}" 
-                             data-id="${note.id}">
-                            <div class="note-item-title">${note.title || 'Untitled Note'}</div>
-                            <div class="note-item-preview">${this.stripHtml(note.content).substring(0, 100)}</div>
-                            <div class="note-item-date">${this.formatDate(note.updatedAt)}</div>
-                        </div>
-                    `).join('');
+                    this.notesList.innerHTML = filteredNotes.map(note => {
+                        const colorClass = note.color ? `color-${note.color}` : '';
+                        const colorStyle = note.color ? `style="background: var(--color-${note.color})"` : '';
+                        
+                        return `
+                            <div class="note-item ${note.id === this.currentNoteId ? 'active' : ''}" 
+                                 data-id="${note.id}">
+                                ${note.color ? `<div class="note-item-color ${colorClass}" ${colorStyle}></div>` : ''}
+                                <div class="note-item-content" style="${note.color ? 'margin-left: 1rem;' : ''}">
+                                    <div class="note-item-title">${note.title || 'Untitled Note'}</div>
+                                    <div class="note-item-preview">${this.stripHtml(note.content).substring(0, 100)}</div>
+                                    ${note.tags.length > 0 ? `
+                                        <div class="note-item-tags">
+                                            ${note.tags.map(tag => `<span class="note-item-tag">${tag}</span>`).join('')}
+                                        </div>
+                                    ` : ''}
+                                    <div class="note-item-date">${this.formatDate(note.updatedAt)}</div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
                     
                     // Add click events
                     document.querySelectorAll('.note-item').forEach(item => {
@@ -1084,9 +1548,8 @@
 
             // Rich Text Editor Commands
             executeCommand(command, value = null) {
-                this.preserveCursorPosition(() => {
-                    document.execCommand(command, false, value);
-                });
+                document.execCommand(command, false, value);
+                this.noteEditor.focus();
             }
 
             // Table Creation
@@ -1095,19 +1558,17 @@
                 const cols = prompt('Number of columns:', '3');
                 
                 if (rows && cols) {
-                    this.preserveCursorPosition(() => {
-                        let tableHtml = '<table><tbody>';
-                        for (let i = 0; i < parseInt(rows); i++) {
-                            tableHtml += '<tr>';
-                            for (let j = 0; j < parseInt(cols); j++) {
-                                tableHtml += `<td>Cell ${i+1}-${j+1}</td>`;
-                            }
-                            tableHtml += '</tr>';
+                    let tableHtml = '<table><tbody>';
+                    for (let i = 0; i < parseInt(rows); i++) {
+                        tableHtml += '<tr>';
+                        for (let j = 0; j < parseInt(cols); j++) {
+                            tableHtml += `<td>Cell ${i+1}-${j+1}</td>`;
                         }
-                        tableHtml += '</tbody></table>';
-                        
-                        document.execCommand('insertHTML', false, tableHtml);
-                    });
+                        tableHtml += '</tr>';
+                    }
+                    tableHtml += '</tbody></table>';
+                    
+                    document.execCommand('insertHTML', false, tableHtml);
                 }
             }
 
@@ -1122,21 +1583,20 @@
                         const reader = new FileReader();
                         
                         reader.onload = (e) => {
-                            this.preserveCursorPosition(() => {
-                                const img = document.createElement('img');
-                                img.src = e.target.result;
-                                img.className = 'resizable-image';
-                                img.style.maxWidth = '300px'; // Default size
-                                img.style.height = 'auto';
-                                
-                                // Add resize handle
-                                const resizeHandle = document.createElement('div');
-                                resizeHandle.className = 'resize-handle';
-                                img.appendChild(resizeHandle);
-                                
-                                document.execCommand('insertHTML', false, img.outerHTML);
-                                this.setupImageResizing(); // Re-setup resizing for new image
-                            });
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.className = 'resizable-image';
+                            img.style.maxWidth = '300px';
+                            img.style.height = 'auto';
+                            
+                            // Add resize handle
+                            const resizeHandle = document.createElement('div');
+                            resizeHandle.className = 'resize-handle';
+                            img.appendChild(resizeHandle);
+                            
+                            document.execCommand('insertHTML', false, img.outerHTML);
+                            this.setupImageResizing();
+                            this.saveNote();
                         };
                         
                         reader.readAsDataURL(blob);
@@ -1204,9 +1664,8 @@
                     
                     img.style.width = `${newWidth}px`;
                     img.style.height = `${newHeight}px`;
-                    img.style.maxWidth = 'none'; // Override max-width during resize
+                    img.style.maxWidth = 'none';
                     
-                    // Auto-save after resize
                     this.autoSave();
                 }
             }
@@ -1214,40 +1673,62 @@
             handleImageMouseUp() {
                 if (this.imageResizeData) {
                     this.imageResizeData.img.classList.remove('resizing');
-                    this.imageResizeData.img.style.maxWidth = '100%'; // Restore max-width
+                    this.imageResizeData.img.style.maxWidth = '100%';
                     this.imageResizeData = null;
-                    this.saveNote(); // Save after resize complete
+                    this.saveNote();
                 }
             }
 
             // Export Functions
             exportNotes(format) {
                 switch (format) {
-                    case 'txt':
+                    case 'txt-all':
                         this.exportAllAsTXT();
                         break;
-                    case 'json':
+                    case 'txt-individual':
+                        this.exportEachAsTXT();
+                        break;
+                    case 'json-all':
                         this.exportAllAsJSON();
                         break;
-                    case 'html':
-                        this.exportAllAsHTML();
+                    case 'html-individual':
+                        this.exportEachAsHTML();
                         break;
-                    case 'markdown':
-                        this.exportAllAsMarkdown();
-                        break;
-                    case 'single-txt':
-                        this.exportCurrentAsTXT();
-                        break;
-                    case 'single-html':
-                        this.exportCurrentAsHTML();
+                    case 'md-individual':
+                        this.exportEachAsMarkdown();
                         break;
                 }
             }
 
             exportAllAsTXT() {
-                this.exportMultipleFiles('txt', 'text/plain', (note) => 
-                    `${note.title}\n\n${this.stripHtml(note.content)}`
+                const content = this.notes.map(note => 
+                    `=== ${note.title} ===\n\n${this.stripHtml(note.content)}\n\n`
+                ).join('\n\n---\n\n');
+                
+                this.downloadFile(
+                    content,
+                    `notes-all-${new Date().toISOString().split('T')[0]}.txt`,
+                    'text/plain'
                 );
+            }
+
+            exportEachAsTXT() {
+                if (this.notes.length === 0) {
+                    alert('No notes to export');
+                    return;
+                }
+                
+                alert(`Exporting ${this.notes.length} notes as individual TXT files...`);
+                
+                this.notes.forEach((note, index) => {
+                    setTimeout(() => {
+                        this.downloadFile(
+                            `${note.title}\n\n${this.stripHtml(note.content)}`,
+                            `${this.sanitizeFilename(note.title)}.txt`,
+                            'text/plain'
+                        );
+                    }, index * 300);
+                });
             }
 
             exportAllAsJSON() {
@@ -1264,112 +1745,74 @@
                 );
             }
 
-            exportAllAsHTML() {
-                this.exportMultipleFiles('html', 'text/html', (note) => `
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <meta charset="UTF-8">
-                        <title>${note.title}</title>
-                        <style>
-                            body { font-family: Arial, sans-serif; line-height: 1.6; padding: 2rem; max-width: 800px; margin: 0 auto; }
-                            img { max-width: 100%; height: auto; }
-                            table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
-                            th, td { border: 1px solid #ddd; padding: 8px; }
-                            pre { background: #f5f5f5; padding: 1rem; overflow-x: auto; }
-                            code { background: #f5f5f5; padding: 2px 4px; border-radius: 3px; }
-                        </style>
-                    </head>
-                    <body>
-                        <h1>${note.title}</h1>
-                        <div>${note.content}</div>
-                        <hr>
-                        <p><small>Exported from My Notes on ${new Date().toLocaleString()}</small></p>
-                    </body>
-                    </html>
-                `);
-            }
-
-            exportAllAsMarkdown() {
-                this.exportMultipleFiles('md', 'text/markdown', (note) => {
-                    let md = `# ${note.title}\n\n`;
-                    md += this.htmlToMarkdown(note.content);
-                    md += `\n\n---\n*Exported from My Notes on ${new Date().toLocaleString()}*`;
-                    return md;
-                });
-            }
-
-            exportCurrentAsTXT() {
-                if (!this.currentNoteId) return;
-                const note = this.notes.find(n => n.id === this.currentNoteId);
-                if (!note) return;
-                
-                this.downloadFile(
-                    `${note.title}\n\n${this.stripHtml(note.content)}`,
-                    `${this.sanitizeFilename(note.title)}.txt`,
-                    'text/plain'
-                );
-            }
-
-            exportCurrentAsHTML() {
-                if (!this.currentNoteId) return;
-                const note = this.notes.find(n => n.id === this.currentNoteId);
-                if (!note) return;
-                
-                const html = `
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <meta charset="UTF-8">
-                        <title>${note.title}</title>
-                        <style>
-                            body { font-family: Arial, sans-serif; line-height: 1.6; padding: 2rem; max-width: 800px; margin: 0 auto; }
-                            img { max-width: 100%; height: auto; }
-                            table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
-                            th, td { border: 1px solid #ddd; padding: 8px; }
-                        </style>
-                    </head>
-                    <body>
-                        <h1>${note.title}</h1>
-                        <div>${note.content}</div>
-                    </body>
-                    </html>
-                `;
-                
-                this.downloadFile(
-                    html,
-                    `${this.sanitizeFilename(note.title)}.html`,
-                    'text/html'
-                );
-            }
-
-            exportMultipleFiles(extension, mimeType, contentGenerator) {
-                // Create a zip file containing all notes
+            exportEachAsHTML() {
                 if (this.notes.length === 0) {
                     alert('No notes to export');
                     return;
                 }
                 
-                // For simplicity, we'll create individual files
-                // In a real app, you might want to use a zip library
-                alert(`Exporting ${this.notes.length} notes as ${extension.toUpperCase()} files...\n\nThey will be downloaded one by one.`);
+                alert(`Exporting ${this.notes.length} notes as individual HTML files...`);
                 
-                // Download each note as separate file
-                setTimeout(() => {
-                    this.notes.forEach((note, index) => {
-                        setTimeout(() => {
-                            this.downloadFile(
-                                contentGenerator(note),
-                                `${this.sanitizeFilename(note.title)}-${index + 1}.${extension}`,
-                                mimeType
-                            );
-                        }, index * 500); // Stagger downloads
-                    });
-                }, 1000);
+                this.notes.forEach((note, index) => {
+                    setTimeout(() => {
+                        const html = `
+                            <!DOCTYPE html>
+                            <html>
+                            <head>
+                                <meta charset="UTF-8">
+                                <title>${note.title}</title>
+                                <style>
+                                    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 2rem; max-width: 800px; margin: 0 auto; }
+                                    img { max-width: 100%; height: auto; }
+                                    table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+                                    th, td { border: 1px solid #ddd; padding: 8px; }
+                                    pre { background: #f5f5f5; padding: 1rem; overflow-x: auto; }
+                                    code { background: #f5f5f5; padding: 2px 4px; border-radius: 3px; }
+                                </style>
+                            </head>
+                            <body>
+                                <h1>${note.title}</h1>
+                                <div>${note.content}</div>
+                                <hr>
+                                <p><small>Exported from My Notes on ${new Date().toLocaleString()}</small></p>
+                            </body>
+                            </html>
+                        `;
+                        
+                        this.downloadFile(
+                            html,
+                            `${this.sanitizeFilename(note.title)}.html`,
+                            'text/html'
+                        );
+                    }, index * 300);
+                });
+            }
+
+            exportEachAsMarkdown() {
+                if (this.notes.length === 0) {
+                    alert('No notes to export');
+                    return;
+                }
+                
+                alert(`Exporting ${this.notes.length} notes as individual Markdown files...`);
+                
+                this.notes.forEach((note, index) => {
+                    setTimeout(() => {
+                        let md = `# ${note.title}\n\n`;
+                        md += this.htmlToMarkdown(note.content);
+                        md += `\n\n---\n*Exported from My Notes on ${new Date().toLocaleString()}*`;
+                        
+                        this.downloadFile(
+                            md,
+                            `${this.sanitizeFilename(note.title)}.md`,
+                            'text/markdown'
+                        );
+                    }, index * 300);
+                });
             }
 
             htmlToMarkdown(html) {
-                // Simple HTML to Markdown conversion
+                // Enhanced HTML to Markdown conversion
                 let md = html
                     .replace(/<h1[^>]*>([^<]+)<\/h1>/g, '# $1\n\n')
                     .replace(/<h2[^>]*>([^<]+)<\/h2>/g, '## $1\n\n')
@@ -1421,8 +1864,7 @@
                 
                 for (const file of files) {
                     try {
-                        const content = await this.readFile(file);
-                        const note = this.createNoteFromFile(file, content);
+                        const note = await this.createNoteFromFile(file);
                         
                         if (note) {
                             this.notes.unshift(note);
@@ -1435,6 +1877,8 @@
                 
                 if (importedCount > 0) {
                     this.saveToStorage();
+                    this.updateAllTags();
+                    this.renderTagFilter();
                     this.renderNotes();
                     alert(`Successfully imported ${importedCount} note${importedCount !== 1 ? 's' : ''}`);
                     
@@ -1448,105 +1892,131 @@
                 event.target.value = '';
             }
 
-            readFile(file) {
+            async createNoteFromFile(file) {
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
-                    reader.onload = (e) => resolve(e.target.result);
+                    
+                    reader.onload = (e) => {
+                        try {
+                            const extension = file.name.split('.').pop().toLowerCase();
+                            const filename = file.name.replace(/\.[^/.]+$/, "");
+                            
+                            let content = '';
+                            let title = filename;
+                            
+                            if (file.type.startsWith('image/')) {
+                                // Handle image files
+                                content = `<img src="${e.target.result}" alt="${filename}" class="resizable-image" style="max-width: 300px; height: auto;">`;
+                            } else {
+                                content = e.target.result;
+                                
+                                // Handle different file types
+                                if (extension === 'md') {
+                                    // Convert markdown to HTML
+                                    content = this.markdownToHtml(content);
+                                } else if (extension === 'json') {
+                                    try {
+                                        const data = JSON.parse(content);
+                                        if (data.title && data.content) {
+                                            title = data.title;
+                                            content = data.content;
+                                        }
+                                    } catch (jsonError) {
+                                        // Keep as plain text if JSON parsing fails
+                                    }
+                                }
+                            }
+                            
+                            const note = {
+                                id: this.generateId(),
+                                title: title,
+                                content: content,
+                                color: null,
+                                tags: [],
+                                createdAt: new Date().toISOString(),
+                                updatedAt: new Date().toISOString(),
+                                originalFilename: file.name
+                            };
+                            
+                            resolve(note);
+                        } catch (error) {
+                            reject(error);
+                        }
+                    };
+                    
                     reader.onerror = (e) => reject(e);
-                    reader.readAsText(file);
+                    
+                    if (file.type.startsWith('image/')) {
+                        reader.readAsDataURL(file);
+                    } else {
+                        reader.readAsText(file);
+                    }
                 });
             }
 
-            createNoteFromFile(file, content) {
-                const extension = file.name.split('.').pop().toLowerCase();
-                const filename = file.name.replace(/\.[^/.]+$/, ""); // Remove extension
-                
-                let noteContent = '';
-                let noteTitle = filename;
-                
-                switch (extension) {
-                    case 'md':
-                    case 'txt':
-                    case 'html':
-                    case 'rtf':
-                        // For simple text files, use as-is
-                        noteContent = content;
-                        break;
-                        
-                    case 'json':
-                        try {
-                            const data = JSON.parse(content);
-                            if (data.title && data.content) {
-                                noteTitle = data.title;
-                                noteContent = data.content;
-                            }
-                        } catch (e) {
-                            noteContent = content;
-                        }
-                        break;
-                        
-                    default:
-                        noteContent = content;
-                }
-                
-                // Convert markdown to HTML if needed
-                if (extension === 'md') {
-                    noteContent = this.markdownToHtml(noteContent);
-                }
-                
-                return {
-                    id: this.generateId(),
-                    title: noteTitle,
-                    content: noteContent,
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString(),
-                    originalFilename: file.name
-                };
-            }
-
             markdownToHtml(markdown) {
-                // Simple Markdown to HTML conversion
+                // Enhanced Markdown to HTML conversion for Apple Notes
                 return markdown
                     .replace(/^# (.*$)/gim, '<h1>$1</h1>')
                     .replace(/^## (.*$)/gim, '<h2>$1</h2>')
                     .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                    .replace(/^#### (.*$)/gim, '<h4>$1</h4>')
+                    .replace(/^##### (.*$)/gim, '<h5>$1</h5>')
+                    .replace(/^###### (.*$)/gim, '<h6>$1</h6>')
                     .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
                     .replace(/\*(.*)\*/gim, '<em>$1</em>')
-                    .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="resizable-image">')
+                    .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="resizable-image" style="max-width: 300px; height: auto;">')
                     .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>')
                     .replace(/^\s*-\s(.*$)/gim, '<li>$1</li>')
+                    .replace(/^\s*\*\s(.*$)/gim, '<li>$1</li>')
                     .replace(/^\s*\d+\.\s(.*$)/gim, '<li>$1</li>')
                     .replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>')
-                    .replace(/\n/g, '<br>');
+                    .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+                    .replace(/`([^`]+)`/g, '<code>$1</code>')
+                    .replace(/\n/g, '<br>')
+                    .replace(/<br><br>/g, '</p><p>')
+                    .replace(/^<br>/, '<p>')
+                    .replace(/<br>$/, '</p>');
             }
 
-            // Local Folder Saving
-            async saveToLocalFolder() {
+            // Backup to Folder
+            async backupToFolder() {
                 try {
-                    // Try using File System Access API
                     if ('showDirectoryPicker' in window) {
                         const directoryHandle = await window.showDirectoryPicker({
                             startIn: 'documents'
                         });
                         
-                        const notesFolderHandle = await directoryHandle.getDirectoryHandle('My-Notes', { create: true });
+                        const notesFolderHandle = await directoryHandle.getDirectoryHandle('My-Notes-Backup', { create: true });
                         
-                        const backupData = {
-                            notes: this.notes,
-                            exportedAt: new Date().toISOString(),
+                        // Save each note as separate TXT file
+                        for (const note of this.notes) {
+                            const content = `${note.title}\n\n${this.stripHtml(note.content)}`;
+                            const filename = `${this.sanitizeFilename(note.title)}.txt`;
+                            
+                            try {
+                                const fileHandle = await notesFolderHandle.getFileHandle(filename, { create: true });
+                                const writable = await fileHandle.createWritable();
+                                await writable.write(content);
+                                await writable.close();
+                            } catch (error) {
+                                console.warn(`Could not save ${filename}:`, error);
+                            }
+                        }
+                        
+                        // Also save metadata as JSON
+                        const metadata = {
+                            notesCount: this.notes.length,
+                            backupDate: new Date().toISOString(),
                             version: '1.0'
                         };
                         
-                        const content = JSON.stringify(backupData, null, 2);
-                        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-                        const filename = `notes-backup-${timestamp}.json`;
+                        const metaFileHandle = await notesFolderHandle.getFileHandle('backup-metadata.json', { create: true });
+                        const metaWritable = await metaFileHandle.createWritable();
+                        await metaWritable.write(JSON.stringify(metadata, null, 2));
+                        await metaWritable.close();
                         
-                        const fileHandle = await notesFolderHandle.getFileHandle(filename, { create: true });
-                        const writable = await fileHandle.createWritable();
-                        await writable.write(content);
-                        await writable.close();
-                        
-                        alert(`✅ Backup saved to: My-Notes/${filename}`);
+                        alert(`✅ Backup complete! Saved ${this.notes.length} notes to My-Notes-Backup folder.`);
                         return;
                     }
                 } catch (error) {
@@ -1555,29 +2025,15 @@
                     }
                 }
                 
-                // Fallback: Regular download
-                this.downloadBackupFile();
-            }
-
-            downloadBackupFile() {
-                const backupData = {
-                    notes: this.notes,
-                    exportedAt: new Date().toISOString(),
-                    version: '1.0'
-                };
-                
-                const content = JSON.stringify(backupData, null, 2);
-                const filename = `notes-backup-${new Date().toISOString().split('T')[0]}.json`;
-                
-                this.downloadFile(content, filename, 'application/json');
-                
-                alert(`📥 Backup downloaded as: ${filename}\n\n💡 Save it to your preferred location.`);
+                // Fallback: Export all as individual TXT files
+                this.exportEachAsTXT();
+                alert('📥 Notes exported as individual TXT files. Please save them to your preferred backup location.');
             }
 
             updateStorageInfo() {
                 const notesSize = JSON.stringify(this.notes).length;
                 const totalSize = (notesSize / 1024).toFixed(2);
-                this.storageInfo.textContent = `Storage: ${totalSize} KB`;
+                this.storageInfo.textContent = `Storage: ${totalSize} KB | ${this.notes.length} notes`;
             }
 
             saveToStorage() {
