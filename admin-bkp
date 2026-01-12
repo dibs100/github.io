@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
     <style>
         :root {
             --primary: #0A66C2;
@@ -266,6 +265,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
         #noteEditor {
@@ -281,6 +281,43 @@
             outline: none;
             overflow-y: auto;
             min-height: 400px;
+        }
+
+        /* Resizable Images */
+        .resizable-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            margin: 1rem 0;
+            cursor: move;
+            position: relative;
+            display: inline-block;
+            border: 2px solid transparent;
+        }
+
+        .resizable-image:hover {
+            border-color: var(--primary);
+        }
+
+        .resizable-image.resizing {
+            border-color: var(--primary-light);
+        }
+
+        .resize-handle {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border: 2px solid white;
+            border-radius: 50%;
+            bottom: -6px;
+            right: -6px;
+            cursor: se-resize;
+            display: none;
+        }
+
+        .resizable-image:hover .resize-handle {
+            display: block;
         }
 
         /* Rich Text Editor Styles */
@@ -347,73 +384,6 @@
             font-weight: 600;
         }
 
-        #noteEditor img {
-            max-width: 100%;
-            height: auto;
-            border-radius: var(--border-radius);
-            margin: 1rem 0;
-        }
-
-        /* File Drop Area */
-        .file-drop-area {
-            border: 2px dashed var(--gray);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            text-align: center;
-            margin: 1rem 0;
-            color: var(--secondary);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .file-drop-area:hover {
-            border-color: var(--primary);
-            background: rgba(10, 102, 194, 0.05);
-        }
-
-        .file-drop-area.drag-over {
-            border-color: var(--primary);
-            background: rgba(10, 102, 194, 0.1);
-        }
-
-        /* Image Gallery */
-        .image-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-
-        .image-item {
-            position: relative;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            border: 1px solid var(--gray);
-        }
-
-        .image-item img {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .image-item-remove {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
         /* Export Options */
         .export-options {
             display: none;
@@ -426,6 +396,7 @@
             padding: 0.5rem;
             min-width: 200px;
             z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .export-options.show {
@@ -455,6 +426,11 @@
             display: flex;
             justify-content: space-between;
             flex-shrink: 0;
+        }
+
+        .auto-save-indicator {
+            color: var(--success);
+            font-weight: 500;
         }
 
         /* Authentication Error */
@@ -559,47 +535,51 @@
                 <div class="note-count" id="noteCount">0 notes</div>
             </div>
             <div class="header-actions">
-                <button class="btn" id="newNoteBtn">
+                <button class="btn" id="newNoteBtn" title="Create new note">
                     <i class="fas fa-plus"></i>
-                    New Note
+                    New
                 </button>
                 <div style="position: relative;">
-                    <button class="btn" id="exportBtn">
+                    <button class="btn" id="exportBtn" title="Export notes">
                         <i class="fas fa-download"></i>
                         Export
                     </button>
                     <div class="export-options" id="exportOptions">
+                        <div class="export-option" data-format="txt">
+                            <i class="fas fa-file-alt"></i>
+                            Export All as TXT
+                        </div>
                         <div class="export-option" data-format="json">
                             <i class="fas fa-code"></i>
-                            Export as JSON
+                            Export All as JSON
                         </div>
                         <div class="export-option" data-format="html">
                             <i class="fas fa-file-code"></i>
-                            Export as HTML
-                        </div>
-                        <div class="export-option" data-format="txt">
-                            <i class="fas fa-file-alt"></i>
-                            Export as Text
+                            Export All as HTML
                         </div>
                         <div class="export-option" data-format="markdown">
                             <i class="fab fa-markdown"></i>
-                            Export as Markdown
+                            Export All as Markdown
                         </div>
-                        <div class="export-option" data-format="backup">
-                            <i class="fas fa-save"></i>
-                            Backup All (JSON + Images)
+                        <div class="export-option" data-format="single-txt">
+                            <i class="fas fa-file"></i>
+                            Export Current as TXT
+                        </div>
+                        <div class="export-option" data-format="single-html">
+                            <i class="fas fa-file-code"></i>
+                            Export Current as HTML
                         </div>
                     </div>
                 </div>
-                <button class="btn" id="importBtn">
+                <button class="btn" id="importBtn" title="Import notes from files">
                     <i class="fas fa-upload"></i>
                     Import
                 </button>
-                <button class="btn" id="settingsBtn">
-                    <i class="fas fa-cog"></i>
-                    Settings
+                <button class="btn" id="saveToFolderBtn" title="Save backup to folder">
+                    <i class="fas fa-folder-open"></i>
+                    Backup
                 </button>
-                <button class="btn" id="logoutBtn">
+                <button class="btn" id="logoutBtn" title="Logout">
                     <i class="fas fa-sign-out-alt"></i>
                     Logout
                 </button>
@@ -659,28 +639,16 @@
                         <button class="toolbar-btn" data-command="createLink" title="Insert Link">
                             <i class="fas fa-link"></i>
                         </button>
-                        <button class="toolbar-btn" id="insertImageBtn" title="Insert Image">
-                            <i class="fas fa-image"></i>
-                        </button>
                         <button class="toolbar-btn" id="insertTableBtn" title="Insert Table">
                             <i class="fas fa-table"></i>
                         </button>
                     </div>
                     
                     <div class="toolbar-group">
-                        <button class="toolbar-btn" data-command="undo" title="Undo">
-                            <i class="fas fa-undo"></i>
-                        </button>
-                        <button class="toolbar-btn" data-command="redo" title="Redo">
-                            <i class="fas fa-redo"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="toolbar-group">
-                        <button class="toolbar-btn" id="saveNoteBtn" title="Save Note">
+                        <button class="toolbar-btn" id="saveNoteBtn" title="Save Note (Ctrl+S)">
                             <i class="fas fa-save"></i> Save
                         </button>
-                        <button class="toolbar-btn btn-danger" id="deleteNoteBtn" title="Delete Note">
+                        <button class="toolbar-btn" id="deleteNoteBtn" title="Delete Note">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -689,22 +657,9 @@
                 <!-- Note Title -->
                 <input type="text" class="note-title-input" id="noteTitle" placeholder="Note Title" maxlength="200">
 
-                <!-- File Drop Area (hidden by default) -->
-                <div class="file-drop-area" id="fileDropArea" style="display: none;">
-                    <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                    <p>Drop images here to upload</p>
-                    <p style="font-size: 0.8rem;">or click to select files</p>
-                    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
-                </div>
-
                 <!-- Rich Text Editor -->
                 <div class="editor-content">
-                    <div id="noteEditor" contenteditable="true" placeholder="Start typing your note here..."></div>
-                </div>
-
-                <!-- Image Gallery -->
-                <div class="image-gallery" id="imageGallery" style="display: none;">
-                    <!-- Uploaded images will appear here -->
+                    <div id="noteEditor" contenteditable="true" placeholder="Start typing your note here... Press Ctrl+V to paste images"></div>
                 </div>
             </div>
         </div>
@@ -712,13 +667,12 @@
         <!-- Status Bar -->
         <div class="status-bar">
             <div id="charCount">0 characters</div>
-            <div id="lastSaved">Not saved yet</div>
+            <div class="auto-save-indicator" id="autoSaveIndicator">Auto-save enabled</div>
             <div id="storageInfo">Local Storage</div>
         </div>
 
         <!-- Hidden file inputs -->
-        <input type="file" id="importFileInput" accept=".json,.html,.txt,.md" style="display: none;">
-        <input type="file" id="imageFileInput" multiple accept="image/*" style="display: none;">
+        <input type="file" id="importFileInput" multiple accept=".md,.txt,.html,.json,.rtf,.doc,.docx" style="display: none;">
     </div>
 
     <script>
@@ -741,14 +695,15 @@
             }
         }
 
-        // Notes App with Enhanced Features
+        // Enhanced Notes App with all requested features
         class EnhancedNotesApp {
             constructor() {
                 this.notes = JSON.parse(localStorage.getItem('dibesh_notes')) || [];
-                this.images = JSON.parse(localStorage.getItem('dibesh_note_images')) || {};
                 this.currentNoteId = null;
                 this.saveTimeout = null;
-                this.AUTO_SAVE_DELAY = 2000; // 2 seconds
+                this.AUTO_SAVE_DELAY = 1000; // 1 second auto-save
+                this.isSaving = false;
+                this.imageResizeData = null;
                 this.init();
             }
 
@@ -772,9 +727,8 @@
                 this.noteCount = document.getElementById('noteCount');
                 this.searchBox = document.getElementById('searchBox');
                 this.charCount = document.getElementById('charCount');
-                this.lastSaved = document.getElementById('lastSaved');
-                this.imageGallery = document.getElementById('imageGallery');
-                this.fileDropArea = document.getElementById('fileDropArea');
+                this.autoSaveIndicator = document.getElementById('autoSaveIndicator');
+                this.storageInfo = document.getElementById('storageInfo');
                 
                 // Buttons
                 this.newNoteBtn = document.getElementById('newNoteBtn');
@@ -784,10 +738,8 @@
                 this.exportOptions = document.getElementById('exportOptions');
                 this.importBtn = document.getElementById('importBtn');
                 this.importFileInput = document.getElementById('importFileInput');
+                this.saveToFolderBtn = document.getElementById('saveToFolderBtn');
                 this.logoutBtn = document.getElementById('logoutBtn');
-                this.settingsBtn = document.getElementById('settingsBtn');
-                this.insertImageBtn = document.getElementById('insertImageBtn');
-                this.imageFileInput = document.getElementById('imageFileInput');
                 this.insertTableBtn = document.getElementById('insertTableBtn');
                 
                 // Event Listeners
@@ -808,6 +760,9 @@
                 
                 // Show storage info
                 this.updateStorageInfo();
+                
+                // Set initial cursor position
+                this.setCursorToEnd();
             }
 
             setupEventListeners() {
@@ -833,13 +788,15 @@
                 this.importBtn.addEventListener('click', () => this.importFileInput.click());
                 this.importFileInput.addEventListener('change', (e) => this.importNotes(e));
                 
+                this.saveToFolderBtn.addEventListener('click', () => this.saveToLocalFolder());
+                
                 // Authentication
                 this.logoutBtn.addEventListener('click', () => this.logout());
                 
                 // Search
                 this.searchBox.addEventListener('input', () => this.filterNotes());
                 
-                // Auto-save on input
+                // Auto-save on input (with cursor preservation)
                 this.noteTitle.addEventListener('input', () => {
                     this.autoSave();
                     this.updateNoteTitleInList();
@@ -848,6 +805,21 @@
                 this.noteEditor.addEventListener('input', () => {
                     this.autoSave();
                     this.updateCharacterCount();
+                    this.setCursorToEnd(); // Keep cursor at end
+                });
+                
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    // Ctrl+S to save
+                    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                        e.preventDefault();
+                        this.saveNote();
+                    }
+                    
+                    // Escape to blur editor
+                    if (e.key === 'Escape') {
+                        this.noteEditor.blur();
+                    }
                 });
                 
                 // Toolbar buttons
@@ -857,30 +829,21 @@
                         const command = e.currentTarget.dataset.command;
                         const value = e.currentTarget.dataset.value;
                         this.executeCommand(command, value);
+                        this.setCursorToEnd();
                     });
                 });
                 
-                // Image handling
-                this.insertImageBtn.addEventListener('click', () => this.imageFileInput.click());
-                this.imageFileInput.addEventListener('change', (e) => this.handleImageUpload(e));
-                
                 // Table insertion
-                this.insertTableBtn.addEventListener('click', () => this.insertTable());
+                this.insertTableBtn.addEventListener('click', () => {
+                    this.insertTable();
+                    this.setCursorToEnd();
+                });
                 
-                // File drop area
-                this.fileDropArea.addEventListener('click', () => this.imageFileInput.click());
-                this.fileDropArea.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    this.fileDropArea.classList.add('drag-over');
-                });
-                this.fileDropArea.addEventListener('dragleave', () => {
-                    this.fileDropArea.classList.remove('drag-over');
-                });
-                this.fileDropArea.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    this.fileDropArea.classList.remove('drag-over');
-                    this.handleDroppedFiles(e.dataTransfer.files);
-                });
+                // Handle image paste
+                this.noteEditor.addEventListener('paste', (e) => this.handlePaste(e));
+                
+                // Handle image resizing
+                this.setupImageResizing();
                 
                 // Close export menu when clicking outside
                 document.addEventListener('click', (e) => {
@@ -888,6 +851,38 @@
                         this.exportOptions.classList.remove('show');
                     }
                 });
+            }
+
+            // Cursor management
+            setCursorToEnd() {
+                const selection = window.getSelection();
+                const range = document.createRange();
+                
+                // Move cursor to end of content
+                range.selectNodeContents(this.noteEditor);
+                range.collapse(false); // false = to end
+                
+                selection.removeAllRanges();
+                selection.addRange(range);
+                
+                // Ensure editor has focus
+                this.noteEditor.focus();
+            }
+
+            preserveCursorPosition(callback) {
+                const selection = window.getSelection();
+                const range = selection.rangeCount > 0 ? selection.getRangeAt(0).cloneRange() : null;
+                
+                callback();
+                
+                if (range) {
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                } else {
+                    this.setCursorToEnd();
+                }
+                
+                this.noteEditor.focus();
             }
 
             generateId() {
@@ -900,8 +895,7 @@
                     title: 'Untitled Note',
                     content: '',
                     createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString(),
-                    images: []
+                    updatedAt: new Date().toISOString()
                 };
 
                 this.notes.unshift(newNote);
@@ -909,10 +903,10 @@
                 this.renderNotes();
                 this.selectNote(newNote.id);
                 
-                // Focus on title
+                // Focus on title and set cursor at end
                 setTimeout(() => {
                     this.noteTitle.focus();
-                    this.noteTitle.select();
+                    this.noteTitle.setSelectionRange(this.noteTitle.value.length, this.noteTitle.value.length);
                 }, 100);
             }
 
@@ -925,17 +919,6 @@
                 // Update editor
                 this.noteTitle.value = note.title;
                 this.noteEditor.innerHTML = note.content || '<p><br></p>';
-                this.lastSaved.textContent = `Last saved: ${this.formatDate(note.updatedAt)}`;
-                
-                // Show/hide image gallery
-                if (note.images && note.images.length > 0) {
-                    this.renderImageGallery(note.images);
-                    this.imageGallery.style.display = 'grid';
-                    this.fileDropArea.style.display = 'block';
-                } else {
-                    this.imageGallery.style.display = 'none';
-                    this.fileDropArea.style.display = 'block';
-                }
                 
                 // Update active state in list
                 document.querySelectorAll('.note-item').forEach(item => {
@@ -947,11 +930,18 @@
                 
                 // Update character count
                 this.updateCharacterCount();
+                
+                // Set cursor to end
+                setTimeout(() => this.setCursorToEnd(), 50);
+                
+                // Setup image resizing for any images in the content
+                setTimeout(() => this.setupImageResizing(), 100);
             }
 
             saveNote() {
-                if (!this.currentNoteId) return;
+                if (!this.currentNoteId || this.isSaving) return;
                 
+                this.isSaving = true;
                 const noteIndex = this.notes.findIndex(n => n.id === this.currentNoteId);
                 if (noteIndex === -1) return;
                 
@@ -967,13 +957,15 @@
                 
                 this.saveToStorage();
                 this.renderNotes();
-                this.selectNote(this.currentNoteId);
                 
                 // Show save confirmation
-                const originalText = this.saveNoteBtn.innerHTML;
-                this.saveNoteBtn.innerHTML = '<i class="fas fa-check"></i> Saved!';
+                this.autoSaveIndicator.textContent = '✓ Saved';
+                this.autoSaveIndicator.style.color = '#10b981';
+                
                 setTimeout(() => {
-                    this.saveNoteBtn.innerHTML = originalText;
+                    this.autoSaveIndicator.textContent = 'Auto-save enabled';
+                    this.autoSaveIndicator.style.color = '';
+                    this.isSaving = false;
                 }, 1500);
             }
 
@@ -993,17 +985,8 @@
                 if (!this.currentNoteId) return;
                 
                 if (confirm('Are you sure you want to delete this note?')) {
-                    // Remove associated images
-                    const note = this.notes.find(n => n.id === this.currentNoteId);
-                    if (note && note.images) {
-                        note.images.forEach(imageId => {
-                            delete this.images[imageId];
-                        });
-                    }
-                    
                     this.notes = this.notes.filter(n => n.id !== this.currentNoteId);
                     this.saveToStorage();
-                    this.saveImagesToStorage();
                     this.renderNotes();
                     
                     // Create new note or select next
@@ -1052,7 +1035,7 @@
                 if (searchTerm) {
                     filteredNotes = this.notes.filter(note => 
                         note.title.toLowerCase().includes(searchTerm) || 
-                        note.content.toLowerCase().includes(searchTerm)
+                        this.stripHtml(note.content).toLowerCase().includes(searchTerm)
                     );
                 }
                 
@@ -1101,122 +1084,9 @@
 
             // Rich Text Editor Commands
             executeCommand(command, value = null) {
-                document.execCommand(command, false, value);
-                this.noteEditor.focus();
-            }
-
-            // Image Handling
-            async handleImageUpload(event) {
-                const files = Array.from(event.target.files);
-                await this.processImages(files);
-                event.target.value = ''; // Clear input
-            }
-
-            async handleDroppedFiles(files) {
-                const imageFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
-                await this.processImages(imageFiles);
-            }
-
-            async processImages(files) {
-                if (!this.currentNoteId) return;
-                
-                const noteIndex = this.notes.findIndex(n => n.id === this.currentNoteId);
-                if (noteIndex === -1) return;
-                
-                for (const file of files) {
-                    const imageId = this.generateId();
-                    const reader = new FileReader();
-                    
-                    reader.onload = (e) => {
-                        // Store image as base64
-                        this.images[imageId] = {
-                            id: imageId,
-                            data: e.target.result,
-                            name: file.name,
-                            type: file.type,
-                            size: file.size,
-                            uploadedAt: new Date().toISOString()
-                        };
-                        
-                        // Add to note's image list
-                        if (!this.notes[noteIndex].images) {
-                            this.notes[noteIndex].images = [];
-                        }
-                        this.notes[noteIndex].images.push(imageId);
-                        
-                        // Insert image into editor
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.alt = file.name;
-                        img.style.maxWidth = '100%';
-                        img.style.height = 'auto';
-                        
-                        const range = window.getSelection().getRangeAt(0);
-                        range.insertNode(img);
-                        range.setStartAfter(img);
-                        
-                        // Save
-                        this.saveToStorage();
-                        this.saveImagesToStorage();
-                        this.renderImageGallery(this.notes[noteIndex].images);
-                        this.imageGallery.style.display = 'grid';
-                    };
-                    
-                    reader.readAsDataURL(file);
-                }
-            }
-
-            renderImageGallery(imageIds) {
-                if (!imageIds || imageIds.length === 0) {
-                    this.imageGallery.innerHTML = '';
-                    return;
-                }
-                
-                this.imageGallery.innerHTML = imageIds.map(imageId => {
-                    const image = this.images[imageId];
-                    if (!image) return '';
-                    
-                    return `
-                        <div class="image-item">
-                            <img src="${image.data}" alt="${image.name}">
-                            <button class="image-item-remove" data-image-id="${imageId}">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    `;
-                }).join('');
-                
-                // Add remove event listeners
-                document.querySelectorAll('.image-item-remove').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        const imageId = e.currentTarget.dataset.imageId;
-                        this.removeImage(imageId);
-                    });
+                this.preserveCursorPosition(() => {
+                    document.execCommand(command, false, value);
                 });
-            }
-
-            removeImage(imageId) {
-                if (!this.currentNoteId) return;
-                
-                const noteIndex = this.notes.findIndex(n => n.id === this.currentNoteId);
-                if (noteIndex === -1) return;
-                
-                // Remove from note
-                this.notes[noteIndex].images = this.notes[noteIndex].images.filter(id => id !== imageId);
-                
-                // Remove from images storage
-                delete this.images[imageId];
-                
-                // Save
-                this.saveToStorage();
-                this.saveImagesToStorage();
-                this.renderImageGallery(this.notes[noteIndex].images);
-                
-                // Hide gallery if no images left
-                if (!this.notes[noteIndex].images || this.notes[noteIndex].images.length === 0) {
-                    this.imageGallery.style.display = 'none';
-                }
             }
 
             // Table Creation
@@ -1225,107 +1095,309 @@
                 const cols = prompt('Number of columns:', '3');
                 
                 if (rows && cols) {
-                    let tableHtml = '<table><tbody>';
-                    for (let i = 0; i < parseInt(rows); i++) {
-                        tableHtml += '<tr>';
-                        for (let j = 0; j < parseInt(cols); j++) {
-                            tableHtml += `<td>Cell ${i+1}-${j+1}</td>`;
+                    this.preserveCursorPosition(() => {
+                        let tableHtml = '<table><tbody>';
+                        for (let i = 0; i < parseInt(rows); i++) {
+                            tableHtml += '<tr>';
+                            for (let j = 0; j < parseInt(cols); j++) {
+                                tableHtml += `<td>Cell ${i+1}-${j+1}</td>`;
+                            }
+                            tableHtml += '</tr>';
                         }
-                        tableHtml += '</tr>';
+                        tableHtml += '</tbody></table>';
+                        
+                        document.execCommand('insertHTML', false, tableHtml);
+                    });
+                }
+            }
+
+            // Image Handling
+            handlePaste(event) {
+                const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+                
+                for (const item of items) {
+                    if (item.type.indexOf('image') !== -1) {
+                        event.preventDefault();
+                        const blob = item.getAsFile();
+                        const reader = new FileReader();
+                        
+                        reader.onload = (e) => {
+                            this.preserveCursorPosition(() => {
+                                const img = document.createElement('img');
+                                img.src = e.target.result;
+                                img.className = 'resizable-image';
+                                img.style.maxWidth = '300px'; // Default size
+                                img.style.height = 'auto';
+                                
+                                // Add resize handle
+                                const resizeHandle = document.createElement('div');
+                                resizeHandle.className = 'resize-handle';
+                                img.appendChild(resizeHandle);
+                                
+                                document.execCommand('insertHTML', false, img.outerHTML);
+                                this.setupImageResizing(); // Re-setup resizing for new image
+                            });
+                        };
+                        
+                        reader.readAsDataURL(blob);
+                        break;
                     }
-                    tableHtml += '</tbody></table>';
+                }
+            }
+
+            setupImageResizing() {
+                // Remove old event listeners
+                document.querySelectorAll('.resizable-image').forEach(img => {
+                    img.removeEventListener('mousedown', this.handleImageMouseDown);
+                });
+                
+                // Add new event listeners
+                document.querySelectorAll('.resizable-image').forEach(img => {
+                    img.addEventListener('mousedown', this.handleImageMouseDown.bind(this));
                     
-                    this.executeCommand('insertHTML', tableHtml);
+                    // Ensure resize handle exists
+                    if (!img.querySelector('.resize-handle')) {
+                        const resizeHandle = document.createElement('div');
+                        resizeHandle.className = 'resize-handle';
+                        img.appendChild(resizeHandle);
+                    }
+                });
+                
+                // Add global mouse events
+                document.removeEventListener('mousemove', this.handleImageMouseMove);
+                document.removeEventListener('mouseup', this.handleImageMouseUp);
+                
+                document.addEventListener('mousemove', this.handleImageMouseMove.bind(this));
+                document.addEventListener('mouseup', this.handleImageMouseUp.bind(this));
+            }
+
+            handleImageMouseDown(e) {
+                if (e.target.classList.contains('resize-handle')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const img = e.target.parentElement;
+                    this.imageResizeData = {
+                        img: img,
+                        startX: e.clientX,
+                        startY: e.clientY,
+                        startWidth: parseInt(getComputedStyle(img).width),
+                        startHeight: parseInt(getComputedStyle(img).height)
+                    };
+                    
+                    img.classList.add('resizing');
+                }
+            }
+
+            handleImageMouseMove(e) {
+                if (this.imageResizeData) {
+                    e.preventDefault();
+                    
+                    const { img, startX, startY, startWidth, startHeight } = this.imageResizeData;
+                    const deltaX = e.clientX - startX;
+                    const deltaY = e.clientY - startY;
+                    
+                    // Calculate new dimensions (maintain aspect ratio)
+                    const newWidth = Math.max(50, startWidth + deltaX);
+                    const aspectRatio = startHeight / startWidth;
+                    const newHeight = newWidth * aspectRatio;
+                    
+                    img.style.width = `${newWidth}px`;
+                    img.style.height = `${newHeight}px`;
+                    img.style.maxWidth = 'none'; // Override max-width during resize
+                    
+                    // Auto-save after resize
+                    this.autoSave();
+                }
+            }
+
+            handleImageMouseUp() {
+                if (this.imageResizeData) {
+                    this.imageResizeData.img.classList.remove('resizing');
+                    this.imageResizeData.img.style.maxWidth = '100%'; // Restore max-width
+                    this.imageResizeData = null;
+                    this.saveNote(); // Save after resize complete
                 }
             }
 
             // Export Functions
             exportNotes(format) {
-                if (!this.currentNoteId) return;
-                
-                const note = this.notes.find(n => n.id === this.currentNoteId);
-                if (!note) return;
-                
-                let content, filename, mimeType;
-                
                 switch (format) {
-                    case 'json':
-                        content = JSON.stringify(note, null, 2);
-                        filename = `${note.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.json`;
-                        mimeType = 'application/json';
-                        break;
-                        
-                    case 'html':
-                        content = `
-                            <!DOCTYPE html>
-                            <html>
-                            <head>
-                                <meta charset="UTF-8">
-                                <title>${note.title}</title>
-                                <style>
-                                    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 2rem; }
-                                    img { max-width: 100%; height: auto; }
-                                    table { border-collapse: collapse; width: 100%; }
-                                    th, td { border: 1px solid #ddd; padding: 8px; }
-                                </style>
-                            </head>
-                            <body>
-                                <h1>${note.title}</h1>
-                                <div>${note.content}</div>
-                                <p><small>Exported on ${new Date().toLocaleString()}</small></p>
-                            </body>
-                            </html>
-                        `;
-                        filename = `${note.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.html`;
-                        mimeType = 'text/html';
-                        break;
-                        
                     case 'txt':
-                        content = `${note.title}\n\n${this.stripHtml(note.content)}`;
-                        filename = `${note.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.txt`;
-                        mimeType = 'text/plain';
+                        this.exportAllAsTXT();
                         break;
-                        
+                    case 'json':
+                        this.exportAllAsJSON();
+                        break;
+                    case 'html':
+                        this.exportAllAsHTML();
+                        break;
                     case 'markdown':
-                        // Simple HTML to Markdown conversion
-                        let mdContent = `# ${note.title}\n\n`;
-                        mdContent += this.htmlToMarkdown(note.content);
-                        content = mdContent;
-                        filename = `${note.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.md`;
-                        mimeType = 'text/markdown';
+                        this.exportAllAsMarkdown();
                         break;
-                        
-                    case 'backup':
-                        this.backupAllData();
-                        return;
+                    case 'single-txt':
+                        this.exportCurrentAsTXT();
+                        break;
+                    case 'single-html':
+                        this.exportCurrentAsHTML();
+                        break;
                 }
-                
-                this.downloadFile(content, filename, mimeType);
             }
 
-            backupAllData() {
-                const backupData = {
+            exportAllAsTXT() {
+                this.exportMultipleFiles('txt', 'text/plain', (note) => 
+                    `${note.title}\n\n${this.stripHtml(note.content)}`
+                );
+            }
+
+            exportAllAsJSON() {
+                const exportData = {
                     notes: this.notes,
-                    images: this.images,
                     exportedAt: new Date().toISOString(),
                     version: '1.0'
                 };
                 
-                const content = JSON.stringify(backupData, null, 2);
-                const filename = `notes-backup-${new Date().toISOString().split('T')[0]}.json`;
-                
-                this.downloadFile(content, filename, 'application/json');
-                
-                // Also save to local folder if possible
-                this.saveToLocalFolder(backupData);
+                this.downloadFile(
+                    JSON.stringify(exportData, null, 2),
+                    `notes-backup-${new Date().toISOString().split('T')[0]}.json`,
+                    'application/json'
+                );
             }
 
-            saveToLocalFolder(data) {
-                // This would require additional permissions or a server
-                // For now, we'll just download the file
-                console.log('Backup data prepared for local saving');
-                // In a real app, you could use the File System Access API
-                // but it requires HTTPS and user permission
+            exportAllAsHTML() {
+                this.exportMultipleFiles('html', 'text/html', (note) => `
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>${note.title}</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; line-height: 1.6; padding: 2rem; max-width: 800px; margin: 0 auto; }
+                            img { max-width: 100%; height: auto; }
+                            table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+                            th, td { border: 1px solid #ddd; padding: 8px; }
+                            pre { background: #f5f5f5; padding: 1rem; overflow-x: auto; }
+                            code { background: #f5f5f5; padding: 2px 4px; border-radius: 3px; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>${note.title}</h1>
+                        <div>${note.content}</div>
+                        <hr>
+                        <p><small>Exported from My Notes on ${new Date().toLocaleString()}</small></p>
+                    </body>
+                    </html>
+                `);
+            }
+
+            exportAllAsMarkdown() {
+                this.exportMultipleFiles('md', 'text/markdown', (note) => {
+                    let md = `# ${note.title}\n\n`;
+                    md += this.htmlToMarkdown(note.content);
+                    md += `\n\n---\n*Exported from My Notes on ${new Date().toLocaleString()}*`;
+                    return md;
+                });
+            }
+
+            exportCurrentAsTXT() {
+                if (!this.currentNoteId) return;
+                const note = this.notes.find(n => n.id === this.currentNoteId);
+                if (!note) return;
+                
+                this.downloadFile(
+                    `${note.title}\n\n${this.stripHtml(note.content)}`,
+                    `${this.sanitizeFilename(note.title)}.txt`,
+                    'text/plain'
+                );
+            }
+
+            exportCurrentAsHTML() {
+                if (!this.currentNoteId) return;
+                const note = this.notes.find(n => n.id === this.currentNoteId);
+                if (!note) return;
+                
+                const html = `
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>${note.title}</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; line-height: 1.6; padding: 2rem; max-width: 800px; margin: 0 auto; }
+                            img { max-width: 100%; height: auto; }
+                            table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+                            th, td { border: 1px solid #ddd; padding: 8px; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>${note.title}</h1>
+                        <div>${note.content}</div>
+                    </body>
+                    </html>
+                `;
+                
+                this.downloadFile(
+                    html,
+                    `${this.sanitizeFilename(note.title)}.html`,
+                    'text/html'
+                );
+            }
+
+            exportMultipleFiles(extension, mimeType, contentGenerator) {
+                // Create a zip file containing all notes
+                if (this.notes.length === 0) {
+                    alert('No notes to export');
+                    return;
+                }
+                
+                // For simplicity, we'll create individual files
+                // In a real app, you might want to use a zip library
+                alert(`Exporting ${this.notes.length} notes as ${extension.toUpperCase()} files...\n\nThey will be downloaded one by one.`);
+                
+                // Download each note as separate file
+                setTimeout(() => {
+                    this.notes.forEach((note, index) => {
+                        setTimeout(() => {
+                            this.downloadFile(
+                                contentGenerator(note),
+                                `${this.sanitizeFilename(note.title)}-${index + 1}.${extension}`,
+                                mimeType
+                            );
+                        }, index * 500); // Stagger downloads
+                    });
+                }, 1000);
+            }
+
+            htmlToMarkdown(html) {
+                // Simple HTML to Markdown conversion
+                let md = html
+                    .replace(/<h1[^>]*>([^<]+)<\/h1>/g, '# $1\n\n')
+                    .replace(/<h2[^>]*>([^<]+)<\/h2>/g, '## $1\n\n')
+                    .replace(/<h3[^>]*>([^<]+)<\/h3>/g, '### $1\n\n')
+                    .replace(/<strong[^>]*>([^<]+)<\/strong>/g, '**$1**')
+                    .replace(/<b[^>]*>([^<]+)<\/b>/g, '**$1**')
+                    .replace(/<em[^>]*>([^<]+)<\/em>/g, '*$1*')
+                    .replace(/<i[^>]*>([^<]+)<\/i>/g, '*$1*')
+                    .replace(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/g, '[$2]($1)')
+                    .replace(/<img[^>]+src="([^"]+)"[^>]*alt="([^"]*)"[^>]*>/g, '![$2]($1)')
+                    .replace(/<ul[^>]*>|<\/ul>|<ol[^>]*>|<\/ol>/g, '')
+                    .replace(/<li[^>]*>([^<]+)<\/li>/g, '- $1\n')
+                    .replace(/<p[^>]*>([^<]+)<\/p>/g, '$1\n\n')
+                    .replace(/<br[^>]*>/g, '\n')
+                    .replace(/<[^>]+>/g, '')
+                    .replace(/\n{3,}/g, '\n\n')
+                    .trim();
+                    
+                return md;
+            }
+
+            sanitizeFilename(filename) {
+                return filename
+                    .replace(/[^a-z0-9]/gi, '_')
+                    .toLowerCase()
+                    .replace(/_+/g, '_')
+                    .replace(/^_|_$/g, '')
+                    .substring(0, 50) || 'note';
             }
 
             downloadFile(content, filename, mimeType) {
@@ -1340,80 +1412,176 @@
                 URL.revokeObjectURL(url);
             }
 
-            htmlToMarkdown(html) {
-                // Simple conversion - can be enhanced
-                let md = html
-                    .replace(/<h1[^>]*>([^<]+)<\/h1>/g, '# $1\n\n')
-                    .replace(/<h2[^>]*>([^<]+)<\/h2>/g, '## $1\n\n')
-                    .replace(/<h3[^>]*>([^<]+)<\/h3>/g, '### $1\n\n')
-                    .replace(/<strong[^>]*>([^<]+)<\/strong>/g, '**$1**')
-                    .replace(/<b[^>]*>([^<]+)<\/b>/g, '**$1**')
-                    .replace(/<em[^>]*>([^<]+)<\/em>/g, '*$1*')
-                    .replace(/<i[^>]*>([^<]+)<\/i>/g, '*$1*')
-                    .replace(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/g, '[$2]($1)')
-                    .replace(/<img[^>]+src="([^"]+)"[^>]*>/g, '![Image]($1)')
-                    .replace(/<ul[^>]*>|<\/ul>|<ol[^>]*>|<\/ol>/g, '')
-                    .replace(/<li[^>]*>([^<]+)<\/li>/g, '- $1\n')
-                    .replace(/<p[^>]*>([^<]+)<\/p>/g, '$1\n\n')
-                    .replace(/<[^>]+>/g, '')
-                    .replace(/\n{3,}/g, '\n\n')
-                    .trim();
+            // Import Functions
+            async importNotes(event) {
+                const files = Array.from(event.target.files);
+                if (files.length === 0) return;
+                
+                let importedCount = 0;
+                
+                for (const file of files) {
+                    try {
+                        const content = await this.readFile(file);
+                        const note = this.createNoteFromFile(file, content);
+                        
+                        if (note) {
+                            this.notes.unshift(note);
+                            importedCount++;
+                        }
+                    } catch (error) {
+                        console.error(`Error importing ${file.name}:`, error);
+                    }
+                }
+                
+                if (importedCount > 0) {
+                    this.saveToStorage();
+                    this.renderNotes();
+                    alert(`Successfully imported ${importedCount} note${importedCount !== 1 ? 's' : ''}`);
                     
-                return md;
+                    // Select the first imported note
+                    if (this.notes.length > 0) {
+                        this.selectNote(this.notes[0].id);
+                    }
+                }
+                
+                // Clear input
+                event.target.value = '';
             }
 
-            // Import
-            importNotes(event) {
-                const file = event.target.files[0];
-                if (!file) return;
+            readFile(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = (e) => reject(e);
+                    reader.readAsText(file);
+                });
+            }
+
+            createNoteFromFile(file, content) {
+                const extension = file.name.split('.').pop().toLowerCase();
+                const filename = file.name.replace(/\.[^/.]+$/, ""); // Remove extension
                 
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    try {
-                        const data = JSON.parse(e.target.result);
+                let noteContent = '';
+                let noteTitle = filename;
+                
+                switch (extension) {
+                    case 'md':
+                    case 'txt':
+                    case 'html':
+                    case 'rtf':
+                        // For simple text files, use as-is
+                        noteContent = content;
+                        break;
                         
-                        if (data.notes && Array.isArray(data.notes)) {
-                            // Full backup import
-                            this.notes = [...this.notes, ...data.notes];
-                            this.images = { ...this.images, ...data.images };
-                            alert(`Imported ${data.notes.length} notes from backup`);
-                        } else if (data.title && data.content) {
-                            // Single note import
-                            data.id = this.generateId();
-                            data.createdAt = data.createdAt || new Date().toISOString();
-                            data.updatedAt = new Date().toISOString();
-                            this.notes.unshift(data);
-                            alert('Note imported successfully');
+                    case 'json':
+                        try {
+                            const data = JSON.parse(content);
+                            if (data.title && data.content) {
+                                noteTitle = data.title;
+                                noteContent = data.content;
+                            }
+                        } catch (e) {
+                            noteContent = content;
                         }
+                        break;
                         
-                        this.saveToStorage();
-                        this.saveImagesToStorage();
-                        this.renderNotes();
-                        this.selectNote(data.id || this.notes[0].id);
-                        
-                    } catch (error) {
-                        alert('Error importing file. Please check the format.');
-                    }
+                    default:
+                        noteContent = content;
+                }
+                
+                // Convert markdown to HTML if needed
+                if (extension === 'md') {
+                    noteContent = this.markdownToHtml(noteContent);
+                }
+                
+                return {
+                    id: this.generateId(),
+                    title: noteTitle,
+                    content: noteContent,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                    originalFilename: file.name
                 };
-                reader.readAsText(file);
-                event.target.value = ''; // Clear input
+            }
+
+            markdownToHtml(markdown) {
+                // Simple Markdown to HTML conversion
+                return markdown
+                    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                    .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+                    .replace(/\*(.*)\*/gim, '<em>$1</em>')
+                    .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="resizable-image">')
+                    .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>')
+                    .replace(/^\s*-\s(.*$)/gim, '<li>$1</li>')
+                    .replace(/^\s*\d+\.\s(.*$)/gim, '<li>$1</li>')
+                    .replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>')
+                    .replace(/\n/g, '<br>');
+            }
+
+            // Local Folder Saving
+            async saveToLocalFolder() {
+                try {
+                    // Try using File System Access API
+                    if ('showDirectoryPicker' in window) {
+                        const directoryHandle = await window.showDirectoryPicker({
+                            startIn: 'documents'
+                        });
+                        
+                        const notesFolderHandle = await directoryHandle.getDirectoryHandle('My-Notes', { create: true });
+                        
+                        const backupData = {
+                            notes: this.notes,
+                            exportedAt: new Date().toISOString(),
+                            version: '1.0'
+                        };
+                        
+                        const content = JSON.stringify(backupData, null, 2);
+                        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                        const filename = `notes-backup-${timestamp}.json`;
+                        
+                        const fileHandle = await notesFolderHandle.getFileHandle(filename, { create: true });
+                        const writable = await fileHandle.createWritable();
+                        await writable.write(content);
+                        await writable.close();
+                        
+                        alert(`✅ Backup saved to: My-Notes/${filename}`);
+                        return;
+                    }
+                } catch (error) {
+                    if (error.name !== 'AbortError') {
+                        console.log('File System API failed:', error);
+                    }
+                }
+                
+                // Fallback: Regular download
+                this.downloadBackupFile();
+            }
+
+            downloadBackupFile() {
+                const backupData = {
+                    notes: this.notes,
+                    exportedAt: new Date().toISOString(),
+                    version: '1.0'
+                };
+                
+                const content = JSON.stringify(backupData, null, 2);
+                const filename = `notes-backup-${new Date().toISOString().split('T')[0]}.json`;
+                
+                this.downloadFile(content, filename, 'application/json');
+                
+                alert(`📥 Backup downloaded as: ${filename}\n\n💡 Save it to your preferred location.`);
             }
 
             updateStorageInfo() {
                 const notesSize = JSON.stringify(this.notes).length;
-                const imagesSize = JSON.stringify(this.images).length;
-                const totalSize = ((notesSize + imagesSize) / 1024).toFixed(2);
-                this.storageInfo = document.getElementById('storageInfo');
+                const totalSize = (notesSize / 1024).toFixed(2);
                 this.storageInfo.textContent = `Storage: ${totalSize} KB`;
             }
 
             saveToStorage() {
                 localStorage.setItem('dibesh_notes', JSON.stringify(this.notes));
-                this.updateStorageInfo();
-            }
-
-            saveImagesToStorage() {
-                localStorage.setItem('dibesh_note_images', JSON.stringify(this.images));
                 this.updateStorageInfo();
             }
 
