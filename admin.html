@@ -18,13 +18,14 @@
             --secondary: #94a3b8;
             --dark: #242c38;
             --darker: #1a2029;
-            --card-bg: #303846;
-            --light: #f8fafc;
-            --gray: #30363d;
-            --gray-light: #161b22;
+            --card-bg: #f8fafc; /* Brighter background for notes */
+            --editor-bg: #ffffff; /* Even brighter for editor */
+            --light: #1a2029; /* Dark text for contrast */
+            --gray: #d1d5db;
+            --gray-light: #f3f4f6;
             --success: #10b981;
             --border-radius: 8px;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --transition: all 0.2s ease;
             
             /* Color tags */
@@ -103,7 +104,7 @@
             width: 100%;
             padding: 1rem;
             margin-bottom: 1.5rem;
-            background: rgba(22, 27, 34, 0.8);
+            background: var(--gray-light);
             border: 1px solid var(--gray);
             border-radius: var(--border-radius);
             color: var(--light);
@@ -113,19 +114,19 @@
         .login-input:focus {
             outline: none;
             border-color: var(--primary);
+            background: white;
         }
 
         .login-submit {
             width: 100%;
             padding: 1rem;
-            background: var(--gradient);
+            background: var(--primary);
             color: white;
             border: none;
             border-radius: var(--border-radius);
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            background: var(--primary);
         }
 
         .login-submit:hover {
@@ -234,7 +235,7 @@
         }
 
         .color-filter-btn.active {
-            border-color: var(--light);
+            border-color: white;
             box-shadow: 0 0 0 1px var(--dark);
         }
 
@@ -260,7 +261,7 @@
             background: var(--card-bg);
             border-radius: 20px;
             font-size: 0.8rem;
-            color: var(--secondary);
+            color: var(--light);
             cursor: pointer;
             transition: var(--transition);
             border: 1px solid transparent;
@@ -301,7 +302,7 @@
         /* Sidebar */
         .sidebar {
             width: 320px;
-            background: var(--dark);
+            background: var(--card-bg);
             border-right: 1px solid var(--gray);
             display: flex;
             flex-direction: column;
@@ -317,7 +318,7 @@
         .search-box {
             width: 100%;
             padding: 0.5rem 1rem;
-            background: var(--card-bg);
+            background: white;
             border: 1px solid var(--gray);
             border-radius: var(--border-radius);
             color: var(--light);
@@ -338,11 +339,11 @@
         .note-item {
             padding: 1rem;
             border-radius: var(--border-radius);
-            background: var(--card-bg);
+            background: white;
             margin-bottom: 0.5rem;
             cursor: pointer;
             transition: var(--transition);
-            border: 1px solid transparent;
+            border: 1px solid var(--gray);
             position: relative;
         }
 
@@ -401,7 +402,7 @@
         }
 
         .note-item-date {
-            color: var(--gray-dark);
+            color: var(--secondary);
             font-size: 0.75rem;
             margin-top: 0.3rem;
         }
@@ -413,13 +414,14 @@
             flex-direction: column;
             overflow: hidden;
             padding: 1rem;
+            background: var(--editor-bg);
         }
 
         .editor-toolbar {
             display: flex;
             gap: 0.5rem;
             padding: 0.5rem;
-            background: var(--dark);
+            background: var(--card-bg);
             border-radius: var(--border-radius);
             margin-bottom: 1rem;
             flex-wrap: wrap;
@@ -441,15 +443,15 @@
             padding: 0.4rem 0.6rem;
             background: transparent;
             border: 1px solid transparent;
-            color: var(--secondary);
+            color: var(--light);
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.9rem;
         }
 
         .toolbar-btn:hover {
-            background: var(--card-bg);
-            color: var(--light);
+            background: rgba(10, 102, 194, 0.1);
+            color: var(--primary);
         }
 
         .toolbar-btn.active {
@@ -512,7 +514,7 @@
             flex-wrap: wrap;
             margin-bottom: 1rem;
             padding: 0.5rem;
-            background: var(--dark);
+            background: var(--card-bg);
             border-radius: var(--border-radius);
         }
 
@@ -556,7 +558,7 @@
 
         .editor-content {
             flex: 1;
-            background: var(--card-bg);
+            background: white;
             border-radius: var(--border-radius);
             border: 1px solid var(--gray);
             overflow: hidden;
@@ -572,12 +574,17 @@
             font-size: 1rem;
             line-height: 1.6;
             color: var(--light);
-            background: transparent;
+            background: white;
             border: none;
             resize: none;
             outline: none;
             overflow-y: auto;
             min-height: 400px;
+        }
+
+        #noteEditor:empty:before {
+            content: attr(placeholder);
+            color: #999;
         }
 
         /* Resizable Images */
@@ -623,13 +630,13 @@
             position: absolute;
             right: 1rem;
             top: 100%;
-            background: var(--dark);
+            background: var(--card-bg);
             border: 1px solid var(--gray);
             border-radius: var(--border-radius);
             padding: 0.5rem;
             min-width: 220px;
             z-index: 100;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .export-options.show {
@@ -643,18 +650,19 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: var(--light);
         }
 
         .export-option:hover {
-            background: var(--card-bg);
+            background: rgba(10, 102, 194, 0.1);
         }
 
         /* Status Bar */
         .status-bar {
             padding: 0.5rem 1rem;
-            background: var(--dark);
+            background: var(--card-bg);
             border-top: 1px solid var(--gray);
-            color: var(--secondary);
+            color: var(--light);
             font-size: 0.85rem;
             display: flex;
             justify-content: space-between;
@@ -673,7 +681,7 @@
         }
 
         ::-webkit-scrollbar-track {
-            background: var(--dark);
+            background: var(--gray-light);
             border-radius: 4px;
         }
 
@@ -685,27 +693,244 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--primary);
         }
+
+        /* MOBILE AND TABLET RESPONSIVE DESIGN */
+        @media (max-width: 1024px) {
+            /* Tablet styles */
+            .sidebar {
+                width: 280px;
+            }
+            
+            .editor-toolbar {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding: 0.5rem;
+            }
+            
+            .toolbar-group {
+                flex-shrink: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Mobile styles - Stack layout */
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: 300px;
+                border-right: none;
+                border-bottom: 1px solid var(--gray);
+            }
+            
+            .editor-container {
+                padding: 0.75rem;
+            }
+            
+            .editor-toolbar {
+                overflow-x: auto;
+                padding: 0.5rem;
+                gap: 0.25rem;
+            }
+            
+            .toolbar-btn {
+                padding: 0.4rem;
+                font-size: 0.85rem;
+            }
+            
+            .note-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .note-title-input {
+                font-size: 1.2rem;
+                width: 100%;
+            }
+            
+            .color-picker {
+                align-self: flex-start;
+            }
+            
+            .header-actions {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+            
+            .btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .filter-bar {
+                flex-wrap: wrap;
+                padding: 0.5rem;
+            }
+            
+            .tag-filter {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+            
+            .clear-filters {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+            
+            .export-options {
+                position: fixed;
+                top: auto;
+                bottom: 60px;
+                right: 10px;
+                left: 10px;
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Small mobile styles */
+            .header {
+                padding: 0.5rem;
+                flex-wrap: wrap;
+            }
+            
+            .header-left {
+                width: 100%;
+                justify-content: space-between;
+                margin-bottom: 0.5rem;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            .btn {
+                flex: 1;
+                justify-content: center;
+                padding: 0.5rem;
+            }
+            
+            .login-box {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .editor-toolbar {
+                justify-content: center;
+            }
+            
+            .toolbar-group {
+                border-right: none;
+            }
+            
+            .note-item {
+                padding: 0.75rem;
+            }
+        }
+
+        /* Mobile-specific utilities */
+        .mobile-only {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-only {
+                display: block;
+            }
+            
+            .desktop-only {
+                display: none;
+            }
+            
+            /* Mobile note actions bar */
+            .mobile-actions-bar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: var(--card-bg);
+                border-top: 1px solid var(--gray);
+                padding: 0.75rem;
+                display: flex;
+                gap: 0.5rem;
+                z-index: 1000;
+            }
+            
+            .mobile-action-btn {
+                flex: 1;
+                padding: 0.75rem;
+                background: var(--primary);
+                color: white;
+                border: none;
+                border-radius: var(--border-radius);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                font-weight: 600;
+                cursor: pointer;
+            }
+            
+            .mobile-action-btn.secondary {
+                background: var(--card-bg);
+                color: var(--light);
+                border: 1px solid var(--gray);
+            }
+            
+            /* Adjust editor for mobile keyboard */
+            .editor-content {
+                min-height: calc(100vh - 450px);
+            }
+            
+            #noteEditor {
+                min-height: calc(100vh - 500px);
+            }
+        }
+
+        /* Touch-friendly adjustments */
+        @media (hover: none) and (pointer: coarse) {
+            .toolbar-btn,
+            .btn,
+            .note-item,
+            .color-option,
+            .color-filter-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            .resize-handle {
+                width: 24px;
+                height: 24px;
+                bottom: -12px;
+                right: -12px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Login Modal (ALWAYS SHOWN FIRST) -->
+    <!-- Login Modal -->
     <div class="login-modal" id="loginModal">
         <div class="login-box">
             <h3>Admin Login</h3>
             <div class="login-error" id="loginError">
                 Invalid password
             </div>
-            <input type="password" class="login-input" id="passwordInput" placeholder="Enter admin password" autocomplete="off">
+            <input type="password" class="login-input" id="passwordInput" placeholder="Enter admin password" autocomplete="current-password">
             <button class="login-submit" id="loginSubmit">
                 Login
             </button>
             <p style="margin-top: 1.5rem; color: var(--secondary); font-size: 0.9rem;">
-                Default password: <code>admin123</code>
+                Secure access to your notes
             </p>
         </div>
     </div>
 
-    <!-- Main Interface (HIDDEN UNTIL LOGIN) -->
+    <!-- Main Interface -->
     <div id="mainApp" style="display: none; flex-direction: column; height: 100vh;">
         <!-- Header -->
         <header class="header">
@@ -716,12 +941,12 @@
             <div class="header-actions">
                 <button class="btn" id="newNoteBtn" title="Create new note">
                     <i class="fas fa-plus"></i>
-                    New
+                    <span class="desktop-only">New</span>
                 </button>
                 <div style="position: relative;">
                     <button class="btn" id="exportBtn" title="Export notes">
                         <i class="fas fa-download"></i>
-                        Export
+                        <span class="desktop-only">Export</span>
                     </button>
                     <div class="export-options" id="exportOptions">
                         <div class="export-option" data-format="txt-all">
@@ -748,15 +973,15 @@
                 </div>
                 <button class="btn" id="importBtn" title="Import notes from files">
                     <i class="fas fa-upload"></i>
-                    Import
+                    <span class="desktop-only">Import</span>
                 </button>
                 <button class="btn" id="saveToFolderBtn" title="Save backup to folder">
                     <i class="fas fa-folder-open"></i>
-                    Backup
+                    <span class="desktop-only">Backup</span>
                 </button>
                 <button class="btn" id="logoutBtn" title="Logout">
                     <i class="fas fa-sign-out-alt"></i>
-                    Logout
+                    <span class="desktop-only">Logout</span>
                 </button>
             </div>
         </header>
@@ -803,13 +1028,13 @@
                 <div class="editor-toolbar">
                     <div class="toolbar-group">
                         <button class="toolbar-btn" data-command="formatBlock" data-value="h1" title="Heading 1">
-                            <i class="fas fa-heading"></i>1
+                            <i class="fas fa-heading"></i><span class="desktop-only">1</span>
                         </button>
                         <button class="toolbar-btn" data-command="formatBlock" data-value="h2" title="Heading 2">
-                            <i class="fas fa-heading"></i>2
+                            <i class="fas fa-heading"></i><span class="desktop-only">2</span>
                         </button>
                         <button class="toolbar-btn" data-command="formatBlock" data-value="h3" title="Heading 3">
-                            <i class="fas fa-heading"></i>3
+                            <i class="fas fa-heading"></i><span class="desktop-only">3</span>
                         </button>
                     </div>
                     
@@ -843,9 +1068,9 @@
                         </button>
                     </div>
                     
-                    <div class="toolbar-group">
+                    <div class="toolbar-group desktop-only">
                         <button class="toolbar-btn" id="saveNoteBtn" title="Save Note (Ctrl+S)">
-                            <i class="fas fa-save"></i> Save
+                            <i class="fas fa-save"></i> <span class="desktop-only">Save</span>
                         </button>
                         <button class="toolbar-btn" id="deleteNoteBtn" title="Delete Note">
                             <i class="fas fa-trash"></i>
@@ -884,6 +1109,19 @@
             </div>
         </div>
 
+        <!-- Mobile Actions Bar -->
+        <div class="mobile-actions-bar mobile-only">
+            <button class="mobile-action-btn" id="mobileSaveBtn">
+                <i class="fas fa-save"></i> Save
+            </button>
+            <button class="mobile-action-btn secondary" id="mobileNewBtn">
+                <i class="fas fa-plus"></i> New
+            </button>
+            <button class="mobile-action-btn secondary" id="mobileDeleteBtn">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+        </div>
+
         <!-- Status Bar -->
         <div class="status-bar">
             <div id="charCount">0 characters</div>
@@ -896,66 +1134,144 @@
     </div>
 
     <script>
-        // PASSWORD SYSTEM - SAME AS index.html
+        // ENHANCED PASSWORD SYSTEM WITH CROSS-BROWSER SUPPORT
         class PasswordManager {
             constructor() {
-                this.STORAGE_KEY = 'dibesh_admin_password';
-                this.DEFAULT_PASSWORD = 'admin123';
-                this.AUTH_FLAG = 'isAuthenticated';
+                // Use a more persistent storage approach
+                this.STORAGE_KEY = 'dibesh_notes_auth_v2';
+                this.DATA_KEY = 'dibesh_notes_data_v2';
+                this.SESSION_FLAG = 'dibesh_notes_session';
+                this.DEFAULT_PASSWORD = this.generateDefaultPassword();
+                this.SALT = 'dibesh_secure_salt_2025';
                 this.init();
             }
 
             init() {
-                // Initialize password if not exists
+                // Initialize password if not exists - use browser fingerprint + salt
                 if (!localStorage.getItem(this.STORAGE_KEY)) {
-                    localStorage.setItem(this.STORAGE_KEY, this.DEFAULT_PASSWORD);
+                    const hashedPassword = this.hashPassword(this.DEFAULT_PASSWORD);
+                    localStorage.setItem(this.STORAGE_KEY, hashedPassword);
                 }
-                // Clear any existing auth flag on page load
-                localStorage.removeItem(this.AUTH_FLAG);
+                
+                // Clear session flag on page load
+                sessionStorage.removeItem(this.SESSION_FLAG);
             }
 
-            getPassword() {
+            generateDefaultPassword() {
+                // Generate a unique default password based on browser fingerprint
+                const fingerprint = navigator.userAgent + 
+                                  navigator.language + 
+                                  navigator.hardwareConcurrency;
+                return this.hashPassword(fingerprint + this.SALT).substring(0, 12);
+            }
+
+            hashPassword(password) {
+                // Simple hash function for basic security
+                let hash = 0;
+                for (let i = 0; i < password.length; i++) {
+                    const char = password.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash;
+                }
+                return Math.abs(hash).toString(36) + this.SALT;
+            }
+
+            getHashedPassword() {
                 return localStorage.getItem(this.STORAGE_KEY);
             }
 
             setPassword(newPassword) {
-                localStorage.setItem(this.STORAGE_KEY, newPassword);
+                const hashedPassword = this.hashPassword(newPassword);
+                localStorage.setItem(this.STORAGE_KEY, hashedPassword);
                 return true;
             }
 
             validatePassword(password) {
-                return password === this.getPassword();
+                const hashedInput = this.hashPassword(password);
+                const storedHash = this.getHashedPassword();
+                return hashedInput === storedHash;
             }
 
             setAuthenticated() {
-                localStorage.setItem(this.AUTH_FLAG, 'true');
+                // Set session flag and timestamp
+                const sessionData = {
+                    authenticated: true,
+                    timestamp: Date.now(),
+                    userAgent: navigator.userAgent.substring(0, 100)
+                };
+                sessionStorage.setItem(this.SESSION_FLAG, JSON.stringify(sessionData));
             }
 
             isAuthenticated() {
-                return localStorage.getItem(this.AUTH_FLAG) === 'true';
+                const sessionData = sessionStorage.getItem(this.SESSION_FLAG);
+                if (!sessionData) return false;
+                
+                try {
+                    const data = JSON.parse(sessionData);
+                    // Check if session is less than 8 hours old
+                    const sessionAge = Date.now() - data.timestamp;
+                    return data.authenticated && sessionAge < (8 * 60 * 60 * 1000);
+                } catch {
+                    return false;
+                }
             }
 
             logout() {
-                localStorage.removeItem(this.AUTH_FLAG);
+                sessionStorage.removeItem(this.SESSION_FLAG);
+            }
+
+            // Data storage methods
+            saveNotesData(notes) {
+                try {
+                    localStorage.setItem(this.DATA_KEY, JSON.stringify(notes));
+                    return true;
+                } catch (e) {
+                    console.error('Failed to save notes:', e);
+                    return false;
+                }
+            }
+
+            loadNotesData() {
+                try {
+                    const data = localStorage.getItem(this.DATA_KEY);
+                    return data ? JSON.parse(data) : [];
+                } catch (e) {
+                    console.error('Failed to load notes:', e);
+                    return [];
+                }
+            }
+
+            clearAllData() {
+                localStorage.removeItem(this.STORAGE_KEY);
+                localStorage.removeItem(this.DATA_KEY);
+                sessionStorage.removeItem(this.SESSION_FLAG);
             }
         }
 
-        // NOTES APP WITH PROPER AUTHENTICATION
+        // ENHANCED NOTES APP WITH MOBILE SUPPORT
         class NotesApp {
             constructor() {
                 this.passwordManager = new PasswordManager();
-                this.notes = JSON.parse(localStorage.getItem('dibesh_notes')) || [];
+                this.notes = this.passwordManager.loadNotesData();
                 this.currentNoteId = null;
                 this.selectedColor = null;
                 this.selectedTag = null;
                 this.allTags = new Set();
                 this.imageResizeData = null;
+                this.isMobile = window.innerWidth <= 768;
                 this.updateAllTags();
                 this.init();
+                
+                // Handle window resize
+                window.addEventListener('resize', this.handleResize.bind(this));
+            }
+
+            handleResize() {
+                this.isMobile = window.innerWidth <= 768;
             }
 
             init() {
-                // Check if already authenticated from index.html
+                // Check if already authenticated
                 if (this.passwordManager.isAuthenticated()) {
                     this.showApp();
                 } else {
@@ -1007,6 +1323,12 @@
                         loginError.style.display = 'block';
                         passwordInput.value = '';
                         passwordInput.focus();
+                        
+                        // Shake animation for wrong password
+                        loginError.style.animation = 'shake 0.5s';
+                        setTimeout(() => {
+                            loginError.style.animation = '';
+                        }, 500);
                     }
                 };
 
@@ -1049,6 +1371,11 @@
                 this.saveToFolderBtn = document.getElementById('saveToFolderBtn');
                 this.logoutBtn = document.getElementById('logoutBtn');
                 this.insertTableBtn = document.getElementById('insertTableBtn');
+                
+                // Mobile buttons
+                this.mobileSaveBtn = document.getElementById('mobileSaveBtn');
+                this.mobileNewBtn = document.getElementById('mobileNewBtn');
+                this.mobileDeleteBtn = document.getElementById('mobileDeleteBtn');
             }
 
             setupEventListeners() {
@@ -1056,6 +1383,17 @@
                 this.newNoteBtn.addEventListener('click', () => this.createNewNote());
                 this.saveNoteBtn.addEventListener('click', () => this.saveNote());
                 this.deleteNoteBtn.addEventListener('click', () => this.deleteNote());
+                
+                // Mobile note actions
+                if (this.mobileSaveBtn) {
+                    this.mobileSaveBtn.addEventListener('click', () => this.saveNote());
+                }
+                if (this.mobileNewBtn) {
+                    this.mobileNewBtn.addEventListener('click', () => this.createNewNote());
+                }
+                if (this.mobileDeleteBtn) {
+                    this.mobileDeleteBtn.addEventListener('click', () => this.deleteNote());
+                }
                 
                 // Export/Import
                 this.exportBtn.addEventListener('click', (e) => {
@@ -1152,13 +1490,33 @@
                     }
                 });
                 
-                // Keyboard shortcuts
-                document.addEventListener('keydown', (e) => {
-                    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-                        e.preventDefault();
-                        this.saveNote();
-                    }
-                });
+                // Keyboard shortcuts (desktop only)
+                if (!this.isMobile) {
+                    document.addEventListener('keydown', (e) => {
+                        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                            e.preventDefault();
+                            this.saveNote();
+                        }
+                        if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+                            e.preventDefault();
+                            this.createNewNote();
+                        }
+                        if (e.key === 'Escape' && this.currentNoteId) {
+                            this.noteEditor.blur();
+                            this.noteTitle.blur();
+                        }
+                    });
+                }
+                
+                // Mobile-specific: Close keyboard when tapping outside editor
+                if (this.isMobile) {
+                    document.addEventListener('click', (e) => {
+                        if (!this.noteEditor.contains(e.target) && !this.noteTitle.contains(e.target)) {
+                            this.noteEditor.blur();
+                            this.noteTitle.blur();
+                        }
+                    });
+                }
             }
 
             // Core note operations
@@ -1178,9 +1536,12 @@
                 this.renderNotes();
                 this.selectNote(newNote.id);
                 
+                // Focus on title after a short delay
                 setTimeout(() => {
                     this.noteTitle.focus();
-                    this.noteTitle.setSelectionRange(this.noteTitle.value.length, this.noteTitle.value.length);
+                    if (!this.isMobile) {
+                        this.noteTitle.setSelectionRange(this.noteTitle.value.length, this.noteTitle.value.length);
+                    }
                 }, 100);
             }
 
@@ -1210,6 +1571,11 @@
                     item.classList.remove('active');
                     if (item.dataset.id === noteId) {
                         item.classList.add('active');
+                        
+                        // Scroll into view on mobile
+                        if (this.isMobile) {
+                            item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
                     }
                 });
                 
@@ -1236,6 +1602,7 @@
                 this.saveToStorage();
                 this.renderNotes();
                 
+                // Show save confirmation
                 this.autoSaveIndicator.textContent = '✓ Saved';
                 this.autoSaveIndicator.style.color = '#10b981';
                 
@@ -1243,6 +1610,11 @@
                     this.autoSaveIndicator.textContent = 'Auto-save enabled';
                     this.autoSaveIndicator.style.color = '';
                 }, 1500);
+                
+                // On mobile, show a quick toast notification
+                if (this.isMobile) {
+                    this.showMobileToast('Note saved');
+                }
             }
 
             deleteNote() {
@@ -1429,8 +1801,18 @@
                         <div style="text-align: center; padding: 2rem; color: var(--secondary);">
                             <i class="fas fa-sticky-note" style="font-size: 2rem; margin-bottom: 1rem;"></i>
                             <p>${searchTerm || this.selectedColor || this.selectedTag ? 'No matching notes' : 'No notes yet'}</p>
+                            ${!searchTerm && !this.selectedColor && !this.selectedTag ? `
+                                <button class="btn" style="margin-top: 1rem;" id="createFirstNote">
+                                    <i class="fas fa-plus"></i> Create your first note
+                                </button>
+                            ` : ''}
                         </div>
                     `;
+                    
+                    const createFirstNoteBtn = document.getElementById('createFirstNote');
+                    if (createFirstNoteBtn) {
+                        createFirstNoteBtn.addEventListener('click', () => this.createNewNote());
+                    }
                 } else {
                     this.notesList.innerHTML = filteredNotes.map(note => {
                         const colorClass = note.color ? `color-${note.color}` : '';
@@ -1457,6 +1839,16 @@
                     document.querySelectorAll('.note-item').forEach(item => {
                         item.addEventListener('click', () => {
                             this.selectNote(item.dataset.id);
+                            
+                            // On mobile, scroll editor into view after selecting note
+                            if (this.isMobile) {
+                                setTimeout(() => {
+                                    document.querySelector('.editor-container').scrollIntoView({ 
+                                        behavior: 'smooth', 
+                                        block: 'start' 
+                                    });
+                                }, 100);
+                            }
                         });
                     });
                 }
@@ -1494,11 +1886,21 @@
 
             formatDate(dateString) {
                 const date = new Date(dateString);
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
+                
+                if (diffMins < 1) return 'Just now';
+                if (diffMins < 60) return `${diffMins}m ago`;
+                if (diffHours < 24) return `${diffHours}h ago`;
+                if (diffDays < 7) return `${diffDays}d ago`;
+                
                 return date.toLocaleString('en-US', {
                     month: 'short',
                     day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
+                    year: diffDays > 365 ? 'numeric' : undefined
                 });
             }
 
@@ -1510,23 +1912,67 @@
 
             // Table insertion
             insertTable() {
-                const rows = prompt('Number of rows:', '3');
-                const cols = prompt('Number of columns:', '3');
-                
-                if (rows && cols) {
-                    let tableHtml = '<table><tbody>';
-                    for (let i = 0; i < parseInt(rows); i++) {
-                        tableHtml += '<tr>';
-                        for (let j = 0; j < parseInt(cols); j++) {
-                            tableHtml += `<td>Cell ${i+1}-${j+1}</td>`;
-                        }
-                        tableHtml += '</tr>';
-                    }
-                    tableHtml += '</tbody></table>';
+                if (this.isMobile) {
+                    const rows = prompt('Number of rows:', '3');
+                    const cols = prompt('Number of columns:', '3');
                     
-                    document.execCommand('insertHTML', false, tableHtml);
-                    this.saveNote();
+                    if (rows && cols) {
+                        this.insertTableHtml(parseInt(rows), parseInt(cols));
+                    }
+                } else {
+                    // Desktop: show a simple modal
+                    const modalHtml = `
+                        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; display: flex; align-items: center; justify-content: center;">
+                            <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 300px;">
+                                <h3 style="margin-bottom: 1rem;">Insert Table</h3>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                    <div>
+                                        <label style="display: block; margin-bottom: 0.5rem;">Rows</label>
+                                        <input type="number" id="tableRows" value="3" min="1" max="10" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                                    </div>
+                                    <div>
+                                        <label style="display: block; margin-bottom: 0.5rem;">Columns</label>
+                                        <input type="number" id="tableCols" value="3" min="1" max="10" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                                    <button id="cancelTable" style="padding: 0.5rem 1rem; background: #eee; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+                                    <button id="insertTable" style="padding: 0.5rem 1rem; background: #0A66C2; color: white; border: none; border-radius: 4px; cursor: pointer;">Insert</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    const modal = document.createElement('div');
+                    modal.innerHTML = modalHtml;
+                    document.body.appendChild(modal);
+                    
+                    document.getElementById('insertTable').addEventListener('click', () => {
+                        const rows = parseInt(document.getElementById('tableRows').value) || 3;
+                        const cols = parseInt(document.getElementById('tableCols').value) || 3;
+                        this.insertTableHtml(rows, cols);
+                        modal.remove();
+                    });
+                    
+                    document.getElementById('cancelTable').addEventListener('click', () => {
+                        modal.remove();
+                    });
                 }
+            }
+
+            insertTableHtml(rows, cols) {
+                let tableHtml = '<table style="border-collapse: collapse; width: 100%; margin: 1rem 0;"><tbody>';
+                for (let i = 0; i < rows; i++) {
+                    tableHtml += '<tr>';
+                    for (let j = 0; j < cols; j++) {
+                        tableHtml += `<td style="border: 1px solid #ddd; padding: 8px;">&nbsp;</td>`;
+                    }
+                    tableHtml += '</tr>';
+                }
+                tableHtml += '</tbody></table>';
+                
+                document.execCommand('insertHTML', false, tableHtml);
+                this.saveNote();
             }
 
             // Image handling
@@ -1564,7 +2010,10 @@
             setupImageResizing() {
                 document.querySelectorAll('.resizable-image').forEach(img => {
                     img.removeEventListener('mousedown', this.handleImageMouseDown);
+                    img.removeEventListener('touchstart', this.handleImageTouchStart);
+                    
                     img.addEventListener('mousedown', this.handleImageMouseDown.bind(this));
+                    img.addEventListener('touchstart', this.handleImageTouchStart.bind(this));
                     
                     if (!img.querySelector('.resize-handle')) {
                         const resizeHandle = document.createElement('div');
@@ -1575,9 +2024,13 @@
                 
                 document.removeEventListener('mousemove', this.handleImageMouseMove);
                 document.removeEventListener('mouseup', this.handleImageMouseUp);
+                document.removeEventListener('touchmove', this.handleImageTouchMove);
+                document.removeEventListener('touchend', this.handleImageTouchEnd);
                 
                 document.addEventListener('mousemove', this.handleImageMouseMove.bind(this));
                 document.addEventListener('mouseup', this.handleImageMouseUp.bind(this));
+                document.addEventListener('touchmove', this.handleImageTouchMove.bind(this));
+                document.addEventListener('touchend', this.handleImageTouchEnd.bind(this));
             }
 
             handleImageMouseDown(e) {
@@ -1590,6 +2043,25 @@
                         img: img,
                         startX: e.clientX,
                         startY: e.clientY,
+                        startWidth: parseInt(getComputedStyle(img).width),
+                        startHeight: parseInt(getComputedStyle(img).height)
+                    };
+                    
+                    img.classList.add('resizing');
+                }
+            }
+
+            handleImageTouchStart(e) {
+                if (e.target.classList.contains('resize-handle')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const img = e.target.parentElement;
+                    const touch = e.touches[0];
+                    this.imageResizeData = {
+                        img: img,
+                        startX: touch.clientX,
+                        startY: touch.clientY,
                         startWidth: parseInt(getComputedStyle(img).width),
                         startHeight: parseInt(getComputedStyle(img).height)
                     };
@@ -1618,6 +2090,27 @@
                 }
             }
 
+            handleImageTouchMove(e) {
+                if (this.imageResizeData) {
+                    e.preventDefault();
+                    
+                    const touch = e.touches[0];
+                    const { img, startX, startY, startWidth, startHeight } = this.imageResizeData;
+                    const deltaX = touch.clientX - startX;
+                    const deltaY = touch.clientY - startY;
+                    
+                    const newWidth = Math.max(50, startWidth + deltaX);
+                    const aspectRatio = startHeight / startWidth;
+                    const newHeight = newWidth * aspectRatio;
+                    
+                    img.style.width = `${newWidth}px`;
+                    img.style.height = `${newHeight}px`;
+                    img.style.maxWidth = 'none';
+                    
+                    this.saveNote();
+                }
+            }
+
             handleImageMouseUp() {
                 if (this.imageResizeData) {
                     this.imageResizeData.img.classList.remove('resizing');
@@ -1625,6 +2118,39 @@
                     this.imageResizeData = null;
                     this.saveNote();
                 }
+            }
+
+            handleImageTouchEnd() {
+                if (this.imageResizeData) {
+                    this.imageResizeData.img.classList.remove('resizing');
+                    this.imageResizeData.img.style.maxWidth = '100%';
+                    this.imageResizeData = null;
+                    this.saveNote();
+                }
+            }
+
+            // Mobile helper methods
+            showMobileToast(message) {
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    bottom: 80px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: rgba(0,0,0,0.8);
+                    color: white;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 25px;
+                    font-size: 0.9rem;
+                    z-index: 10000;
+                    animation: fadeInOut 2s ease;
+                `;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.remove();
+                }, 2000);
             }
 
             // Export functions
@@ -1793,7 +2319,12 @@
                     this.updateAllTags();
                     this.renderTagFilter();
                     this.renderNotes();
-                    alert(`Successfully imported ${importedCount} note${importedCount !== 1 ? 's' : ''}`);
+                    
+                    if (this.isMobile) {
+                        this.showMobileToast(`Imported ${importedCount} note${importedCount !== 1 ? 's' : ''}`);
+                    } else {
+                        alert(`Successfully imported ${importedCount} note${importedCount !== 1 ? 's' : ''}`);
+                    }
                     
                     if (this.notes.length > 0) {
                         this.selectNote(this.notes[0].id);
@@ -1896,7 +2427,7 @@
             }
 
             saveToStorage() {
-                localStorage.setItem('dibesh_notes', JSON.stringify(this.notes));
+                this.passwordManager.saveNotesData(this.notes);
             }
 
             logout() {
@@ -1909,6 +2440,22 @@
         window.addEventListener('DOMContentLoaded', () => {
             new NotesApp();
         });
+
+        // Add shake animation for login error
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+            
+            @keyframes fadeInOut {
+                0%, 100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+                10%, 90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
