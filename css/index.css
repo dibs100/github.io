@@ -998,6 +998,20 @@ footer {
     background: rgba(10, 102, 194, 0.1);
 }
 
+/* MOBILE LANGUAGE SWITCHER */
+.mobile-language-switcher {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    gap: 1rem;
+}
+
+.mobile-nav .language-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    min-height: 48px;
+}
+
 /* ===== LANGUAGE-SPECIFIC CONTENT ===== */
 .lang-en {
     display: block;
@@ -1076,15 +1090,14 @@ footer {
         display: none;
     }
     
-    /* Keep language switcher visible on mobile - IMPROVED */
+    /* Keep language switcher visible on mobile - FIXED */
     .language-switcher {
         display: flex !important;
         background: rgba(10, 102, 194, 0.1);
         padding: 0.5rem;
         border-radius: 30px;
         border: 1px solid rgba(10, 102, 194, 0.2);
-        margin-right: 0;
-        order: 1;
+        margin-right: 0.5rem;
     }
     
     .language-btn {
@@ -1099,11 +1112,6 @@ footer {
         height: 18px !important;
         min-width: 24px;
         min-height: 18px;
-    }
-    
-    /* Hide mobile language switcher from hamburger menu */
-    .mobile-language-switcher {
-        display: none;
     }
     
     /* Keep all buttons visible */
@@ -1129,7 +1137,6 @@ footer {
         display: flex;
         align-items: center;
         gap: 1rem;
-        order: 1;
     }
     
     .logo {
@@ -1139,7 +1146,6 @@ footer {
         text-overflow: ellipsis;
         flex-shrink: 0;
         max-width: 150px;
-        order: 1;
     }
     
     .header-buttons {
@@ -1147,7 +1153,6 @@ footer {
         gap: 0.5rem;
         display: flex;
         align-items: center;
-        order: 3;
     }
     
     /* Adjust button sizes for mobile */
