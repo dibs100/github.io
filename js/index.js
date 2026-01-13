@@ -101,8 +101,11 @@ window.showMessage = function(type, message) {
         const errorElement = document.getElementById('loginError');
         if (errorElement) {
             errorElement.style.display = 'block';
-            errorElement.querySelector('.lang-en').textContent = message;
-            errorElement.querySelector('.lang-de').textContent = message;
+            // Update both language versions
+            const enSpan = errorElement.querySelector('.lang-en');
+            const deSpan = errorElement.querySelector('.lang-de');
+            if (enSpan) enSpan.textContent = message;
+            if (deSpan) deSpan.textContent = message;
             setTimeout(() => {
                 errorElement.style.display = 'none';
             }, 5000);
@@ -113,8 +116,11 @@ window.showMessage = function(type, message) {
         const successElement = document.getElementById('passwordSuccess');
         if (successElement) {
             successElement.style.display = 'block';
-            successElement.querySelector('.lang-en').textContent = message;
-            successElement.querySelector('.lang-de').textContent = message;
+            // Update both language versions
+            const enSpan = successElement.querySelector('.lang-en');
+            const deSpan = successElement.querySelector('.lang-de');
+            if (enSpan) enSpan.textContent = message;
+            if (deSpan) deSpan.textContent = message;
             setTimeout(() => {
                 successElement.style.display = 'none';
             }, 5000);
@@ -374,11 +380,14 @@ function updatePlaceholdersAndTitles(lang) {
     });
 }
 
-// ===== SIMPLIFIED LANGUAGE SWITCHING =====
+// ===== IMPROVED LANGUAGE SWITCHING =====
 function switchLanguage(lang) {
     console.log(`🌐 Switching language to: ${lang}`);
     
-    // Hide all language-specific elements
+    // Store language preference
+    localStorage.setItem('preferredLanguage', lang);
+    
+    // Hide all language-specific elements first
     const allLangElements = document.querySelectorAll('.lang-en, .lang-de');
     console.log(`Found ${allLangElements.length} language elements`);
     
@@ -392,9 +401,21 @@ function switchLanguage(lang) {
     
     selectedLangElements.forEach(el => {
         el.style.display = '';
+        
+        // Special handling for elements that should be block/inline
+        if (el.classList.contains('section-title') || 
+            el.classList.contains('skill-card') ||
+            el.classList.contains('experience-card') ||
+            el.classList.contains('certification-card')) {
+            el.style.display = 'block';
+        } else if (el.tagName === 'SPAN' || el.tagName === 'LI') {
+            el.style.display = 'inline';
+        } else if (el.tagName === 'A' && el.parentElement.tagName === 'LI') {
+            el.style.display = 'inline-block';
+        }
     });
     
-    // Update active state on buttons - DESKTOP
+    // Update active state on buttons - DESKTOP & MOBILE
     const langEnBtn = document.getElementById('langEn');
     const langDeBtn = document.getElementById('langDe');
     
@@ -418,6 +439,35 @@ function switchLanguage(lang) {
     console.log(`✅ Language switched to ${lang}`);
 }
 
+// ===== INITIALIZE LANGUAGE FROM STORAGE =====
+function initializeLanguage() {
+    const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+    console.log(`🌐 Initializing language: ${savedLang}`);
+    
+    // Apply language immediately
+    switchLanguage(savedLang);
+    
+    // Set up click handlers
+    const langEnBtn = document.getElementById('langEn');
+    const langDeBtn = document.getElementById('langDe');
+    
+    if (langEnBtn) {
+        langEnBtn.addEventListener('click', () => {
+            console.log("EN button clicked");
+            switchLanguage('en');
+        });
+    }
+    
+    if (langDeBtn) {
+        langDeBtn.addEventListener('click', () => {
+            console.log("DE button clicked");
+            switchLanguage('de');
+        });
+    }
+    
+    console.log("✅ Language system initialized");
+}
+
 // ===== MAIN INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
     console.log("📄 DOM loaded, initializing...");
@@ -427,6 +477,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Has password:", !!localStorage.getItem('admin_password'));
     console.log("Password value:", localStorage.getItem('admin_password'));
     console.log("Is authenticated:", localStorage.getItem('isAuthenticated') === 'true');
+    console.log("Preferred language:", localStorage.getItem('preferredLanguage'));
     console.log("====================");
     
     // Initialize DOM elements
@@ -521,26 +572,8 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeFirebase();
     }, 1000);
     
-    // ===== LANGUAGE SWITCHING =====
-    
-    // Language switcher - DESKTOP
-    const langEnBtn = document.getElementById('langEn');
-    const langDeBtn = document.getElementById('langDe');
-    
-    // Add event listeners for language switching - DESKTOP
-    if (langEnBtn) {
-        langEnBtn.addEventListener('click', () => {
-            console.log("EN button clicked");
-            switchLanguage('en');
-        });
-    }
-    
-    if (langDeBtn) {
-        langDeBtn.addEventListener('click', () => {
-            console.log("DE button clicked");
-            switchLanguage('de');
-        });
-    }
+    // ===== INITIALIZE LANGUAGE SYSTEM =====
+    initializeLanguage();
     
     // ===== SMOOTH SCROLLING =====
     
@@ -632,8 +665,11 @@ document.addEventListener('DOMContentLoaded', function() {
     debugBtn.addEventListener('click', () => {
         console.log("=== DEBUG INFO ===");
         passwordManager.debug();
+        console.log("Preferred language:", localStorage.getItem('preferredLanguage'));
         console.log("Default password: admin123");
         console.log("Stored password:", localStorage.getItem('admin_password'));
+        console.log("Number of EN elements:", document.querySelectorAll('.lang-en').length);
+        console.log("Number of DE elements:", document.querySelectorAll('.lang-de').length);
         console.log("=================");
         alert("Check console (F12) for debug info");
     });
@@ -656,5 +692,13 @@ window.resetPasswordSystem = function() {
     console.log("🔑 Default password: admin123");
     
     alert("Password system reset! Use 'admin123' to login.");
+    location.reload();
+};
+
+// ===== RESET LANGUAGE (for testing) =====
+window.resetLanguage = function() {
+    console.log("🔄 Resetting language...");
+    localStorage.removeItem('preferredLanguage');
+    console.log("✅ Language reset to default (EN)");
     location.reload();
 };
