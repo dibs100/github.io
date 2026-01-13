@@ -189,7 +189,7 @@
             border-radius: 50%;
             background: linear-gradient(135deg, #1f4a7c 0%, #0d2c4f 100%);
             border: 1px solid rgba(31, 74, 124, 0.4);
-            color: #4bb1f7;
+            color: 	#FF0000 /* #4bb1f7; */
             font-size: 1rem;
             font-weight: bold;
             opacity: 0.8;
@@ -1705,13 +1705,13 @@
         if (zabbixBtn) {
             zabbixBtn.addEventListener('click', () => {
                 // You can update this URL to your actual Zabbix lab URL
-                const zabbixUrl = "https://your-zabbix-lab-url.com";
+                const zabbixUrl = "https://zabbix.com/";
                 
                 // For now, we'll show an alert and let you configure it
-                alert('Zabbix Lab link will be configured when your Zabbix site is ready.\n\nUpdate the URL in the JavaScript code.');
+               // alert('Zabbix Lab link will be configured when your Zabbix site is ready.\n\nUpdate the URL in the JavaScript code.');
                 
                 // When you have your Zabbix URL ready, uncomment this line:
-                // window.open(zabbixUrl, '_blank');
+                 window.open(zabbixUrl, '_blank');
             });
         }
 
