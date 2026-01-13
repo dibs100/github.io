@@ -26,24 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     window.firebaseAuth = firebase.auth();
                     window.firebaseDB = firebase.firestore();
                     
-                    // Auth state listener
-                    window.firebaseAuth.onAuthStateChanged((user) => {
-                        console.log("👤 Auth state:", user ? "Logged in" : "Logged out");
-                        
-                        if (user) {
-                            localStorage.setItem('firebaseUserId', user.uid);
-                            localStorage.setItem('userEmail', user.email || '');
-                            user.getIdToken().then((token) => {
-                                localStorage.setItem('firebaseToken', token);
-                            });
-                        }
-                        
-                        // Callback for admin page
-                        if (window.onFirebaseAuthStateChanged) {
-                            window.onFirebaseAuthStateChanged(user);
-                        }
-                    });
-                    
                     console.log("✅ Firebase services ready!");
                 } else {
                     console.log("✅ Firebase already initialized");
