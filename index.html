@@ -159,54 +159,53 @@
         <p id="loadingText">Loading...</p>
     </div>
 
-    <!-- ===== LOGIN MODAL ===== -->
-    <div class="login-modal" id="loginModal">
-        <div class="login-box">
-            <button class="login-close" id="loginClose">
-                <i class="fas fa-times"></i>
+<!-- ===== LOGIN MODAL ===== -->
+<div class="login-modal" id="loginModal">
+    <div class="login-box">
+        <button class="login-close" id="loginClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <h3 class="lang-en">Admin Login</h3>
+        <h3 class="lang-de" style="display: none;">Admin Login</h3>
+        <div class="login-error" id="loginError">
+            <span class="lang-en">Invalid password</span>
+            <span class="lang-de" style="display: none;">Ungültiges Passwort</span>
+        </div>
+        <input type="password" class="login-input" id="passwordInput" placeholder="Enter admin password">
+        <button class="login-submit" id="loginSubmit">
+            <span class="lang-en">Login</span>
+            <span class="lang-de" style="display: none;">Anmelden</span>
+        </button>
+        <div class="login-footer">
+            <button class="change-password-btn" id="changePasswordBtn">
+                <span class="lang-en">Change Password</span>
+                <span class="lang-de" style="display: none;">Passwort ändern</span>
             </button>
-            <h3 class="lang-en">Admin Login</h3>
-            <h3 class="lang-de" style="display: none;">Admin Login</h3>
-            <div class="login-error" id="loginError">
-                <span class="lang-en">Invalid email or password</span>
-                <span class="lang-de" style="display: none;">Ungültige E-Mail oder Passwort</span>
-            </div>
-            <input type="email" class="login-input" id="emailInput" placeholder="Email address">
-            <input type="password" class="login-input" id="passwordInput" placeholder="Password">
-            <button class="login-submit" id="loginSubmit">
-                <span class="lang-en">Login</span>
-                <span class="lang-de" style="display: none;">Anmelden</span>
-            </button>
-            <div class="login-footer">
-                <button class="change-password-btn" id="changePasswordBtn">
-                    <span class="lang-en">Create Account</span>
-                    <span class="lang-de" style="display: none;">Account erstellen</span>
-                </button>
-            </div>
         </div>
     </div>
+</div>
 
-    <!-- ===== PASSWORD CHANGE / REGISTER MODAL ===== -->
-    <div class="password-modal" id="passwordModal">
-        <div class="password-box">
-            <button class="login-close" id="passwordClose">
-                <i class="fas fa-times"></i>
-            </button>
-            <h3 class="lang-en">Create Account</h3>
-            <h3 class="lang-de" style="display: none;">Account erstellen</h3>
-            <div class="password-success" id="passwordSuccess">
-                <span class="lang-en">Account created successfully!</span>
-                <span class="lang-de" style="display: none;">Account erfolgreich erstellt!</span>
-            </div>
-            <input type="email" class="login-input" id="registerEmail" placeholder="Email address">
-            <input type="password" class="login-input" id="newPassword" placeholder="New password (min 6 chars)">
-            <input type="password" class="login-input" id="confirmPassword" placeholder="Confirm password">
-            <button class="login-submit" id="registerSubmit">
-                <span class="lang-en">Create Account</span>
-                <span class="lang-de" style="display: none;">Account erstellen</span>
-            </button>
+<!-- ===== PASSWORD CHANGE MODAL ===== -->
+<div class="password-modal" id="passwordModal">
+    <div class="password-box">
+        <button class="login-close" id="passwordClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <h3 class="lang-en">Change Password</h3>
+        <h3 class="lang-de" style="display: none;">Passwort ändern</h3>
+        <div class="password-success" id="passwordSuccess">
+            <span class="lang-en">Password changed successfully!</span>
+            <span class="lang-de" style="display: none;">Passwort erfolgreich geändert!</span>
         </div>
+        <input type="password" class="login-input" id="currentPassword" placeholder="Current password">
+        <input type="password" class="login-input" id="newPassword" placeholder="New password">
+        <input type="password" class="login-input" id="confirmPassword" placeholder="Confirm new password">
+        <button class="login-submit" id="changePasswordSubmit">
+            <span class="lang-en">Change Password</span>
+            <span class="lang-de" style="display: none;">Passwort ändern</span>
+        </button>
     </div>
+</div>
 
     <!-- ===== HEADER ===== -->
     <header>
