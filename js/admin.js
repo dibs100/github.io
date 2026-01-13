@@ -69,7 +69,15 @@ class PasswordManager {
 // ===== ENHANCED NOTES APP =====
 class EnhancedNotesApp {
     constructor() {
-        this.notes = JSON.parse(localStorage.getItem('dibesh_notes')) || [];
+        console.log('NotesApp: Initializing...');
+        try {
+            this.notes = JSON.parse(localStorage.getItem('dibesh_notes')) || [];
+            console.log('NotesApp: Loaded', this.notes.length, 'notes');
+        } catch (error) {
+            console.error('NotesApp: Error loading notes:', error);
+            this.notes = [];
+        }
+        
         this.currentNoteId = null;
         this.saveTimeout = null;
         this.AUTO_SAVE_DELAY = 1000;
@@ -79,16 +87,19 @@ class EnhancedNotesApp {
     }
 
     init() {
+        console.log('NotesApp: Checking authentication...');
         // ===== AUTHENTICATION CHECK =====
         const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
         const authError = document.getElementById('authError');
         const mainApp = document.getElementById('mainApp');
 
         if (!isAuthenticated) {
+            console.log('NotesApp: User not authenticated, showing error');
             authError.style.display = 'flex';
             return;
         }
 
+        console.log('NotesApp: User authenticated, showing main app');
         mainApp.style.display = 'flex';
         
         // ===== DOM ELEMENTS =====
@@ -100,6 +111,13 @@ class EnhancedNotesApp {
         this.charCount = document.getElementById('charCount');
         this.autoSaveIndicator = document.getElementById('autoSaveIndicator');
         this.storageInfo = document.getElementById('storageInfo');
+        
+        console.log('NotesApp: DOM elements loaded:', {
+            notesList: !!this.notesList,
+            noteTitle: !!this.noteTitle,
+            noteEditor: !!this.noteEditor,
+            noteCount: !!this.noteCount
+        });
         
         // ===== BUTTONS =====
         this.newNoteBtn = document.getElementById('newNoteBtn');
@@ -121,17 +139,22 @@ class EnhancedNotesApp {
         
         // Select first note if available
         if (this.notes.length > 0) {
+            console.log('NotesApp: Selecting first note');
             this.selectNote(this.notes[0].id);
         } else {
+            console.log('NotesApp: No notes, creating new one');
             this.createNewNote();
         }
         
         this.updateCharacterCount();
         this.updateStorageInfo();
         this.setCursorToEnd();
+        
+        console.log('NotesApp: Initialization complete');
     }
 
     setupEventListeners() {
+        console.log('NotesApp: Setting up event listeners');
         // Note actions
         this.newNoteBtn.addEventListener('click', () => this.createNewNote());
         this.saveNoteBtn.addEventListener('click', () => this.saveNote());
@@ -217,6 +240,8 @@ class EnhancedNotesApp {
                 this.exportOptions.classList.remove('show');
             }
         });
+        
+        console.log('NotesApp: Event listeners setup complete');
     }
 
     // ===== CURSOR MANAGEMENT =====
@@ -249,6 +274,7 @@ class EnhancedNotesApp {
     }
 
     createNewNote() {
+        console.log('NotesApp: Creating new note');
         const newNote = {
             id: this.generateId(),
             title: 'Untitled Note',
@@ -269,10 +295,14 @@ class EnhancedNotesApp {
     }
 
     selectNote(noteId) {
+        console.log('NotesApp: Selecting note', noteId);
         this.currentNoteId = noteId;
         const note = this.notes.find(n => n.id === noteId);
         
-        if (!note) return;
+        if (!note) {
+            console.error('NotesApp: Note not found', noteId);
+            return;
+        }
         
         this.noteTitle.value = note.title;
         this.noteEditor.innerHTML = note.content || '<p><br></p>';
@@ -292,6 +322,7 @@ class EnhancedNotesApp {
     saveNote() {
         if (!this.currentNoteId || this.isSaving) return;
         
+        console.log('NotesApp: Saving note', this.currentNoteId);
         this.isSaving = true;
         const noteIndex = this.notes.findIndex(n => n.id === this.currentNoteId);
         if (noteIndex === -1) return;
@@ -378,6 +409,7 @@ class EnhancedNotesApp {
     }
 
     renderNotes() {
+        console.log('NotesApp: Rendering notes');
         const searchTerm = this.searchBox.value.toLowerCase();
         let filteredNotes = this.notes;
         
@@ -417,6 +449,7 @@ class EnhancedNotesApp {
         }
         
         this.noteCount.textContent = `${filteredNotes.length} note${filteredNotes.length !== 1 ? 's' : ''}`;
+        console.log('NotesApp: Rendered', filteredNotes.length, 'notes');
     }
 
     filterNotes() {
@@ -905,7 +938,13 @@ class EnhancedNotesApp {
 
 // ===== INITIALIZE APP =====
 document.addEventListener('DOMContentLoaded', () => {
-    new EnhancedNotesApp();
+    console.log('DOM fully loaded, initializing NotesApp...');
+    try {
+        new EnhancedNotesApp();
+    } catch (error) {
+        console.error('Failed to initialize NotesApp:', error);
+        alert('Error loading notes application. Please check console for details.');
+    }
 });
 
 // ===== SESSION MANAGEMENT =====
