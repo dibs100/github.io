@@ -323,63 +323,6 @@ function initializeMobileMenu() {
     }
 }
 
-// ===== ENHANCED LANGUAGE SWITCHING =====
-function updatePlaceholdersAndTitles(lang) {
-    // Update input placeholders
-    const passwordInput = document.getElementById('passwordInput');
-    const currentPasswordInput = document.getElementById('currentPassword');
-    const newPasswordInput = document.getElementById('newPassword');
-    const confirmPasswordInput = document.getElementById('confirmPassword');
-    
-    if (passwordInput) {
-        const placeholder = passwordInput.getAttribute(`placeholder-lang-${lang}`);
-        if (placeholder) passwordInput.placeholder = placeholder;
-    }
-    
-    if (currentPasswordInput) {
-        const placeholder = currentPasswordInput.getAttribute(`placeholder-lang-${lang}`);
-        if (placeholder) currentPasswordInput.placeholder = placeholder;
-    }
-    
-    if (newPasswordInput) {
-        const placeholder = newPasswordInput.getAttribute(`placeholder-lang-${lang}`);
-        if (placeholder) newPasswordInput.placeholder = placeholder;
-    }
-    
-    if (confirmPasswordInput) {
-        const placeholder = confirmPasswordInput.getAttribute(`placeholder-lang-${lang}`);
-        if (placeholder) confirmPasswordInput.placeholder = placeholder;
-    }
-    
-    // Update button titles
-    const zabbixBtn = document.getElementById('zabbixBtn');
-    const loginBtn = document.getElementById('loginBtn');
-    const socialLinks = document.querySelectorAll('.social-links a');
-    
-    if (zabbixBtn) {
-        const title = zabbixBtn.getAttribute(`title-lang-${lang}`);
-        if (title) zabbixBtn.title = title;
-    }
-    
-    if (loginBtn) {
-        const title = loginBtn.getAttribute(`title-lang-${lang}`);
-        if (title) loginBtn.title = title;
-    }
-    
-    socialLinks.forEach(link => {
-        const title = link.getAttribute(`title-lang-${lang}`);
-        if (title) link.title = title;
-    });
-    
-    // Update navigation text from data attributes
-    document.querySelectorAll('nav a, .mobile-nav a').forEach(link => {
-        const text = link.getAttribute(`data-${lang}`);
-        if (text) {
-            link.textContent = text;
-        }
-    });
-}
-
 // ===== IMPROVED LANGUAGE SWITCHING =====
 function switchLanguage(lang) {
     console.log(`🌐 Switching language to: ${lang}`);
@@ -430,26 +373,31 @@ function switchLanguage(lang) {
         }
     }
     
-    // Update active state on buttons - MOBILE
-    const langEnMobileBtn = document.getElementById('langEnMobile');
-    const langDeMobileBtn = document.getElementById('langDeMobile');
+    // Update active state on buttons - MOBILE (from mobile-nav)
+    const mobileLangEnBtn = document.getElementById('langEnMobile');
+    const mobileLangDeBtn = document.getElementById('langDeMobile');
     
-    if (langEnMobileBtn && langDeMobileBtn) {
-        langEnMobileBtn.classList.remove('active');
-        langDeMobileBtn.classList.remove('active');
+    if (mobileLangEnBtn && mobileLangDeBtn) {
+        mobileLangEnBtn.classList.remove('active');
+        mobileLangDeBtn.classList.remove('active');
         
         if (lang === 'en') {
-            langEnMobileBtn.classList.add('active');
+            mobileLangEnBtn.classList.add('active');
         } else {
-            langDeMobileBtn.classList.add('active');
+            mobileLangDeBtn.classList.add('active');
         }
     }
     
     // Update document language attribute for accessibility
     document.documentElement.lang = lang;
     
-    // Update placeholders and titles
-    updatePlaceholdersAndTitles(lang);
+    // Update navigation text from data attributes
+    document.querySelectorAll('nav a, .mobile-nav a').forEach(link => {
+        const text = link.getAttribute(`data-${lang}`);
+        if (text) {
+            link.textContent = text;
+        }
+    });
     
     console.log(`✅ Language switched to ${lang}`);
 }
@@ -480,7 +428,7 @@ function initializeLanguage() {
         });
     }
     
-    // Set up click handlers for MOBILE buttons
+    // Set up click handlers for MOBILE buttons (from mobile navigation)
     const langEnMobileBtn = document.getElementById('langEnMobile');
     const langDeMobileBtn = document.getElementById('langDeMobile');
     
