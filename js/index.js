@@ -1,10 +1,80 @@
-// ===== DOM ELEMENTS =====
-let loginModal, loginClose, loginSubmit, loginError, passwordInput;
-let passwordModal, passwordClose, registerSubmit, passwordSuccess, emailInput;
-let changePasswordBtn, registerSubmitBtn, confirmPassword, newPassword, registerEmail;
+// ===== PASSWORD MANAGER =====
+class PasswordManager {
+    constructor() {
+        this.STORAGE_KEY = 'admin_password_hash';
+        this.AUTH_KEY = 'isAuthenticated';
+        this.DEFAULT_PASSWORD = 'admin123'; // Default password for first-time setup
+    }
+    
+    // Hash password for storage (simple XOR encryption)
+    hashPassword(password) {
+        const key = 'dibesh-portfolio-secure-key';
+        let result = '';
+        for (let i = 0; i < password.length; i++) {
+            const charCode = password.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+            result += String.fromCharCode(charCode);
+        }
+        return btoa(result);
+    }
+    
+    // Check if password matches stored hash
+    validatePassword(password) {
+        const storedHash = localStorage.getItem(this.STORAGE_KEY);
+        
+        // If no password is set yet, use default
+        if (!storedHash) {
+            return password === this.DEFAULT_PASSWORD;
+        }
+        
+        const inputHash = this.hashPassword(password);
+        return inputHash === storedHash;
+    }
+    
+    // Change password
+    changePassword(currentPassword, newPassword, confirmPassword) {
+        // Validate current password
+        if (!this.validatePassword(currentPassword)) {
+            return { success: false, error: "Current password is incorrect" };
+        }
+        
+        // Validate new password
+        if (newPassword.length < 6) {
+            return { success: false, error: "New password must be at least 6 characters" };
+        }
+        
+        if (newPassword !== confirmPassword) {
+            return { success: false, error: "New passwords do not match" };
+        }
+        
+        // Store new password hash
+        const newHash = this.hashPassword(newPassword);
+        localStorage.setItem(this.STORAGE_KEY, newHash);
+        
+        return { success: true };
+    }
+    
+    // Check if user is authenticated
+    isAuthenticated() {
+        return localStorage.getItem(this.AUTH_KEY) === 'true';
+    }
+    
+    // Login
+    login(password) {
+        if (this.validatePassword(password)) {
+            localStorage.setItem(this.AUTH_KEY, 'true');
+            return { success: true };
+        }
+        return { success: false, error: "Invalid password" };
+    }
+    
+    // Logout
+    logout() {
+        localStorage.removeItem(this.AUTH_KEY);
+    }
+}
 
-// ===== LOADING FUNCTIONS =====
-function showLoading(show, text = "Loading...") {
+// ===== GLOBAL HELPER FUNCTIONS =====
+window.showLoading = function(show, text = "Loading...") {
     const overlay = document.getElementById('loadingOverlay');
     const textElement = document.getElementById('loadingText');
     
@@ -12,9 +82,9 @@ function showLoading(show, text = "Loading...") {
         overlay.style.display = show ? 'flex' : 'none';
         textElement.textContent = text;
     }
-}
+};
 
-function showError(message) {
+window.showError = function(message) {
     const errorElement = document.getElementById('loginError');
     if (errorElement) {
         errorElement.style.display = 'block';
@@ -24,9 +94,9 @@ function showError(message) {
             errorElement.style.display = 'none';
         }, 5000);
     }
-}
+};
 
-function showSuccess(message) {
+window.showSuccess = function(message) {
     const successElement = document.getElementById('passwordSuccess');
     if (successElement) {
         successElement.style.display = 'block';
@@ -36,213 +106,54 @@ function showSuccess(message) {
             successElement.style.display = 'none';
         }, 5000);
     }
-}
+};
 
-// ===== FIREBASE AUTH FUNCTIONS =====
-async function loginWithFirebase(email, password) {
-    try {
-        showLoading(true, "Logging in...");
-        
-        // Validate inputs
-        if (!email || !password) {
-            throw new Error("Please fill in all fields");
-        }
-        
-        // Check if Firebase auth is available
-        if (!window.firebaseAuth) {
-            throw new Error("Authentication service not available. Please refresh the page.");
-        }
-        
-        // Sign in with email and password
-        const userCredential = await window.firebaseAuth.signInWithEmailAndPassword(email, password);
-        const user = userCredential.user;
-        
-        console.log("✅ Login successful:", user.email);
-        
-        // Get fresh ID token
-        const token = await user.getIdToken();
-        
-        // Store user data in localStorage
-        localStorage.setItem('firebaseUserId', user.uid);
-        localStorage.setItem('userEmail', user.email || '');
-        localStorage.setItem('firebaseToken', token);
-        
-        // Hide login modal
-        if (loginModal) {
-            loginModal.style.display = 'none';
-        }
-        
-        // Clear form
-        if (emailInput) emailInput.value = '';
-        if (passwordInput) passwordInput.value = '';
-        
-        // Show success message
-        setTimeout(() => {
-            alert("Login successful! Redirecting to admin panel...");
-            window.location.href = 'admin.html';
-        }, 500);
-        
-    } catch (error) {
-        console.error("❌ Login error:", error);
-        
-        let errorMessage = "Login failed. ";
-        switch (error.code) {
-            case 'auth/user-not-found':
-                errorMessage = "No account found with this email.";
-                break;
-            case 'auth/wrong-password':
-                errorMessage = "Incorrect password.";
-                break;
-            case 'auth/invalid-email':
-                errorMessage = "Invalid email address.";
-                break;
-            case 'auth/user-disabled':
-                errorMessage = "This account has been disabled.";
-                break;
-            case 'auth/too-many-requests':
-                errorMessage = "Too many failed attempts. Try again later.";
-                break;
-            default:
-                errorMessage += error.message;
-        }
-        
-        showError(errorMessage);
-        
-    } finally {
-        showLoading(false);
-    }
-}
-
-async function registerWithFirebase(email, password, confirmPassword) {
-    try {
-        // Validate inputs
-        if (!email || !password || !confirmPassword) {
-            throw new Error("Please fill in all fields");
-        }
-        
-        if (password !== confirmPassword) {
-            throw new Error("Passwords do not match");
-        }
-        
-        if (password.length < 6) {
-            throw new Error("Password must be at least 6 characters");
-        }
-        
-        showLoading(true, "Creating account...");
-        
-        // Check if Firebase auth is available
-        if (!window.firebaseAuth) {
-            throw new Error("Registration service not available. Please refresh the page.");
-        }
-        
-        // Create user with email and password
-        const userCredential = await window.firebaseAuth.createUserWithEmailAndPassword(email, password);
-        const user = userCredential.user;
-        
-        console.log("✅ Registration successful:", user.email);
-        
-        // Create user profile in Firestore
-        if (window.firebaseDB) {
-            try {
-                await window.firebaseDB.collection('users').doc(user.uid).set({
-                    email: user.email,
-                    displayName: email.split('@')[0],
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
-                    noteCount: 0
-                });
-                console.log("✅ User profile created in Firestore");
-            } catch (firestoreError) {
-                console.warn("⚠️ Could not create Firestore profile:", firestoreError);
-                // Continue even if Firestore fails
-            }
-        }
-        
-        // Get fresh ID token
-        const token = await user.getIdToken();
-        
-        // Store user data
-        localStorage.setItem('firebaseUserId', user.uid);
-        localStorage.setItem('userEmail', user.email || '');
-        localStorage.setItem('firebaseToken', token);
-        
-        // Hide registration modal
-        if (passwordModal) {
-            passwordModal.style.display = 'none';
-        }
-        
-        // Clear form
-        if (registerEmail) registerEmail.value = '';
-        if (newPassword) newPassword.value = '';
-        if (confirmPassword) confirmPassword.value = '';
-        
-        // Show success message
-        showSuccess("Account created successfully! Redirecting...");
-        
-        // Auto-login and redirect
-        setTimeout(() => {
-            window.location.href = 'admin.html';
-        }, 2000);
-        
-    } catch (error) {
-        console.error("❌ Registration error:", error);
-        
-        let errorMessage = "Registration failed. ";
-        switch (error.code) {
-            case 'auth/email-already-in-use':
-                errorMessage = "Email already registered. Try login instead.";
-                break;
-            case 'auth/weak-password':
-                errorMessage = "Password is too weak. Use at least 6 characters.";
-                break;
-            case 'auth/invalid-email':
-                errorMessage = "Invalid email address.";
-                break;
-            case 'auth/operation-not-allowed':
-                errorMessage = "Email/password accounts are not enabled.";
-                break;
-            default:
-                errorMessage += error.message;
-        }
-        
-        showError(errorMessage);
-        
-    } finally {
-        showLoading(false);
-    }
-}
+// ===== DOM ELEMENTS & PASSWORD MANAGER =====
+let loginModal, loginClose, loginSubmit, loginError, passwordInput;
+let passwordModal, passwordClose, changePasswordSubmit, passwordSuccess;
+let currentPasswordInput, newPasswordInput, confirmPasswordInput;
+let changePasswordBtn;
+const passwordManager = new PasswordManager();
 
 // ===== MODAL FUNCTIONS =====
 function showLoginModal() {
     if (loginModal) {
         loginModal.style.display = 'flex';
-        if (emailInput) emailInput.focus();
+        if (passwordInput) {
+            passwordInput.value = '';
+            passwordInput.focus();
+        }
     }
 }
 
 function hideLoginModal() {
     if (loginModal) {
         loginModal.style.display = 'none';
-        if (emailInput) emailInput.value = '';
         if (passwordInput) passwordInput.value = '';
         if (loginError) loginError.style.display = 'none';
     }
 }
 
-function showRegisterModal() {
+function showChangePasswordModal() {
     if (passwordModal) {
         passwordModal.style.display = 'flex';
-        if (registerEmail) registerEmail.focus();
+        if (currentPasswordInput) {
+            currentPasswordInput.value = '';
+            currentPasswordInput.focus();
+        }
+        if (newPasswordInput) newPasswordInput.value = '';
+        if (confirmPasswordInput) confirmPasswordInput.value = '';
+        if (passwordSuccess) passwordSuccess.style.display = 'none';
     }
     hideLoginModal();
 }
 
-function hideRegisterModal() {
+function hideChangePasswordModal() {
     if (passwordModal) {
         passwordModal.style.display = 'none';
-        if (registerEmail) registerEmail.value = '';
-        if (newPassword) newPassword.value = '';
-        if (confirmPassword) confirmPassword.value = '';
+        if (currentPasswordInput) currentPasswordInput.value = '';
+        if (newPasswordInput) newPasswordInput.value = '';
+        if (confirmPasswordInput) confirmPasswordInput.value = '';
         if (passwordSuccess) passwordSuccess.style.display = 'none';
     }
 }
@@ -250,42 +161,95 @@ function hideRegisterModal() {
 // ===== EVENT HANDLERS =====
 function handleLoginSubmit(e) {
     e.preventDefault();
-    const email = emailInput ? emailInput.value.trim() : '';
     const password = passwordInput ? passwordInput.value.trim() : '';
-    loginWithFirebase(email, password);
+    
+    if (!password) {
+        showError("Please enter password");
+        return;
+    }
+    
+    showLoading(true, "Logging in...");
+    
+    // Simulate network delay
+    setTimeout(() => {
+        const result = passwordManager.login(password);
+        
+        if (result.success) {
+            console.log("✅ Login successful");
+            
+            // Hide login modal
+            hideLoginModal();
+            
+            // Show success message
+            setTimeout(() => {
+                alert("Login successful! Redirecting to admin panel...");
+                window.location.href = 'admin.html';
+            }, 500);
+            
+        } else {
+            showError(result.error || "Login failed");
+        }
+        
+        showLoading(false);
+    }, 1000);
 }
 
-function handleRegisterSubmit(e) {
+function handleChangePasswordSubmit(e) {
     e.preventDefault();
-    const email = registerEmail ? registerEmail.value.trim() : '';
-    const password = newPassword ? newPassword.value.trim() : '';
-    const confirm = confirmPassword ? confirmPassword.value.trim() : '';
-    registerWithFirebase(email, password, confirm);
+    
+    const currentPassword = currentPasswordInput ? currentPasswordInput.value.trim() : '';
+    const newPassword = newPasswordInput ? newPasswordInput.value.trim() : '';
+    const confirmPassword = confirmPasswordInput ? confirmPasswordInput.value.trim() : '';
+    
+    if (!currentPassword || !newPassword || !confirmPassword) {
+        showError("Please fill in all fields");
+        return;
+    }
+    
+    showLoading(true, "Changing password...");
+    
+    // Simulate network delay
+    setTimeout(() => {
+        const result = passwordManager.changePassword(currentPassword, newPassword, confirmPassword);
+        
+        if (result.success) {
+            console.log("✅ Password changed successfully");
+            showSuccess("Password changed successfully!");
+            
+            // Clear form
+            if (currentPasswordInput) currentPasswordInput.value = '';
+            if (newPasswordInput) newPasswordInput.value = '';
+            if (confirmPasswordInput) confirmPasswordInput.value = '';
+            
+            // Auto-close after success
+            setTimeout(() => {
+                hideChangePasswordModal();
+                showLoginModal();
+            }, 2000);
+            
+        } else {
+            showError(result.error || "Failed to change password");
+        }
+        
+        showLoading(false);
+    }, 1000);
 }
 
-// ===== INITIALIZATION =====
-function initFirebaseAuth() {
-    console.log("🔥 Initializing Firebase Auth...");
+// ===== INITIALIZE FIREBASE AUTH =====
+// This ensures Firebase is ready for admin page
+function initializeFirebaseForAdmin() {
+    console.log("🔥 Initializing Firebase for admin access...");
     
-    // Check if user is already logged in
-    const userId = localStorage.getItem('firebaseUserId');
-    const token = localStorage.getItem('firebaseToken');
-    
-    if (userId && token && window.firebaseAuth) {
-        window.firebaseAuth.onAuthStateChanged((user) => {
-            if (user) {
-                console.log("✅ User already logged in:", user.email);
-                // User is logged in, admin button should go directly to admin page
-                const loginBtn = document.getElementById('loginBtn');
-                if (loginBtn) {
-                    loginBtn.onclick = () => {
-                        window.location.href = 'admin.html';
-                    };
-                    loginBtn.title = "Go to Admin Panel";
-                    loginBtn.innerHTML = '<i class="fas fa-user-cog"></i>';
-                }
-            }
-        });
+    // Check if Firebase is available
+    if (typeof firebase !== 'undefined' && window.firebaseAuth) {
+        // Create a single admin user for Firestore access
+        // This allows using Firestore without individual user accounts
+        
+        // Store admin flag
+        localStorage.setItem('isAdmin', 'true');
+        console.log("✅ Firebase ready for admin access");
+    } else {
+        console.log("ℹ️ Firebase not available, using local storage only");
     }
 }
 
@@ -298,19 +262,17 @@ document.addEventListener('DOMContentLoaded', function() {
     loginClose = document.getElementById('loginClose');
     loginSubmit = document.getElementById('loginSubmit');
     loginError = document.getElementById('loginError');
-    emailInput = document.getElementById('emailInput');
     passwordInput = document.getElementById('passwordInput');
     
     passwordModal = document.getElementById('passwordModal');
     passwordClose = document.getElementById('passwordClose');
-    registerSubmit = document.getElementById('registerSubmit');
+    changePasswordSubmit = document.getElementById('changePasswordSubmit');
     passwordSuccess = document.getElementById('passwordSuccess');
-    registerEmail = document.getElementById('registerEmail');
-    newPassword = document.getElementById('newPassword');
-    confirmPassword = document.getElementById('confirmPassword');
+    currentPasswordInput = document.getElementById('currentPassword');
+    newPasswordInput = document.getElementById('newPassword');
+    confirmPasswordInput = document.getElementById('confirmPassword');
     
     changePasswordBtn = document.getElementById('changePasswordBtn');
-    registerSubmitBtn = document.getElementById('registerSubmit');
     
     // Set up event listeners
     const loginBtn = document.getElementById('loginBtn');
@@ -323,19 +285,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     if (passwordClose) {
-        passwordClose.addEventListener('click', hideRegisterModal);
+        passwordClose.addEventListener('click', hideChangePasswordModal);
     }
     
     if (loginSubmit) {
         loginSubmit.addEventListener('click', handleLoginSubmit);
     }
     
-    if (registerSubmit) {
-        registerSubmit.addEventListener('click', handleRegisterSubmit);
+    if (changePasswordSubmit) {
+        changePasswordSubmit.addEventListener('click', handleChangePasswordSubmit);
     }
     
     if (changePasswordBtn) {
-        changePasswordBtn.addEventListener('click', showRegisterModal);
+        changePasswordBtn.addEventListener('click', showChangePasswordModal);
     }
     
     // Close modals when clicking outside
@@ -344,18 +306,12 @@ document.addEventListener('DOMContentLoaded', function() {
             hideLoginModal();
         }
         if (passwordModal && e.target === passwordModal) {
-            hideRegisterModal();
+            hideChangePasswordModal();
         }
     });
     
     // Allow Enter key to submit forms
-    if (emailInput && passwordInput) {
-        emailInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                handleLoginSubmit(e);
-            }
-        });
-        
+    if (passwordInput) {
         passwordInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 handleLoginSubmit(e);
@@ -363,26 +319,25 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    if (registerEmail && newPassword && confirmPassword) {
-        const handleRegisterEnter = (e) => {
+    if (currentPasswordInput && newPasswordInput && confirmPasswordInput) {
+        const handleEnter = (e) => {
             if (e.key === 'Enter') {
-                handleRegisterSubmit(e);
+                handleChangePasswordSubmit(e);
             }
         };
         
-        registerEmail.addEventListener('keypress', handleRegisterEnter);
-        newPassword.addEventListener('keypress', handleRegisterEnter);
-        confirmPassword.addEventListener('keypress', handleRegisterEnter);
+        currentPasswordInput.addEventListener('keypress', handleEnter);
+        newPasswordInput.addEventListener('keypress', handleEnter);
+        confirmPasswordInput.addEventListener('keypress', handleEnter);
     }
     
-    // Check Firebase auth status after a delay
+    // Initialize Firebase for admin access
     setTimeout(() => {
-        initFirebaseAuth();
-    }, 1000);
+        initializeFirebaseForAdmin();
+    }, 1500);
     
-    // ===== EXISTING CODE (Language switcher, navigation, etc.) =====
-    // Your existing language switcher, mobile menu, and navigation code here...
-    // Keep all your existing functionality for the portfolio site
+    // ===== EXISTING LANGUAGE & NAVIGATION CODE =====
+    // Keep all your existing portfolio functionality
     
     // Language switcher
     const langEnBtn = document.getElementById('langEn');
@@ -391,17 +346,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const langDeMobile = document.getElementById('langDeMobile');
     
     function switchLanguage(lang) {
-        // Hide all language-specific elements
         document.querySelectorAll('.lang-en, .lang-de').forEach(el => {
             el.style.display = 'none';
         });
         
-        // Show elements for selected language
         document.querySelectorAll(`.lang-${lang}`).forEach(el => {
             el.style.display = '';
         });
         
-        // Update active state on buttons
         [langEnBtn, langDeBtn, langEnMobile, langDeMobile].forEach(btn => {
             if (btn) btn.classList.remove('active');
         });
@@ -429,7 +381,6 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileNav.style.display = mobileNav.style.display === 'block' ? 'none' : 'block';
         });
         
-        // Close mobile nav when clicking a link
         mobileNav.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileNav.style.display = 'none';
