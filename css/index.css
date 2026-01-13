@@ -1082,15 +1082,24 @@ footer {
         grid-template-columns: 1fr;
     }
     
-    /* Hide desktop navigation and language switcher */
-    nav,
-    .language-switcher {
+    /* Hide desktop navigation */
+    nav {
         display: none;
     }
     
-    /* Show mobile language switcher */
+    /* SHOW DESKTOP LANGUAGE SWITCHER ON MOBILE */
+    .language-switcher {
+        display: flex !important;
+        background: rgba(10, 102, 194, 0.1);
+        padding: 0.4rem 0.8rem;
+        border-radius: 30px;
+        border: 1px solid rgba(10, 102, 194, 0.2);
+        margin-right: 0.5rem;
+    }
+    
+    /* Hide mobile language switcher from hamburger menu */
     .mobile-language-switcher {
-        display: flex;
+        display: none;
     }
     
     /* Keep all buttons visible */
@@ -1106,11 +1115,15 @@ footer {
     /* Adjust header layout for mobile */
     .header-content {
         flex-wrap: nowrap;
+        gap: 0.5rem;
     }
     
     .header-left {
         flex: 1;
         min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
     }
     
     .logo {
@@ -1118,11 +1131,14 @@ footer {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        flex-shrink: 0;
     }
     
     .header-buttons {
         flex-shrink: 0;
         gap: 0.5rem;
+        display: flex;
+        align-items: center;
     }
     
     /* Adjust button sizes for mobile */
@@ -1143,6 +1159,17 @@ footer {
     .mobile-nav {
         top: 85px;
         padding: 1.5rem;
+    }
+    
+    /* Adjust language button size for mobile */
+    .language-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.85rem;
+    }
+    
+    .flag-icon {
+        width: 18px;
+        height: 13px;
     }
 }
 
@@ -1179,11 +1206,26 @@ footer {
     
     /* Adjust header for smaller screens */
     .header-left {
-        gap: 1rem;
+        gap: 0.5rem;
     }
     
     .logo {
         font-size: 1.3rem;
+    }
+    
+    .language-switcher {
+        padding: 0.3rem 0.6rem;
+        margin-right: 0.3rem;
+    }
+    
+    .language-btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    .flag-icon {
+        width: 16px;
+        height: 12px;
     }
     
     .header-buttons {
@@ -1224,6 +1266,20 @@ footer {
         font-size: 1.2rem;
     }
     
+    .language-switcher {
+        padding: 0.2rem 0.4rem;
+    }
+    
+    .language-btn {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.75rem;
+    }
+    
+    .flag-icon {
+        width: 14px;
+        height: 10px;
+    }
+    
     .header-buttons {
         gap: 0.3rem;
     }
@@ -1245,17 +1301,25 @@ footer {
         padding: 0.8rem 1.2rem;
         font-size: 1rem;
     }
-    
-    .mobile-language-switcher .language-btn {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
-        width: 120px;
-    }
 }
 
 @media (max-width: 400px) {
     .logo {
         font-size: 1.1rem;
+    }
+    
+    .language-switcher {
+        padding: 0.15rem 0.3rem;
+    }
+    
+    .language-btn {
+        padding: 0.15rem 0.3rem;
+        font-size: 0.7rem;
+    }
+    
+    .flag-icon {
+        width: 12px;
+        height: 9px;
     }
     
     .header-buttons {
