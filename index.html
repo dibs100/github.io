@@ -978,6 +978,51 @@
             display: none;
         }
 
+
+        /* ===== MOBILE & TABLET LOGIN ===== */
+@media (max-width: 768px) {
+  .login-container, 
+  .auth-box, 
+  .login-form-wrapper {
+    width: 90% !important;
+    max-width: 400px !important;
+    margin: 20px auto !important;
+    padding: 25px !important;
+  }
+  
+  /* Make inputs bigger for touch */
+  input[type="text"], 
+  input[type="password"], 
+  input[type="email"] {
+    font-size: 16px !important; /* Prevents iOS zoom */
+    height: 50px !important;
+    padding: 12px 15px !important;
+  }
+  
+  /* Bigger login button */
+  .login-btn, 
+  .submit-btn, 
+  button[type="submit"] {
+    padding: 15px 25px !important;
+    font-size: 18px !important;
+    height: 55px !important;
+  }
+  
+  /* Adjust spacing */
+  .form-group {
+    margin-bottom: 20px !important;
+  }
+}
+
+/* For tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .login-container, 
+  .auth-box {
+    width: 70% !important;
+    max-width: 500px !important;
+  }
+}
+        
         /* ===== RESPONSIVE STYLES ===== */
         @media (max-width: 992px) {
             .hero-content {
