@@ -263,6 +263,60 @@ function initializeFirebase() {
     }
 }
 
+// ===== ZABBIX BUTTON FUNCTIONALITY =====
+function initializeZabbixButton() {
+    const zabbixBtn = document.getElementById('zabbixBtn');
+    if (zabbixBtn) {
+        console.log("✅ Zabbix button found");
+        zabbixBtn.addEventListener('click', () => {
+            console.log("🌐 Redirecting to Zabbix website...");
+            // Open in a new tab
+            window.open('https://www.zabbix.com', '_blank');
+        });
+    } else {
+        console.error("❌ Zabbix button not found!");
+    }
+}
+
+// ===== IMPROVED MOBILE MENU FUNCTIONALITY =====
+function initializeMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    if (mobileMenuBtn && mobileNav) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isVisible = mobileNav.classList.contains('active');
+            
+            if (isVisible) {
+                mobileNav.classList.remove('active');
+                mobileNav.style.display = 'none';
+            } else {
+                mobileNav.classList.add('active');
+                mobileNav.style.display = 'block';
+            }
+        });
+        
+        // Close mobile nav when clicking a link
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                mobileNav.style.display = 'none';
+            });
+        });
+        
+        // Close mobile nav when clicking outside
+        document.addEventListener('click', (e) => {
+            if (mobileNav.classList.contains('active') && 
+                !mobileNav.contains(e.target) && 
+                !mobileMenuBtn.contains(e.target)) {
+                mobileNav.classList.remove('active');
+                mobileNav.style.display = 'none';
+            }
+        });
+    }
+}
+
 // ===== MAIN INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
     console.log("📄 DOM loaded, initializing...");
@@ -291,7 +345,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     changePasswordBtn = document.getElementById('changePasswordBtn');
     
-    // Set up event listeners
+    // ===== SET UP EVENT LISTENERS =====
+    
+    // Login button
     const loginBtn = document.getElementById('loginBtn');
     if (loginBtn) {
         loginBtn.addEventListener('click', showLoginModal);
@@ -351,12 +407,21 @@ document.addEventListener('DOMContentLoaded', function() {
         confirmPasswordInput.addEventListener('keypress', handleEnter);
     }
     
+    // ===== INITIALIZE NEW FEATURES =====
+    
+    // Initialize Zabbix button
+    initializeZabbixButton();
+    
+    // Initialize mobile menu with improved functionality
+    initializeMobileMenu();
+    
     // Initialize Firebase
     setTimeout(() => {
         initializeFirebase();
     }, 1000);
     
     // ===== EXISTING LANGUAGE & NAVIGATION CODE =====
+    
     // Language switcher
     const langEnBtn = document.getElementById('langEn');
     const langDeBtn = document.getElementById('langDe');
@@ -386,29 +451,16 @@ document.addEventListener('DOMContentLoaded', function() {
             if (langDeBtn) langDeBtn.classList.add('active');
             if (langDeMobile) langDeMobile.classList.add('active');
         }
+        
+        // Update document language attribute for accessibility
+        document.documentElement.lang = lang;
     }
     
+    // Add event listeners for language switching
     if (langEnBtn) langEnBtn.addEventListener('click', () => switchLanguage('en'));
     if (langDeBtn) langDeBtn.addEventListener('click', () => switchLanguage('de'));
     if (langEnMobile) langEnMobile.addEventListener('click', () => switchLanguage('en'));
     if (langDeMobile) langDeMobile.addEventListener('click', () => switchLanguage('de'));
-    
-    // Mobile menu
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileNav = document.getElementById('mobileNav');
-    
-    if (mobileMenuBtn && mobileNav) {
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileNav.style.display = mobileNav.style.display === 'block' ? 'none' : 'block';
-        });
-        
-        // Close mobile nav when clicking a link
-        mobileNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileNav.style.display = 'none';
-            });
-        });
-    }
     
     // Smooth scrolling for navigation links
     document.querySelectorAll('nav a, .mobile-nav a').forEach(anchor => {
@@ -418,6 +470,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (targetId.startsWith('#')) {
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
+                    // Close mobile menu if open
+                    const mobileNav = document.getElementById('mobileNav');
+                    if (mobileNav && mobileNav.classList.contains('active')) {
+                        mobileNav.classList.remove('active');
+                        mobileNav.style.display = 'none';
+                    }
+                    
                     window.scrollTo({
                         top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
@@ -429,15 +488,24 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Active navigation link on scroll
     window.addEventListener('scroll', () => {
-        const scrollPosition = window.scrollY;
+        const scrollPosition = window.scrollY + 100;
         
         document.querySelectorAll('section').forEach(section => {
-            const sectionTop = section.offsetTop - 100;
+            const sectionTop = section.offsetTop;
             const sectionHeight = section.clientHeight;
             const sectionId = section.getAttribute('id');
             
             if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                // Update desktop navigation
                 document.querySelectorAll('nav a').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                // Update mobile navigation
+                document.querySelectorAll('.mobile-nav a').forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('href') === `#${sectionId}`) {
                         link.classList.add('active');
