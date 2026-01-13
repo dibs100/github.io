@@ -374,6 +374,50 @@ function updatePlaceholdersAndTitles(lang) {
     });
 }
 
+// ===== SIMPLIFIED LANGUAGE SWITCHING =====
+function switchLanguage(lang) {
+    console.log(`🌐 Switching language to: ${lang}`);
+    
+    // Hide all language-specific elements
+    const allLangElements = document.querySelectorAll('.lang-en, .lang-de');
+    console.log(`Found ${allLangElements.length} language elements`);
+    
+    allLangElements.forEach(el => {
+        el.style.display = 'none';
+    });
+    
+    // Show elements for selected language
+    const selectedLangElements = document.querySelectorAll(`.lang-${lang}`);
+    console.log(`Found ${selectedLangElements.length} elements for ${lang}`);
+    
+    selectedLangElements.forEach(el => {
+        el.style.display = '';
+    });
+    
+    // Update active state on buttons - DESKTOP
+    const langEnBtn = document.getElementById('langEn');
+    const langDeBtn = document.getElementById('langDe');
+    
+    if (langEnBtn && langDeBtn) {
+        langEnBtn.classList.remove('active');
+        langDeBtn.classList.remove('active');
+        
+        if (lang === 'en') {
+            langEnBtn.classList.add('active');
+        } else {
+            langDeBtn.classList.add('active');
+        }
+    }
+    
+    // Update document language attribute for accessibility
+    document.documentElement.lang = lang;
+    
+    // Update placeholders and titles
+    updatePlaceholdersAndTitles(lang);
+    
+    console.log(`✅ Language switched to ${lang}`);
+}
+
 // ===== MAIN INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
     console.log("📄 DOM loaded, initializing...");
@@ -479,48 +523,24 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // ===== LANGUAGE SWITCHING =====
     
-    // Language switcher
+    // Language switcher - DESKTOP
     const langEnBtn = document.getElementById('langEn');
     const langDeBtn = document.getElementById('langDe');
-    const langEnMobile = document.getElementById('langEnMobile');
-    const langDeMobile = document.getElementById('langDeMobile');
     
-    function switchLanguage(lang) {
-        // Hide all language-specific elements
-        document.querySelectorAll('.lang-en, .lang-de').forEach(el => {
-            el.style.display = 'none';
+    // Add event listeners for language switching - DESKTOP
+    if (langEnBtn) {
+        langEnBtn.addEventListener('click', () => {
+            console.log("EN button clicked");
+            switchLanguage('en');
         });
-        
-        // Show elements for selected language
-        document.querySelectorAll(`.lang-${lang}`).forEach(el => {
-            el.style.display = '';
-        });
-        
-        // Update active state on buttons
-        [langEnBtn, langDeBtn, langEnMobile, langDeMobile].forEach(btn => {
-            if (btn) btn.classList.remove('active');
-        });
-        
-        if (lang === 'en') {
-            if (langEnBtn) langEnBtn.classList.add('active');
-            if (langEnMobile) langEnMobile.classList.add('active');
-        } else {
-            if (langDeBtn) langDeBtn.classList.add('active');
-            if (langDeMobile) langDeMobile.classList.add('active');
-        }
-        
-        // Update document language attribute for accessibility
-        document.documentElement.lang = lang;
-        
-        // Update placeholders and titles
-        updatePlaceholdersAndTitles(lang);
     }
     
-    // Add event listeners for language switching
-    if (langEnBtn) langEnBtn.addEventListener('click', () => switchLanguage('en'));
-    if (langDeBtn) langDeBtn.addEventListener('click', () => switchLanguage('de'));
-    if (langEnMobile) langEnMobile.addEventListener('click', () => switchLanguage('en'));
-    if (langDeMobile) langDeMobile.addEventListener('click', () => switchLanguage('de'));
+    if (langDeBtn) {
+        langDeBtn.addEventListener('click', () => {
+            console.log("DE button clicked");
+            switchLanguage('de');
+        });
+    }
     
     // ===== SMOOTH SCROLLING =====
     
