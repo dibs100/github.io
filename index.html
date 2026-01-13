@@ -189,7 +189,7 @@
             border-radius: 50%;
             background: linear-gradient(135deg, #1f4a7c 0%, #0d2c4f 100%);
             border: 1px solid rgba(31, 74, 124, 0.4);
-            color: 	#FD3A4A; /*#4bb1f7;*/
+            color: #4bb1f7;
             font-size: 1rem;
             font-weight: bold;
             opacity: 0.8;
@@ -1570,11 +1570,12 @@
     </footer>
 
     <script>
-        // Password Management System
+        // ENHANCED PASSWORD MANAGEMENT SYSTEM
         class PasswordManager {
             constructor() {
                 this.STORAGE_KEY = 'dibesh_admin_password';
-                this.DEFAULT_PASSWORD = 'admin123'; // Default password
+                this.SESSION_FLAG = 'dibesh_notes_session';
+                this.DEFAULT_PASSWORD = 'admin123'; // Initial password
                 this.init();
             }
 
@@ -1583,6 +1584,8 @@
                 if (!localStorage.getItem(this.STORAGE_KEY)) {
                     localStorage.setItem(this.STORAGE_KEY, this.DEFAULT_PASSWORD);
                 }
+                // Clear any existing session on page load for security
+                sessionStorage.removeItem(this.SESSION_FLAG);
             }
 
             getPassword() {
@@ -1596,6 +1599,34 @@
 
             validatePassword(password) {
                 return password === this.getPassword();
+            }
+
+            setAuthenticated() {
+                // Create a session with timestamp
+                const sessionData = {
+                    authenticated: true,
+                    timestamp: Date.now(),
+                    userAgent: navigator.userAgent.substring(0, 100)
+                };
+                sessionStorage.setItem(this.SESSION_FLAG, JSON.stringify(sessionData));
+            }
+
+            isAuthenticated() {
+                const sessionData = sessionStorage.getItem(this.SESSION_FLAG);
+                if (!sessionData) return false;
+                
+                try {
+                    const data = JSON.parse(sessionData);
+                    // Check if session is less than 8 hours old
+                    const sessionAge = Date.now() - data.timestamp;
+                    return data.authenticated && sessionAge < (8 * 60 * 60 * 1000);
+                } catch {
+                    return false;
+                }
+            }
+
+            logout() {
+                sessionStorage.removeItem(this.SESSION_FLAG);
             }
         }
 
@@ -1674,13 +1705,13 @@
         if (zabbixBtn) {
             zabbixBtn.addEventListener('click', () => {
                 // You can update this URL to your actual Zabbix lab URL
-                const zabbixUrl = "https://www.zabbix.com/";
+                const zabbixUrl = "https://your-zabbix-lab-url.com";
                 
                 // For now, we'll show an alert and let you configure it
-               // alert('Zabbix Lab link will be configured when your Zabbix site is ready.\n\nUpdate the URL in the JavaScript code (line ~714).');
+                alert('Zabbix Lab link will be configured when your Zabbix site is ready.\n\nUpdate the URL in the JavaScript code.');
                 
                 // When you have your Zabbix URL ready, uncomment this line:
-                 window.open(zabbixUrl, '_blank');
+                // window.open(zabbixUrl, '_blank');
             });
         }
 
@@ -1725,13 +1756,20 @@
         // Handle login function
         function handleLogin() {
             if (passwordManager.validatePassword(passwordInput.value)) {
-                // Successful login - redirect to admin page
-                localStorage.setItem('isAuthenticated', 'true');
+                // Successful login - set authenticated session
+                passwordManager.setAuthenticated();
+                // Redirect to admin page
                 window.location.href = "admin.html";
             } else {
                 loginError.style.display = 'block';
                 passwordInput.value = '';
                 passwordInput.focus();
+                
+                // Shake animation for wrong password
+                loginError.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    loginError.style.animation = '';
+                }, 500);
             }
         }
 
@@ -1910,6 +1948,21 @@
                 mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             }
         });
+
+        // Add shake animation for login error
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Quick access message for debugging
+        console.log("✅ Login system ready. Default password: 'admin123'");
+        console.log("ℹ️ Change password using the 'Change Password' button after login");
     </script>
 </body>
 </html>
