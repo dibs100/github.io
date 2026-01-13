@@ -237,7 +237,7 @@
                     </ul>
                 </nav>
                 <!-- ACTION BUTTONS -->
-                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <div class="header-buttons">
                     <!-- ZABBIX LAB BUTTON -->
                     <button class="zabbix-btn" id="zabbixBtn" title="Zabbix Lab">
                         <span class="zabbix-icon">Z</span>
@@ -270,11 +270,13 @@
         <div class="mobile-language-switcher">
             <button class="language-btn active" id="langEnMobile">
                 <div class="flag-icon en"></div>
-                English
+                <span class="lang-en">English</span>
+                <span class="lang-de" style="display: none;">Englisch</span>
             </button>
             <button class="language-btn" id="langDeMobile">
                 <div class="flag-icon de"></div>
-                Deutsch
+                <span class="lang-en">German</span>
+                <span class="lang-de" style="display: none;">Deutsch</span>
             </button>
         </div>
     </div>
