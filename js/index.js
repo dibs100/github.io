@@ -415,7 +415,7 @@ function switchLanguage(lang) {
         }
     });
     
-    // Update active state on buttons - DESKTOP & MOBILE
+    // Update active state on buttons - DESKTOP
     const langEnBtn = document.getElementById('langEn');
     const langDeBtn = document.getElementById('langDe');
     
@@ -427,6 +427,21 @@ function switchLanguage(lang) {
             langEnBtn.classList.add('active');
         } else {
             langDeBtn.classList.add('active');
+        }
+    }
+    
+    // Update active state on buttons - MOBILE
+    const langEnMobileBtn = document.getElementById('langEnMobile');
+    const langDeMobileBtn = document.getElementById('langDeMobile');
+    
+    if (langEnMobileBtn && langDeMobileBtn) {
+        langEnMobileBtn.classList.remove('active');
+        langDeMobileBtn.classList.remove('active');
+        
+        if (lang === 'en') {
+            langEnMobileBtn.classList.add('active');
+        } else {
+            langDeMobileBtn.classList.add('active');
         }
     }
     
@@ -447,7 +462,7 @@ function initializeLanguage() {
     // Apply language immediately
     switchLanguage(savedLang);
     
-    // Set up click handlers
+    // Set up click handlers for DESKTOP buttons
     const langEnBtn = document.getElementById('langEn');
     const langDeBtn = document.getElementById('langDe');
     
@@ -461,6 +476,24 @@ function initializeLanguage() {
     if (langDeBtn) {
         langDeBtn.addEventListener('click', () => {
             console.log("DE button clicked");
+            switchLanguage('de');
+        });
+    }
+    
+    // Set up click handlers for MOBILE buttons
+    const langEnMobileBtn = document.getElementById('langEnMobile');
+    const langDeMobileBtn = document.getElementById('langDeMobile');
+    
+    if (langEnMobileBtn) {
+        langEnMobileBtn.addEventListener('click', () => {
+            console.log("Mobile EN button clicked");
+            switchLanguage('en');
+        });
+    }
+    
+    if (langDeMobileBtn) {
+        langDeMobileBtn.addEventListener('click', () => {
+            console.log("Mobile DE button clicked");
             switchLanguage('de');
         });
     }
