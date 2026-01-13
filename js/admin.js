@@ -83,24 +83,39 @@ class EnhancedNotesApp {
         this.AUTO_SAVE_DELAY = 1000;
         this.isSaving = false;
         this.imageResizeData = null;
-        this.init();
+        
+        // Initialize DOM elements first
+        this.authError = document.getElementById('authError');
+        this.mainApp = document.getElementById('mainApp');
+        
+        // Check authentication immediately
+        this.checkAuthentication();
+        
+        // If authenticated, initialize the app
+        if (this.isAuthenticated) {
+            this.initApp();
+        }
     }
 
-    init() {
+    checkAuthentication() {
         console.log('NotesApp: Checking authentication...');
-        // ===== AUTHENTICATION CHECK =====
-        const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-        const authError = document.getElementById('authError');
-        const mainApp = document.getElementById('mainApp');
-
-        if (!isAuthenticated) {
+        this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+        
+        if (!this.isAuthenticated) {
             console.log('NotesApp: User not authenticated, showing error');
-            authError.style.display = 'flex';
-            return;
+            this.authError.style.display = 'flex';
+            this.mainApp.style.display = 'none';
+            return false;
         }
-
+        
         console.log('NotesApp: User authenticated, showing main app');
-        mainApp.style.display = 'flex';
+        this.authError.style.display = 'none';
+        this.mainApp.style.display = 'flex';
+        return true;
+    }
+
+    initApp() {
+        console.log('NotesApp: Initializing app components...');
         
         // ===== DOM ELEMENTS =====
         this.notesList = document.getElementById('notesList');
@@ -111,13 +126,6 @@ class EnhancedNotesApp {
         this.charCount = document.getElementById('charCount');
         this.autoSaveIndicator = document.getElementById('autoSaveIndicator');
         this.storageInfo = document.getElementById('storageInfo');
-        
-        console.log('NotesApp: DOM elements loaded:', {
-            notesList: !!this.notesList,
-            noteTitle: !!this.noteTitle,
-            noteEditor: !!this.noteEditor,
-            noteCount: !!this.noteCount
-        });
         
         // ===== BUTTONS =====
         this.newNoteBtn = document.getElementById('newNoteBtn');
@@ -155,6 +163,7 @@ class EnhancedNotesApp {
 
     setupEventListeners() {
         console.log('NotesApp: Setting up event listeners');
+        
         // Note actions
         this.newNoteBtn.addEventListener('click', () => this.createNewNote());
         this.saveNoteBtn.addEventListener('click', () => this.saveNote());
