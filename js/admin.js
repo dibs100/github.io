@@ -1,121 +1,119 @@
-// ===== ENCRYPTION UTILITIES (MUST MATCH INDEX.HTML) =====
-const EncryptionUtils = {
-    ENCRYPTION_KEY: 'dibesh-portfolio-2025-secure-key-12345',
-    
-    encrypt(text) {
-        let result = '';
-        for (let i = 0; i < text.length; i++) {
-            const charCode = text.charCodeAt(i) ^ this.ENCRYPTION_KEY.charCodeAt(i % this.ENCRYPTION_KEY.length);
-            result += String.fromCharCode(charCode);
-        }
-        return btoa(result);
-    },
-    
-    decrypt(encryptedText) {
-        try {
-            const decoded = atob(encryptedText);
-            let result = '';
-            for (let i = 0; i < decoded.length; i++) {
-                const charCode = decoded.charCodeAt(i) ^ this.ENCRYPTION_KEY.charCodeAt(i % this.ENCRYPTION_KEY.length);
-                result += String.fromCharCode(charCode);
-            }
-            return result;
-        } catch (error) {
-            console.error('Decryption error:', error);
-            return null;
-        }
-    },
-    
-    hashPassword(password) {
-        let hash = 0;
-        for (let i = 0; i < password.length; i++) {
-            const char = password.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash;
-        }
-        return hash.toString(36);
-    }
-};
-
-// ===== PASSWORD MANAGER (MUST MATCH INDEX.HTML) =====
-class PasswordManager {
-    constructor() {
-        this.STORAGE_KEY = 'dibesh_admin_password';
-    }
-
-    getEncryptedPassword() {
-        return localStorage.getItem(this.STORAGE_KEY);
-    }
-
-    validatePassword(password) {
-        const encryptedStored = this.getEncryptedPassword();
-        if (!encryptedStored) return false;
-        
-        const decryptedPassword = EncryptionUtils.decrypt(encryptedStored);
-        return password === decryptedPassword;
-    }
-
-    setPassword(newPassword) {
-        if (newPassword.length < 6) {
-            return { success: false, error: 'Password must be at least 6 characters' };
-        }
-        
-        const encryptedPassword = EncryptionUtils.encrypt(newPassword);
-        localStorage.setItem(this.STORAGE_KEY, encryptedPassword);
-        return { success: true };
-    }
-}
-
-// ===== ENHANCED NOTES APP =====
+// ===== ENHANCED NOTES APP WITH FIREBASE =====
 class EnhancedNotesApp {
     constructor() {
-        console.log('NotesApp: Initializing...');
-        try {
-            this.notes = JSON.parse(localStorage.getItem('dibesh_notes')) || [];
-            console.log('NotesApp: Loaded', this.notes.length, 'notes');
-        } catch (error) {
-            console.error('NotesApp: Error loading notes:', error);
-            this.notes = [];
+        console.log('📝 NotesApp: Initializing...');
+        
+        // Hide all screens initially
+        this.hideAllScreens();
+        
+        // Show Firebase loading screen
+        const loadingScreen = document.getElementById('firebaseLoading');
+        if (loadingScreen) {
+            loadingScreen.style.display = 'flex';
         }
         
+        // Wait for Firebase to initialize
+        this.waitForFirebase();
+    }
+    
+    hideAllScreens() {
+        const loadingScreen = document.getElementById('firebaseLoading');
+        const errorScreen = document.getElementById('firebaseError');
+        const authError = document.getElementById('authError');
+        const mainApp = document.getElementById('mainApp');
+        
+        if (loadingScreen) loadingScreen.style.display = 'none';
+        if (errorScreen) errorScreen.style.display = 'none';
+        if (authError) authError.style.display = 'none';
+        if (mainApp) mainApp.style.display = 'none';
+    }
+    
+    async waitForFirebase() {
+        console.log('🔥 Waiting for Firebase...');
+        
+        // Wait up to 10 seconds for Firebase
+        let attempts = 0;
+        const maxAttempts = 50; // 10 seconds (50 * 200ms)
+        
+        const checkInterval = setInterval(() => {
+            attempts++;
+            
+            if (typeof firebase !== 'undefined' && window.firebaseAuth && window.firebaseDB) {
+                clearInterval(checkInterval);
+                console.log('✅ Firebase services ready');
+                this.checkAuthentication();
+            } else if (attempts >= maxAttempts) {
+                clearInterval(checkInterval);
+                console.error('❌ Firebase timeout');
+                this.showFirebaseError();
+            }
+        }, 200);
+    }
+    
+    showFirebaseError() {
+        this.hideAllScreens();
+        const errorScreen = document.getElementById('firebaseError');
+        if (errorScreen) {
+            errorScreen.style.display = 'flex';
+        }
+    }
+    
+    async checkAuthentication() {
+        console.log('🔐 Checking authentication...');
+        
+        // Hide loading screen
+        const loadingScreen = document.getElementById('firebaseLoading');
+        if (loadingScreen) {
+            loadingScreen.style.display = 'none';
+        }
+        
+        // Check if user is logged in
+        const user = window.firebaseAuth.currentUser;
+        const token = localStorage.getItem('firebaseToken');
+        const userId = localStorage.getItem('firebaseUserId');
+        
+        if (user && token && userId) {
+            console.log('✅ User authenticated:', user.email);
+            this.userId = userId;
+            this.userEmail = user.email || localStorage.getItem('userEmail') || '';
+            await this.initApp();
+        } else {
+            console.log('❌ User not authenticated');
+            this.showAuthError();
+        }
+    }
+    
+    showAuthError() {
+        this.hideAllScreens();
+        const authError = document.getElementById('authError');
+        if (authError) {
+            authError.style.display = 'flex';
+        }
+    }
+    
+    async initApp() {
+        console.log('🚀 Initializing Notes App...');
+        
+        // Show main app
+        this.hideAllScreens();
+        const mainApp = document.getElementById('mainApp');
+        if (mainApp) {
+            mainApp.style.display = 'flex';
+        }
+        
+        // Display user info
+        const userInfo = document.getElementById('userInfo');
+        if (userInfo && this.userEmail) {
+            userInfo.textContent = `Logged in as: ${this.userEmail}`;
+        }
+        
+        // Initialize notes array
+        this.notes = [];
         this.currentNoteId = null;
         this.saveTimeout = null;
-        this.AUTO_SAVE_DELAY = 1000;
+        this.AUTO_SAVE_DELAY = 2000;
         this.isSaving = false;
         this.imageResizeData = null;
-        
-        // Initialize DOM elements first
-        this.authError = document.getElementById('authError');
-        this.mainApp = document.getElementById('mainApp');
-        
-        // Check authentication immediately
-        this.checkAuthentication();
-        
-        // If authenticated, initialize the app
-        if (this.isAuthenticated) {
-            this.initApp();
-        }
-    }
-
-    checkAuthentication() {
-        console.log('NotesApp: Checking authentication...');
-        this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-        
-        if (!this.isAuthenticated) {
-            console.log('NotesApp: User not authenticated, showing error');
-            this.authError.style.display = 'flex';
-            this.mainApp.style.display = 'none';
-            return false;
-        }
-        
-        console.log('NotesApp: User authenticated, showing main app');
-        this.authError.style.display = 'none';
-        this.mainApp.style.display = 'flex';
-        return true;
-    }
-
-    initApp() {
-        console.log('NotesApp: Initializing app components...');
         
         // ===== DOM ELEMENTS =====
         this.notesList = document.getElementById('notesList');
@@ -142,15 +140,15 @@ class EnhancedNotesApp {
         // ===== EVENT LISTENERS =====
         this.setupEventListeners();
         
-        // ===== INITIAL LOAD =====
-        this.renderNotes();
+        // ===== LOAD NOTES FROM FIRESTORE =====
+        await this.loadNotesFromFirestore();
         
         // Select first note if available
         if (this.notes.length > 0) {
-            console.log('NotesApp: Selecting first note');
+            console.log('📋 Selecting first note');
             this.selectNote(this.notes[0].id);
         } else {
-            console.log('NotesApp: No notes, creating new one');
+            console.log('📋 No notes, creating new one');
             this.createNewNote();
         }
         
@@ -158,11 +156,125 @@ class EnhancedNotesApp {
         this.updateStorageInfo();
         this.setCursorToEnd();
         
-        console.log('NotesApp: Initialization complete');
+        console.log('✅ Notes App initialized');
     }
-
+    
+    async loadNotesFromFirestore() {
+        try {
+            console.log('📥 Loading notes from Firestore...');
+            
+            if (!window.firebaseDB) {
+                throw new Error('Firestore not available');
+            }
+            
+            const notesSnapshot = await window.firebaseDB
+                .collection('notes')
+                .where('userId', '==', this.userId)
+                .orderBy('updatedAt', 'desc')
+                .get();
+            
+            this.notes = notesSnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            
+            console.log(`📥 Loaded ${this.notes.length} notes from Firestore`);
+            
+            // Render notes list
+            this.renderNotes();
+            
+        } catch (error) {
+            console.error('❌ Error loading notes from Firestore:', error);
+            
+            // Fallback to localStorage
+            try {
+                this.notes = JSON.parse(localStorage.getItem(`dibesh_notes_${this.userId}`)) || [];
+                console.log(`📥 Fallback to localStorage, loaded ${this.notes.length} notes`);
+                this.renderNotes();
+            } catch (e) {
+                this.notes = [];
+                console.log('📥 No notes found');
+            }
+        }
+    }
+    
+    async saveNoteToFirestore(note) {
+        try {
+            if (!window.firebaseDB) {
+                throw new Error('Firestore not available');
+            }
+            
+            const noteData = {
+                userId: this.userId,
+                title: note.title || 'Untitled Note',
+                content: note.content || '',
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            
+            let savedNote;
+            
+            if (note.id && note.id.startsWith('note_')) {
+                // This is a local note, create new in Firestore
+                noteData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                const docRef = await window.firebaseDB.collection('notes').add(noteData);
+                savedNote = { ...note, id: doc.id };
+                console.log('✅ Note created in Firestore:', doc.id);
+            } else if (note.id) {
+                // Update existing note in Firestore
+                await window.firebaseDB.collection('notes').doc(note.id).update(noteData);
+                savedNote = note;
+                console.log('✅ Note updated in Firestore:', note.id);
+            } else {
+                // Create new note in Firestore
+                noteData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                const docRef = await window.firebaseDB.collection('notes').add(noteData);
+                savedNote = { ...note, id: docRef.id };
+                console.log('✅ Note created in Firestore:', docRef.id);
+            }
+            
+            // Backup to localStorage
+            this.backupToLocalStorage();
+            
+            return savedNote;
+            
+        } catch (error) {
+            console.error('❌ Error saving to Firestore:', error);
+            
+            // Fallback to localStorage
+            return this.saveNoteToLocalStorage(note);
+        }
+    }
+    
+    saveNoteToLocalStorage(note) {
+        const noteIndex = this.notes.findIndex(n => n.id === note.id);
+        
+        if (noteIndex === -1) {
+            // New note - generate local ID
+            note.id = note.id || `note_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            note.createdAt = note.createdAt || new Date().toISOString();
+            this.notes.unshift(note);
+        } else {
+            // Update existing note
+            this.notes[noteIndex] = {
+                ...this.notes[noteIndex],
+                ...note
+            };
+        }
+        
+        note.updatedAt = new Date().toISOString();
+        
+        // Save to localStorage
+        localStorage.setItem(`dibesh_notes_${this.userId}`, JSON.stringify(this.notes));
+        
+        return note;
+    }
+    
+    backupToLocalStorage() {
+        localStorage.setItem(`dibesh_notes_${this.userId}`, JSON.stringify(this.notes));
+    }
+    
     setupEventListeners() {
-        console.log('NotesApp: Setting up event listeners');
+        console.log('🔗 Setting up event listeners...');
         
         // Note actions
         this.newNoteBtn.addEventListener('click', () => this.createNewNote());
@@ -188,7 +300,7 @@ class EnhancedNotesApp {
         
         this.saveToFolderBtn.addEventListener('click', () => this.saveToLocalFolder());
         
-        // Authentication
+        // Logout
         this.logoutBtn.addEventListener('click', () => this.logout());
         
         // Search
@@ -203,7 +315,6 @@ class EnhancedNotesApp {
         this.noteEditor.addEventListener('input', () => {
             this.autoSave();
             this.updateCharacterCount();
-            this.setCursorToEnd();
         });
         
         // Keyboard shortcuts
@@ -227,14 +338,12 @@ class EnhancedNotesApp {
                 const command = e.currentTarget.dataset.command;
                 const value = e.currentTarget.dataset.value;
                 this.executeCommand(command, value);
-                this.setCursorToEnd();
             });
         });
         
         // Table insertion
         this.insertTableBtn.addEventListener('click', () => {
             this.insertTable();
-            this.setCursorToEnd();
         });
         
         // Image paste
@@ -250,42 +359,14 @@ class EnhancedNotesApp {
             }
         });
         
-        console.log('NotesApp: Event listeners setup complete');
+        console.log('✅ Event listeners setup complete');
     }
-
-    // ===== CURSOR MANAGEMENT =====
-    setCursorToEnd() {
-        const selection = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(this.noteEditor);
-        range.collapse(false);
-        selection.removeAllRanges();
-        selection.addRange(range);
-        this.noteEditor.focus();
-    }
-
-    preserveCursorPosition(callback) {
-        const selection = window.getSelection();
-        const range = selection.rangeCount > 0 ? selection.getRangeAt(0).cloneRange() : null;
-        callback();
-        if (range) {
-            selection.removeAllRanges();
-            selection.addRange(range);
-        } else {
-            this.setCursorToEnd();
-        }
-        this.noteEditor.focus();
-    }
-
+    
     // ===== NOTE MANAGEMENT =====
-    generateId() {
-        return Date.now().toString(36) + Math.random().toString(36).substr(2);
-    }
-
     createNewNote() {
-        console.log('NotesApp: Creating new note');
+        console.log('📝 Creating new note');
         const newNote = {
-            id: this.generateId(),
+            id: `note_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
             title: 'Untitled Note',
             content: '',
             createdAt: new Date().toISOString(),
@@ -293,7 +374,7 @@ class EnhancedNotesApp {
         };
 
         this.notes.unshift(newNote);
-        this.saveToStorage();
+        this.saveNoteToLocalStorage(newNote); // Save locally first
         this.renderNotes();
         this.selectNote(newNote.id);
         
@@ -302,14 +383,14 @@ class EnhancedNotesApp {
             this.noteTitle.setSelectionRange(this.noteTitle.value.length, this.noteTitle.value.length);
         }, 100);
     }
-
+    
     selectNote(noteId) {
-        console.log('NotesApp: Selecting note', noteId);
+        console.log('📋 Selecting note:', noteId);
         this.currentNoteId = noteId;
         const note = this.notes.find(n => n.id === noteId);
         
         if (!note) {
-            console.error('NotesApp: Note not found', noteId);
+            console.error('❌ Note not found:', noteId);
             return;
         }
         
@@ -324,29 +405,44 @@ class EnhancedNotesApp {
         });
         
         this.updateCharacterCount();
-        setTimeout(() => this.setCursorToEnd(), 50);
+        this.setCursorToEnd();
         setTimeout(() => this.setupImageResizing(), 100);
     }
-
-    saveNote() {
+    
+    async saveNote() {
         if (!this.currentNoteId || this.isSaving) return;
         
-        console.log('NotesApp: Saving note', this.currentNoteId);
+        console.log('💾 Saving note:', this.currentNoteId);
         this.isSaving = true;
-        const noteIndex = this.notes.findIndex(n => n.id === this.currentNoteId);
-        if (noteIndex === -1) return;
         
         const title = this.noteTitle.value.trim() || 'Untitled Note';
         const content = this.noteEditor.innerHTML;
         
-        this.notes[noteIndex] = {
-            ...this.notes[noteIndex],
-            title: title,
-            content: content,
-            updatedAt: new Date().toISOString()
-        };
+        // Find or create note
+        let note = this.notes.find(n => n.id === this.currentNoteId);
         
-        this.saveToStorage();
+        if (note) {
+            note.title = title;
+            note.content = content;
+        } else {
+            note = {
+                id: this.currentNoteId,
+                title: title,
+                content: content,
+                createdAt: new Date().toISOString()
+            };
+        }
+        
+        note.updatedAt = new Date().toISOString();
+        
+        // Save to Firestore (with localStorage fallback)
+        const savedNote = await this.saveNoteToFirestore(note);
+        
+        // Update current note ID if new
+        if (savedNote.id !== this.currentNoteId) {
+            this.currentNoteId = savedNote.id;
+        }
+        
         this.renderNotes();
         
         this.autoSaveIndicator.textContent = '✓ Saved';
@@ -358,7 +454,7 @@ class EnhancedNotesApp {
             this.isSaving = false;
         }, 1500);
     }
-
+    
     autoSave() {
         if (this.saveTimeout) {
             clearTimeout(this.saveTimeout);
@@ -370,13 +466,27 @@ class EnhancedNotesApp {
             }
         }, this.AUTO_SAVE_DELAY);
     }
-
-    deleteNote() {
+    
+    async deleteNote() {
         if (!this.currentNoteId) return;
         
         if (confirm('Are you sure you want to delete this note?')) {
+            try {
+                // Delete from Firestore if it's a Firestore note
+                if (!this.currentNoteId.startsWith('note_')) {
+                    await window.firebaseDB.collection('notes').doc(this.currentNoteId).delete();
+                    console.log('🗑️ Note deleted from Firestore:', this.currentNoteId);
+                }
+            } catch (error) {
+                console.error('❌ Error deleting from Firestore:', error);
+            }
+            
+            // Delete from local array
             this.notes = this.notes.filter(n => n.id !== this.currentNoteId);
-            this.saveToStorage();
+            
+            // Update localStorage
+            localStorage.setItem(`dibesh_notes_${this.userId}`, JSON.stringify(this.notes));
+            
             this.renderNotes();
             
             if (this.notes.length === 0) {
@@ -386,7 +496,7 @@ class EnhancedNotesApp {
             }
         }
     }
-
+    
     updateNoteTitleInList() {
         if (!this.currentNoteId) return;
         
@@ -397,16 +507,16 @@ class EnhancedNotesApp {
         this.notes[noteIndex].title = title;
         this.notes[noteIndex].updatedAt = new Date().toISOString();
         
-        this.saveToStorage();
+        this.saveNoteToLocalStorage(this.notes[noteIndex]);
         this.renderNotes();
     }
-
+    
     updateCharacterCount() {
         const text = this.noteEditor.innerText || '';
         const length = text.length;
         this.charCount.textContent = `${length} characters`;
     }
-
+    
     formatDate(dateString) {
         const date = new Date(dateString);
         return date.toLocaleString('en-US', {
@@ -416,9 +526,8 @@ class EnhancedNotesApp {
             minute: '2-digit'
         });
     }
-
+    
     renderNotes() {
-        console.log('NotesApp: Rendering notes');
         const searchTerm = this.searchBox.value.toLowerCase();
         let filteredNotes = this.notes;
         
@@ -447,6 +556,7 @@ class EnhancedNotesApp {
                     <div class="note-item-title">${note.title || 'Untitled Note'}</div>
                     <div class="note-item-preview">${this.stripHtml(note.content).substring(0, 100)}</div>
                     <div class="note-item-date">${this.formatDate(note.updatedAt)}</div>
+                    ${note.id.startsWith('note_') ? '<div class="local-badge">Local</div>' : ''}
                 </div>
             `).join('');
             
@@ -458,47 +568,54 @@ class EnhancedNotesApp {
         }
         
         this.noteCount.textContent = `${filteredNotes.length} note${filteredNotes.length !== 1 ? 's' : ''}`;
-        console.log('NotesApp: Rendered', filteredNotes.length, 'notes');
     }
-
+    
     filterNotes() {
         this.renderNotes();
     }
-
+    
     stripHtml(html) {
         const div = document.createElement('div');
         div.innerHTML = html;
         return div.textContent || div.innerText || '';
     }
-
-    // ===== RICH TEXT EDITOR COMMANDS =====
-    executeCommand(command, value = null) {
-        this.preserveCursorPosition(() => {
-            document.execCommand(command, false, value);
-        });
+    
+    // ===== EDITOR FUNCTIONS =====
+    setCursorToEnd() {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(this.noteEditor);
+        range.collapse(false);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        this.noteEditor.focus();
     }
-
+    
+    executeCommand(command, value = null) {
+        document.execCommand(command, false, value);
+        this.noteEditor.focus();
+    }
+    
     insertTable() {
         const rows = prompt('Number of rows:', '3');
         const cols = prompt('Number of columns:', '3');
         
         if (rows && cols) {
-            this.preserveCursorPosition(() => {
-                let tableHtml = '<table><tbody>';
-                for (let i = 0; i < parseInt(rows); i++) {
-                    tableHtml += '<tr>';
-                    for (let j = 0; j < parseInt(cols); j++) {
-                        tableHtml += `<td>Cell ${i+1}-${j+1}</td>`;
-                    }
-                    tableHtml += '</tr>';
+            let tableHtml = '<table><tbody>';
+            for (let i = 0; i < parseInt(rows); i++) {
+                tableHtml += '<tr>';
+                for (let j = 0; j < parseInt(cols); j++) {
+                    tableHtml += `<td>Cell ${i+1}-${j+1}</td>`;
                 }
-                tableHtml += '</tbody></table>';
-                
-                document.execCommand('insertHTML', false, tableHtml);
-            });
+                tableHtml += '</tr>';
+            }
+            tableHtml += '</tbody></table>';
+            
+            document.execCommand('insertHTML', false, tableHtml);
+            this.noteEditor.focus();
         }
     }
-
+    
     // ===== IMAGE HANDLING =====
     handlePaste(event) {
         const items = (event.clipboardData || event.originalEvent.clipboardData).items;
@@ -510,20 +627,18 @@ class EnhancedNotesApp {
                 const reader = new FileReader();
                 
                 reader.onload = (e) => {
-                    this.preserveCursorPosition(() => {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.className = 'resizable-image';
-                        img.style.maxWidth = '300px';
-                        img.style.height = 'auto';
-                        
-                        const resizeHandle = document.createElement('div');
-                        resizeHandle.className = 'resize-handle';
-                        img.appendChild(resizeHandle);
-                        
-                        document.execCommand('insertHTML', false, img.outerHTML);
-                        this.setupImageResizing();
-                    });
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'resizable-image';
+                    img.style.maxWidth = '300px';
+                    img.style.height = 'auto';
+                    
+                    const resizeHandle = document.createElement('div');
+                    resizeHandle.className = 'resize-handle';
+                    img.appendChild(resizeHandle);
+                    
+                    document.execCommand('insertHTML', false, img.outerHTML);
+                    this.setupImageResizing();
                 };
                 
                 reader.readAsDataURL(blob);
@@ -531,10 +646,10 @@ class EnhancedNotesApp {
             }
         }
     }
-
+    
     setupImageResizing() {
+        // Implementation for image resizing
         document.querySelectorAll('.resizable-image').forEach(img => {
-            img.removeEventListener('mousedown', this.handleImageMouseDown);
             img.addEventListener('mousedown', this.handleImageMouseDown.bind(this));
             
             if (!img.querySelector('.resize-handle')) {
@@ -544,13 +659,10 @@ class EnhancedNotesApp {
             }
         });
         
-        document.removeEventListener('mousemove', this.handleImageMouseMove);
-        document.removeEventListener('mouseup', this.handleImageMouseUp);
-        
         document.addEventListener('mousemove', this.handleImageMouseMove.bind(this));
         document.addEventListener('mouseup', this.handleImageMouseUp.bind(this));
     }
-
+    
     handleImageMouseDown(e) {
         if (e.target.classList.contains('resize-handle')) {
             e.preventDefault();
@@ -568,7 +680,7 @@ class EnhancedNotesApp {
             img.classList.add('resizing');
         }
     }
-
+    
     handleImageMouseMove(e) {
         if (this.imageResizeData) {
             e.preventDefault();
@@ -588,7 +700,7 @@ class EnhancedNotesApp {
             this.autoSave();
         }
     }
-
+    
     handleImageMouseUp() {
         if (this.imageResizeData) {
             this.imageResizeData.img.classList.remove('resizing');
@@ -597,8 +709,8 @@ class EnhancedNotesApp {
             this.saveNote();
         }
     }
-
-    // ===== EXPORT FUNCTIONS =====
+    
+    // ===== EXPORT/IMPORT FUNCTIONS =====
     exportNotes(format) {
         switch (format) {
             case 'txt': this.exportAllAsTXT(); break;
@@ -609,13 +721,13 @@ class EnhancedNotesApp {
             case 'single-html': this.exportCurrentAsHTML(); break;
         }
     }
-
+    
     exportAllAsTXT() {
         this.exportMultipleFiles('txt', 'text/plain', (note) => 
             `${note.title}\n\n${this.stripHtml(note.content)}`
         );
     }
-
+    
     exportAllAsJSON() {
         const exportData = {
             notes: this.notes,
@@ -629,7 +741,7 @@ class EnhancedNotesApp {
             'application/json'
         );
     }
-
+    
     exportAllAsHTML() {
         this.exportMultipleFiles('html', 'text/html', (note) => `
             <!DOCTYPE html>
@@ -642,20 +754,16 @@ class EnhancedNotesApp {
                     img { max-width: 100%; height: auto; }
                     table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
                     th, td { border: 1px solid #ddd; padding: 8px; }
-                    pre { background: #f5f5f5; padding: 1rem; overflow-x: auto; }
-                    code { background: #f5f5f5; padding: 2px 4px; border-radius: 3px; }
                 </style>
             </head>
             <body>
                 <h1>${note.title}</h1>
                 <div>${note.content}</div>
-                <hr>
-                <p><small>Exported from My Notes on ${new Date().toLocaleString()}</small></p>
             </body>
             </html>
         `);
     }
-
+    
     exportAllAsMarkdown() {
         this.exportMultipleFiles('md', 'text/markdown', (note) => {
             let md = `# ${note.title}\n\n`;
@@ -664,7 +772,7 @@ class EnhancedNotesApp {
             return md;
         });
     }
-
+    
     exportCurrentAsTXT() {
         if (!this.currentNoteId) return;
         const note = this.notes.find(n => n.id === this.currentNoteId);
@@ -676,7 +784,7 @@ class EnhancedNotesApp {
             'text/plain'
         );
     }
-
+    
     exportCurrentAsHTML() {
         if (!this.currentNoteId) return;
         const note = this.notes.find(n => n.id === this.currentNoteId);
@@ -702,36 +810,12 @@ class EnhancedNotesApp {
             </html>
         `;
         
-        this.downloadFile(
-            html,
-            `${this.sanitizeFilename(note.title)}.html`,
-            'text/html'
-        );
+        this.downloadFile(html, `${this.sanitizeFilename(note.title)}.html`, 'text/html');
     }
-
-    exportMultipleFiles(extension, mimeType, contentGenerator) {
-        if (this.notes.length === 0) {
-            alert('No notes to export');
-            return;
-        }
-        
-        alert(`Exporting ${this.notes.length} notes as ${extension.toUpperCase()} files...\n\nThey will be downloaded one by one.`);
-        
-        setTimeout(() => {
-            this.notes.forEach((note, index) => {
-                setTimeout(() => {
-                    this.downloadFile(
-                        contentGenerator(note),
-                        `${this.sanitizeFilename(note.title)}-${index + 1}.${extension}`,
-                        mimeType
-                    );
-                }, index * 500);
-            });
-        }, 1000);
-    }
-
+    
     htmlToMarkdown(html) {
-        let md = html
+        // Simple HTML to Markdown conversion
+        return html
             .replace(/<h1[^>]*>([^<]+)<\/h1>/g, '# $1\n\n')
             .replace(/<h2[^>]*>([^<]+)<\/h2>/g, '## $1\n\n')
             .replace(/<h3[^>]*>([^<]+)<\/h3>/g, '### $1\n\n')
@@ -748,10 +832,29 @@ class EnhancedNotesApp {
             .replace(/<[^>]+>/g, '')
             .replace(/\n{3,}/g, '\n\n')
             .trim();
-            
-        return md;
     }
-
+    
+    exportMultipleFiles(extension, mimeType, contentGenerator) {
+        if (this.notes.length === 0) {
+            alert('No notes to export');
+            return;
+        }
+        
+        alert(`Exporting ${this.notes.length} notes as ${extension.toUpperCase()} files...`);
+        
+        setTimeout(() => {
+            this.notes.forEach((note, index) => {
+                setTimeout(() => {
+                    this.downloadFile(
+                        contentGenerator(note),
+                        `${this.sanitizeFilename(note.title)}-${index + 1}.${extension}`,
+                        mimeType
+                    );
+                }, index * 500);
+            });
+        }, 1000);
+    }
+    
     sanitizeFilename(filename) {
         return filename
             .replace(/[^a-z0-9]/gi, '_')
@@ -760,7 +863,7 @@ class EnhancedNotesApp {
             .replace(/^_|_$/g, '')
             .substring(0, 50) || 'note';
     }
-
+    
     downloadFile(content, filename, mimeType) {
         const blob = new Blob([content], { type: mimeType });
         const url = URL.createObjectURL(blob);
@@ -772,7 +875,7 @@ class EnhancedNotesApp {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     }
-
+    
     // ===== IMPORT FUNCTIONS =====
     async importNotes(event) {
         const files = Array.from(event.target.files);
@@ -786,7 +889,8 @@ class EnhancedNotesApp {
                 const note = this.createNoteFromFile(file, content);
                 
                 if (note) {
-                    this.notes.unshift(note);
+                    // Save to Firestore
+                    await this.saveNoteToFirestore(note);
                     importedCount++;
                 }
             } catch (error) {
@@ -795,18 +899,14 @@ class EnhancedNotesApp {
         }
         
         if (importedCount > 0) {
-            this.saveToStorage();
-            this.renderNotes();
+            // Reload notes
+            await this.loadNotesFromFirestore();
             alert(`Successfully imported ${importedCount} note${importedCount !== 1 ? 's' : ''}`);
-            
-            if (this.notes.length > 0) {
-                this.selectNote(this.notes[0].id);
-            }
         }
         
         event.target.value = '';
     }
-
+    
     readFile(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -815,7 +915,7 @@ class EnhancedNotesApp {
             reader.readAsText(file);
         });
     }
-
+    
     createNoteFromFile(file, content) {
         const extension = file.name.split('.').pop().toLowerCase();
         const filename = file.name.replace(/\.[^/.]+$/, "");
@@ -847,35 +947,12 @@ class EnhancedNotesApp {
                 noteContent = content;
         }
         
-        if (extension === 'md') {
-            noteContent = this.markdownToHtml(noteContent);
-        }
-        
         return {
-            id: this.generateId(),
             title: noteTitle,
-            content: noteContent,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            originalFilename: file.name
+            content: noteContent
         };
     }
-
-    markdownToHtml(markdown) {
-        return markdown
-            .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-            .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-            .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-            .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
-            .replace(/\*(.*)\*/gim, '<em>$1</em>')
-            .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="resizable-image">')
-            .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>')
-            .replace(/^\s*-\s(.*$)/gim, '<li>$1</li>')
-            .replace(/^\s*\d+\.\s(.*$)/gim, '<li>$1</li>')
-            .replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>')
-            .replace(/\n/g, '<br>');
-    }
-
+    
     // ===== LOCAL FOLDER SAVING =====
     async saveToLocalFolder() {
         try {
@@ -912,7 +989,7 @@ class EnhancedNotesApp {
         
         this.downloadBackupFile();
     }
-
+    
     downloadBackupFile() {
         const backupData = {
             notes: this.notes,
@@ -927,48 +1004,47 @@ class EnhancedNotesApp {
         
         alert(`📥 Backup downloaded as: ${filename}\n\n💡 Save it to your preferred location.`);
     }
-
+    
     updateStorageInfo() {
         const notesSize = JSON.stringify(this.notes).length;
         const totalSize = (notesSize / 1024).toFixed(2);
-        this.storageInfo.textContent = `Storage: ${totalSize} KB`;
+        const noteSource = this.notes.some(n => n.id.startsWith('note_')) ? ' (Local + Firestore)' : ' (Firestore)';
+        this.storageInfo.textContent = `Storage: ${totalSize} KB${noteSource}`;
     }
-
-    saveToStorage() {
-        localStorage.setItem('dibesh_notes', JSON.stringify(this.notes));
-        this.updateStorageInfo();
-    }
-
+    
     logout() {
-        localStorage.removeItem('isAuthenticated');
+        // Clear Firebase auth
+        if (window.firebaseAuth) {
+            window.firebaseAuth.signOut().then(() => {
+                console.log('✅ User logged out');
+            }).catch((error) => {
+                console.error('❌ Logout error:', error);
+            });
+        }
+        
+        // Clear localStorage
+        localStorage.removeItem('firebaseToken');
+        localStorage.removeItem('firebaseUserId');
+        localStorage.removeItem('userEmail');
+        
+        // Redirect to index
         window.location.href = 'index.html';
     }
 }
 
 // ===== INITIALIZE APP =====
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM fully loaded, initializing NotesApp...');
+    console.log('📄 DOM fully loaded, initializing NotesApp...');
     try {
         new EnhancedNotesApp();
     } catch (error) {
-        console.error('Failed to initialize NotesApp:', error);
-        alert('Error loading notes application. Please check console for details.');
+        console.error('❌ Failed to initialize NotesApp:', error);
+        
+        // Show error screen
+        const loadingScreen = document.getElementById('firebaseLoading');
+        const errorScreen = document.getElementById('firebaseError');
+        
+        if (loadingScreen) loadingScreen.style.display = 'none';
+        if (errorScreen) errorScreen.style.display = 'flex';
     }
 });
-
-// ===== SESSION MANAGEMENT =====
-let inactivityTimer;
-function resetInactivityTimer() {
-    clearTimeout(inactivityTimer);
-    if (localStorage.getItem('isAuthenticated') === 'true') {
-        inactivityTimer = setTimeout(() => {
-            localStorage.removeItem('isAuthenticated');
-            window.location.href = 'index.html';
-        }, 30 * 60 * 1000);
-    }
-}
-
-document.addEventListener('mousemove', resetInactivityTimer);
-document.addEventListener('keypress', resetInactivityTimer);
-document.addEventListener('click', resetInactivityTimer);
-resetInactivityTimer();
