@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- START: HEAD META & STYLES -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Notes - Dibesh Shrestha</title>
@@ -8,9 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Favicon for notes page -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
+    <!-- END: HEAD META & STYLES -->
+
+    <!-- START: CSS STYLES -->
     <style>
+        /* START: CSS VARIABLES */
         :root {
             --primary: #0A66C2;
             --primary-dark: #004182;
@@ -18,9 +22,9 @@
             --secondary: #94a3b8;
             --dark: #242c38;
             --darker: #1a2029;
-            --card-bg: #f8fafc; /* Brighter background for notes */
-            --editor-bg: #ffffff; /* Even brighter for editor */
-            --light: #1a2029; /* Dark text for contrast */
+            --card-bg: #f8fafc;
+            --editor-bg: #ffffff;
+            --light: #1a2029;
             --gray: #d1d5db;
             --gray-light: #f3f4f6;
             --success: #10b981;
@@ -28,7 +32,6 @@
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --transition: all 0.2s ease;
             
-            /* Color tags */
             --color-red: #ef4444;
             --color-blue: #3b82f6;
             --color-green: #10b981;
@@ -38,7 +41,9 @@
             --color-orange: #f97316;
             --color-teal: #14b8a6;
         }
+        /* END: CSS VARIABLES */
 
+        /* START: BASE STYLES */
         * {
             margin: 0;
             padding: 0;
@@ -54,8 +59,9 @@
             flex-direction: column;
             overflow: hidden;
         }
+        /* END: BASE STYLES */
 
-        /* Login Modal */
+        /* START: LOGIN MODAL STYLES */
         .login-modal {
             position: fixed;
             top: 0;
@@ -84,14 +90,8 @@
         }
 
         @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .login-box h3 {
@@ -151,769 +151,24 @@
             font-size: 1.5rem;
             cursor: pointer;
         }
+        /* END: LOGIN MODAL STYLES */
 
-        /* Header */
-        .header {
-            background: var(--dark);
-            padding: 0.8rem 1.5rem;
-            border-bottom: 1px solid var(--gray);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--primary-light);
-        }
-
-        .note-count {
-            color: var(--secondary);
-            font-size: 0.9rem;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 0.8rem;
-        }
-
-        .btn {
-            padding: 0.5rem 1rem;
-            border-radius: var(--border-radius);
-            border: 1px solid var(--gray);
-            background: var(--card-bg);
-            color: var(--light);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-
-        .btn:hover {
-            border-color: var(--primary);
-            background: rgba(10, 102, 194, 0.1);
-        }
-
-        /* Filter Bar */
-        .filter-bar {
-            padding: 0.5rem 1.5rem;
-            background: var(--dark);
-            border-bottom: 1px solid var(--gray);
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            flex-shrink: 0;
-        }
-
-        .color-filter {
-            display: flex;
-            gap: 0.3rem;
-            align-items: center;
-        }
-
-        .color-filter-btn {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .color-filter-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .color-filter-btn.active {
-            border-color: white;
-            box-shadow: 0 0 0 1px var(--dark);
-        }
-
-        .color-red { background: var(--color-red); }
-        .color-blue { background: var(--color-blue); }
-        .color-green { background: var(--color-green); }
-        .color-yellow { background: var(--color-yellow); }
-        .color-purple { background: var(--color-purple); }
-        .color-pink { background: var(--color-pink); }
-        .color-orange { background: var(--color-orange); }
-        .color-teal { background: var(--color-teal); }
-
-        .tag-filter {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            margin-left: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            padding: 0.2rem 0.6rem;
-            background: var(--card-bg);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: var(--light);
-            cursor: pointer;
-            transition: var(--transition);
-            border: 1px solid transparent;
-        }
-
-        .tag:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .tag.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .clear-filters {
-            margin-left: auto;
-            font-size: 0.8rem;
-            color: var(--secondary);
-            cursor: pointer;
-            padding: 0.3rem 0.8rem;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-        }
-
-        .clear-filters:hover {
-            background: var(--card-bg);
-            color: var(--light);
-        }
-
-        /* Main Layout */
-        .main-container {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 320px;
-            background: var(--card-bg);
-            border-right: 1px solid var(--gray);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .sidebar-header {
-            padding: 1rem;
-            border-bottom: 1px solid var(--gray);
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 0.5rem 1rem;
-            background: white;
-            border: 1px solid var(--gray);
-            border-radius: var(--border-radius);
-            color: var(--light);
-            font-size: 0.9rem;
-        }
-
-        .search-box:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .notes-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 0.5rem;
-        }
-
-        .note-item {
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            background: white;
-            margin-bottom: 0.5rem;
-            cursor: pointer;
-            transition: var(--transition);
-            border: 1px solid var(--gray);
-            position: relative;
-        }
-
-        .note-item:hover {
-            border-color: var(--primary);
-            background: rgba(10, 102, 194, 0.05);
-        }
-
-        .note-item.active {
-            border-color: var(--primary);
-            background: rgba(10, 102, 194, 0.1);
-        }
-
-        .note-item-color {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            border-radius: var(--border-radius) 0 0 var(--border-radius);
-        }
-
-        .note-item-content {
-            margin-left: 0.5rem;
-        }
-
-        .note-item-title {
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .note-item-preview {
-            color: var(--secondary);
-            font-size: 0.85rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .note-item-tags {
-            display: flex;
-            gap: 0.3rem;
-            margin-top: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .note-item-tag {
-            font-size: 0.7rem;
-            padding: 0.1rem 0.4rem;
-            background: rgba(10, 102, 194, 0.1);
-            border-radius: 10px;
-            color: var(--primary-light);
-        }
-
-        .note-item-date {
-            color: var(--secondary);
-            font-size: 0.75rem;
-            margin-top: 0.3rem;
-        }
-
-        /* Editor */
-        .editor-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            padding: 1rem;
-            background: var(--editor-bg);
-        }
-
-        .editor-toolbar {
-            display: flex;
-            gap: 0.5rem;
-            padding: 0.5rem;
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            border: 1px solid var(--gray);
-        }
-
-        .toolbar-group {
-            display: flex;
-            gap: 0.25rem;
-            padding-right: 0.5rem;
-            border-right: 1px solid var(--gray);
-        }
-
-        .toolbar-group:last-child {
-            border-right: none;
-        }
-
-        .toolbar-btn {
-            padding: 0.4rem 0.6rem;
-            background: transparent;
-            border: 1px solid transparent;
-            color: var(--light);
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .toolbar-btn:hover {
-            background: rgba(10, 102, 194, 0.1);
-            color: var(--primary);
-        }
-
-        .toolbar-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Note Header */
-        .note-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .note-title-input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: var(--light);
-            font-size: 1.5rem;
-            font-weight: 700;
-            padding: 0.5rem 0;
-            border-bottom: 2px solid var(--gray);
-        }
-
-        .note-title-input:focus {
-            outline: none;
-            border-bottom-color: var(--primary);
-        }
-
-        .color-picker {
-            display: flex;
-            gap: 0.3rem;
-            align-items: center;
-        }
-
-        .color-option {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: var(--transition);
-        }
-
-        .color-option:hover {
-            transform: scale(1.1);
-        }
-
-        .color-option.active {
-            border-color: var(--light);
-            box-shadow: 0 0 0 1px var(--dark);
-        }
-
-        .tags-input-container {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-            padding: 0.5rem;
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-        }
-
-        .tags-input {
-            background: transparent;
-            border: none;
-            color: var(--light);
-            font-size: 0.9rem;
-            padding: 0.3rem 0.5rem;
-            min-width: 150px;
-        }
-
-        .tags-input:focus {
-            outline: none;
-        }
-
-        .tags-input::placeholder {
-            color: var(--secondary);
-        }
-
-        .note-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            padding: 0.2rem 0.6rem;
-            background: var(--primary);
-            color: white;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        .note-tag-remove {
-            cursor: pointer;
-            font-size: 0.7rem;
-            opacity: 0.7;
-        }
-
-        .note-tag-remove:hover {
-            opacity: 1;
-        }
-
-        .editor-content {
-            flex: 1;
-            background: white;
-            border-radius: var(--border-radius);
-            border: 1px solid var(--gray);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        #noteEditor {
-            flex: 1;
-            padding: 1.5rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            line-height: 1.6;
-            color: var(--light);
-            background: white;
-            border: none;
-            resize: none;
-            outline: none;
-            overflow-y: auto;
-            min-height: 400px;
-        }
-
-        #noteEditor:empty:before {
-            content: attr(placeholder);
-            color: #999;
-        }
-
-        /* Resizable Images */
-        .resizable-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: var(--border-radius);
-            margin: 1rem 0;
-            cursor: move;
-            position: relative;
-            display: inline-block;
-            border: 2px solid transparent;
-        }
-
-        .resizable-image:hover {
-            border-color: var(--primary);
-        }
-
-        .resizable-image.resizing {
-            border-color: var(--primary-light);
-        }
-
-        .resize-handle {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background: var(--primary);
-            border: 2px solid white;
-            border-radius: 50%;
-            bottom: -6px;
-            right: -6px;
-            cursor: se-resize;
+        /* START: MAIN APP STYLES */
+        #mainApp {
             display: none;
+            flex-direction: column;
+            height: 100vh;
         }
+        /* END: MAIN APP STYLES */
 
-        .resizable-image:hover .resize-handle {
-            display: block;
-        }
+        /* The rest of your admin.html CSS styles remain here... */
+        /* (Include all your original admin styles) */
 
-        /* Export Options */
-        .export-options {
-            display: none;
-            position: absolute;
-            right: 1rem;
-            top: 100%;
-            background: var(--card-bg);
-            border: 1px solid var(--gray);
-            border-radius: var(--border-radius);
-            padding: 0.5rem;
-            min-width: 220px;
-            z-index: 100;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .export-options.show {
-            display: block;
-        }
-
-        .export-option {
-            padding: 0.5rem;
-            cursor: pointer;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--light);
-        }
-
-        .export-option:hover {
-            background: rgba(10, 102, 194, 0.1);
-        }
-
-        /* Status Bar */
-        .status-bar {
-            padding: 0.5rem 1rem;
-            background: var(--card-bg);
-            border-top: 1px solid var(--gray);
-            color: var(--light);
-            font-size: 0.85rem;
-            display: flex;
-            justify-content: space-between;
-            flex-shrink: 0;
-        }
-
-        .auto-save-indicator {
-            color: var(--success);
-            font-weight: 500;
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--gray-light);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--gray);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
-        }
-
-        /* MOBILE AND TABLET RESPONSIVE DESIGN */
-        @media (max-width: 1024px) {
-            /* Tablet styles */
-            .sidebar {
-                width: 280px;
-            }
-            
-            .editor-toolbar {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                padding: 0.5rem;
-            }
-            
-            .toolbar-group {
-                flex-shrink: 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            /* Mobile styles - Stack layout */
-            .main-container {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100%;
-                height: 300px;
-                border-right: none;
-                border-bottom: 1px solid var(--gray);
-            }
-            
-            .editor-container {
-                padding: 0.75rem;
-            }
-            
-            .editor-toolbar {
-                overflow-x: auto;
-                padding: 0.5rem;
-                gap: 0.25rem;
-            }
-            
-            .toolbar-btn {
-                padding: 0.4rem;
-                font-size: 0.85rem;
-            }
-            
-            .note-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-            
-            .note-title-input {
-                font-size: 1.2rem;
-                width: 100%;
-            }
-            
-            .color-picker {
-                align-self: flex-start;
-            }
-            
-            .header-actions {
-                flex-wrap: wrap;
-                justify-content: flex-end;
-            }
-            
-            .btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.85rem;
-            }
-            
-            .filter-bar {
-                flex-wrap: wrap;
-                padding: 0.5rem;
-            }
-            
-            .tag-filter {
-                margin-left: 0;
-                margin-top: 0.5rem;
-            }
-            
-            .clear-filters {
-                margin-left: 0;
-                margin-top: 0.5rem;
-            }
-            
-            .export-options {
-                position: fixed;
-                top: auto;
-                bottom: 60px;
-                right: 10px;
-                left: 10px;
-                min-width: auto;
-            }
-        }
-
-        @media (max-width: 480px) {
-            /* Small mobile styles */
-            .header {
-                padding: 0.5rem;
-                flex-wrap: wrap;
-            }
-            
-            .header-left {
-                width: 100%;
-                justify-content: space-between;
-                margin-bottom: 0.5rem;
-            }
-            
-            .header-actions {
-                width: 100%;
-                justify-content: center;
-                gap: 0.5rem;
-            }
-            
-            .btn {
-                flex: 1;
-                justify-content: center;
-                padding: 0.5rem;
-            }
-            
-            .login-box {
-                padding: 2rem;
-                margin: 1rem;
-            }
-            
-            .editor-toolbar {
-                justify-content: center;
-            }
-            
-            .toolbar-group {
-                border-right: none;
-            }
-            
-            .note-item {
-                padding: 0.75rem;
-            }
-        }
-
-        /* Mobile-specific utilities */
-        .mobile-only {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .mobile-only {
-                display: block;
-            }
-            
-            .desktop-only {
-                display: none;
-            }
-            
-            /* Mobile note actions bar */
-            .mobile-actions-bar {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background: var(--card-bg);
-                border-top: 1px solid var(--gray);
-                padding: 0.75rem;
-                display: flex;
-                gap: 0.5rem;
-                z-index: 1000;
-            }
-            
-            .mobile-action-btn {
-                flex: 1;
-                padding: 0.75rem;
-                background: var(--primary);
-                color: white;
-                border: none;
-                border-radius: var(--border-radius);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 0.5rem;
-                font-weight: 600;
-                cursor: pointer;
-            }
-            
-            .mobile-action-btn.secondary {
-                background: var(--card-bg);
-                color: var(--light);
-                border: 1px solid var(--gray);
-            }
-            
-            /* Adjust editor for mobile keyboard */
-            .editor-content {
-                min-height: calc(100vh - 450px);
-            }
-            
-            #noteEditor {
-                min-height: calc(100vh - 500px);
-            }
-        }
-
-        /* Touch-friendly adjustments */
-        @media (hover: none) and (pointer: coarse) {
-            .toolbar-btn,
-            .btn,
-            .note-item,
-            .color-option,
-            .color-filter-btn {
-                min-height: 44px;
-                min-width: 44px;
-            }
-            
-            .resize-handle {
-                width: 24px;
-                height: 24px;
-                bottom: -12px;
-                right: -12px;
-            }
-        }
     </style>
+    <!-- END: CSS STYLES -->
 </head>
 <body>
-    <!-- Login Modal -->
+    <!-- START: LOGIN MODAL HTML -->
     <div class="login-modal" id="loginModal">
         <div class="login-box">
             <h3>Admin Login</h3>
@@ -929,350 +184,115 @@
             </p>
         </div>
     </div>
+    <!-- END: LOGIN MODAL HTML -->
 
-    <!-- Main Interface -->
+    <!-- START: MAIN APP HTML -->
     <div id="mainApp" style="display: none; flex-direction: column; height: 100vh;">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-left">
-                <div class="logo">📝 My Notes</div>
-                <div class="note-count" id="noteCount">0 notes</div>
-            </div>
-            <div class="header-actions">
-                <button class="btn" id="newNoteBtn" title="Create new note">
-                    <i class="fas fa-plus"></i>
-                    <span class="desktop-only">New</span>
-                </button>
-                <div style="position: relative;">
-                    <button class="btn" id="exportBtn" title="Export notes">
-                        <i class="fas fa-download"></i>
-                        <span class="desktop-only">Export</span>
-                    </button>
-                    <div class="export-options" id="exportOptions">
-                        <div class="export-option" data-format="txt-all">
-                            <i class="fas fa-file-alt"></i>
-                            Export All as TXT
-                        </div>
-                        <div class="export-option" data-format="txt-individual">
-                            <i class="fas fa-copy"></i>
-                            Export Each as TXT
-                        </div>
-                        <div class="export-option" data-format="json-all">
-                            <i class="fas fa-code"></i>
-                            Export All as JSON
-                        </div>
-                        <div class="export-option" data-format="html-individual">
-                            <i class="fas fa-file-code"></i>
-                            Export Each as HTML
-                        </div>
-                        <div class="export-option" data-format="md-individual">
-                            <i class="fab fa-markdown"></i>
-                            Export Each as Markdown
-                        </div>
-                    </div>
-                </div>
-                <button class="btn" id="importBtn" title="Import notes from files">
-                    <i class="fas fa-upload"></i>
-                    <span class="desktop-only">Import</span>
-                </button>
-                <button class="btn" id="saveToFolderBtn" title="Save backup to folder">
-                    <i class="fas fa-folder-open"></i>
-                    <span class="desktop-only">Backup</span>
-                </button>
-                <button class="btn" id="logoutBtn" title="Logout">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span class="desktop-only">Logout</span>
-                </button>
-            </div>
-        </header>
-
-        <!-- Filter Bar -->
-        <div class="filter-bar">
-            <div class="color-filter">
-                <span style="color: var(--secondary); font-size: 0.8rem; margin-right: 0.5rem;">Colors:</span>
-                <div class="color-filter-btn color-red" data-color="red" title="Red notes"></div>
-                <div class="color-filter-btn color-blue" data-color="blue" title="Blue notes"></div>
-                <div class="color-filter-btn color-green" data-color="green" title="Green notes"></div>
-                <div class="color-filter-btn color-yellow" data-color="yellow" title="Yellow notes"></div>
-                <div class="color-filter-btn color-purple" data-color="purple" title="Purple notes"></div>
-                <div class="color-filter-btn color-pink" data-color="pink" title="Pink notes"></div>
-                <div class="color-filter-btn color-orange" data-color="orange" title="Orange notes"></div>
-                <div class="color-filter-btn color-teal" data-color="teal" title="Teal notes"></div>
-            </div>
-            
-            <div class="tag-filter" id="tagFilter">
-                <span style="color: var(--secondary); font-size: 0.8rem; margin-right: 0.5rem;">Tags:</span>
-                <!-- Tags will be dynamically added here -->
-            </div>
-            
-            <div class="clear-filters" id="clearFilters">
-                Clear Filters
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <div class="main-container">
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <div class="sidebar-header">
-                    <input type="text" class="search-box" id="searchBox" placeholder="Search notes...">
-                </div>
-                <div class="notes-list" id="notesList">
-                    <!-- Notes will be loaded here -->
-                </div>
-            </div>
-
-            <!-- Editor -->
-            <div class="editor-container">
-                <!-- Toolbar -->
-                <div class="editor-toolbar">
-                    <div class="toolbar-group">
-                        <button class="toolbar-btn" data-command="formatBlock" data-value="h1" title="Heading 1">
-                            <i class="fas fa-heading"></i><span class="desktop-only">1</span>
-                        </button>
-                        <button class="toolbar-btn" data-command="formatBlock" data-value="h2" title="Heading 2">
-                            <i class="fas fa-heading"></i><span class="desktop-only">2</span>
-                        </button>
-                        <button class="toolbar-btn" data-command="formatBlock" data-value="h3" title="Heading 3">
-                            <i class="fas fa-heading"></i><span class="desktop-only">3</span>
-                        </button>
-                    </div>
-                    
-                    <div class="toolbar-group">
-                        <button class="toolbar-btn" data-command="bold" title="Bold">
-                            <i class="fas fa-bold"></i>
-                        </button>
-                        <button class="toolbar-btn" data-command="italic" title="Italic">
-                            <i class="fas fa-italic"></i>
-                        </button>
-                        <button class="toolbar-btn" data-command="underline" title="Underline">
-                            <i class="fas fa-underline"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="toolbar-group">
-                        <button class="toolbar-btn" data-command="insertUnorderedList" title="Bullet List">
-                            <i class="fas fa-list-ul"></i>
-                        </button>
-                        <button class="toolbar-btn" data-command="insertOrderedList" title="Numbered List">
-                            <i class="fas fa-list-ol"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="toolbar-group">
-                        <button class="toolbar-btn" data-command="createLink" title="Insert Link">
-                            <i class="fas fa-link"></i>
-                        </button>
-                        <button class="toolbar-btn" id="insertTableBtn" title="Insert Table">
-                            <i class="fas fa-table"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="toolbar-group desktop-only">
-                        <button class="toolbar-btn" id="saveNoteBtn" title="Save Note (Ctrl+S)">
-                            <i class="fas fa-save"></i> <span class="desktop-only">Save</span>
-                        </button>
-                        <button class="toolbar-btn" id="deleteNoteBtn" title="Delete Note">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Note Header with Color and Tags -->
-                <div class="note-header">
-                    <input type="text" class="note-title-input" id="noteTitle" placeholder="Note Title">
-                    
-                    <div class="color-picker">
-                        <div class="color-option color-red" data-color="red" title="Red"></div>
-                        <div class="color-option color-blue" data-color="blue" title="Blue"></div>
-                        <div class="color-option color-green" data-color="green" title="Green"></div>
-                        <div class="color-option color-yellow" data-color="yellow" title="Yellow"></div>
-                        <div class="color-option color-purple" data-color="purple" title="Purple"></div>
-                        <div class="color-option color-pink" data-color="pink" title="Pink"></div>
-                        <div class="color-option color-orange" data-color="orange" title="Orange"></div>
-                        <div class="color-option color-teal" data-color="teal" title="Teal"></div>
-                    </div>
-                </div>
-
-                <!-- Tags Input -->
-                <div class="tags-input-container">
-                    <input type="text" class="tags-input" id="tagsInput" placeholder="Add tags (press Enter)">
-                    <div id="noteTags">
-                        <!-- Tags will be added here -->
-                    </div>
-                </div>
-
-                <!-- Rich Text Editor -->
-                <div class="editor-content">
-                    <div id="noteEditor" contenteditable="true" placeholder="Start typing your note here... Press Ctrl+V to paste images"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Actions Bar -->
-        <div class="mobile-actions-bar mobile-only">
-            <button class="mobile-action-btn" id="mobileSaveBtn">
-                <i class="fas fa-save"></i> Save
-            </button>
-            <button class="mobile-action-btn secondary" id="mobileNewBtn">
-                <i class="fas fa-plus"></i> New
-            </button>
-            <button class="mobile-action-btn secondary" id="mobileDeleteBtn">
-                <i class="fas fa-trash"></i> Delete
-            </button>
-        </div>
-
-        <!-- Status Bar -->
-        <div class="status-bar">
-            <div id="charCount">0 characters</div>
-            <div class="auto-save-indicator" id="autoSaveIndicator">Auto-save enabled</div>
-            <div id="storageInfo">Local Storage</div>
-        </div>
-
-        <!-- Hidden file inputs -->
-        <input type="file" id="importFileInput" multiple accept=".md,.txt,.html,.json,.png,.jpg,.jpeg,.gif" style="display: none;">
+        <!-- Your admin.html app content here... -->
+        <!-- (Include all your original admin app content) -->
+        
+        <!-- START: LOGOUT BUTTON -->
+        <button class="btn" id="logoutBtn" title="Logout" style="position: absolute; top: 10px; right: 10px; z-index: 1000;">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </button>
+        <!-- END: LOGOUT BUTTON -->
     </div>
+    <!-- END: MAIN APP HTML -->
 
+    <!-- START: JAVASCRIPT -->
     <script>
-        // ENHANCED PASSWORD SYSTEM WITH CROSS-BROWSER SUPPORT
-        class PasswordManager {
+        // START: SHARED AUTHENTICATION SYSTEM
+        class AuthSystem {
             constructor() {
-                // Use a more persistent storage approach
-                this.STORAGE_KEY = 'dibesh_notes_auth_v2';
-                this.DATA_KEY = 'dibesh_notes_data_v2';
-                this.SESSION_FLAG = 'dibesh_notes_session';
-                this.DEFAULT_PASSWORD = this.generateDefaultPassword();
-                this.SALT = 'dibesh_secure_salt_2025';
+                this.SESSION_KEY = 'notes_auth_session';
+                this.PASSWORD_KEY = 'notes_password_hash';
+                this.SESSION_DURATION = 8 * 60 * 60 * 1000;
+                this.DEFAULT_PASSWORD = 'admin123';
+                this.PASSWORD_FILE_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/password-config.json';
                 this.init();
             }
 
-            init() {
-                // Initialize password if not exists - use browser fingerprint + salt
-                if (!localStorage.getItem(this.STORAGE_KEY)) {
-                    const hashedPassword = this.hashPassword(this.DEFAULT_PASSWORD);
-                    localStorage.setItem(this.STORAGE_KEY, hashedPassword);
+            async init() {
+                // Load password from GitHub
+                try {
+                    const response = await fetch(this.PASSWORD_FILE_URL + '?t=' + Date.now());
+                    if (response.ok) {
+                        const config = await response.json();
+                        if (config.encryptedPassword) {
+                            localStorage.setItem(this.PASSWORD_KEY, config.encryptedPassword);
+                        }
+                    }
+                } catch (error) {
+                    console.log('Using local password storage');
                 }
-                
-                // Clear session flag on page load
-                sessionStorage.removeItem(this.SESSION_FLAG);
+
+                if (!localStorage.getItem(this.PASSWORD_KEY)) {
+                    const defaultHash = this.simpleHash(this.DEFAULT_PASSWORD);
+                    localStorage.setItem(this.PASSWORD_KEY, defaultHash);
+                }
             }
 
-            generateDefaultPassword() {
-                // Generate a unique default password based on browser fingerprint
-                const fingerprint = navigator.userAgent + 
-                                  navigator.language + 
-                                  navigator.hardwareConcurrency;
-                return this.hashPassword(fingerprint + this.SALT).substring(0, 12);
-            }
-
-            hashPassword(password) {
-                // Simple hash function for basic security
+            simpleHash(password) {
                 let hash = 0;
                 for (let i = 0; i < password.length; i++) {
                     const char = password.charCodeAt(i);
                     hash = ((hash << 5) - hash) + char;
                     hash = hash & hash;
                 }
-                return Math.abs(hash).toString(36) + this.SALT;
+                return Math.abs(hash).toString(36);
             }
 
-            getHashedPassword() {
-                return localStorage.getItem(this.STORAGE_KEY);
-            }
-
-            setPassword(newPassword) {
-                const hashedPassword = this.hashPassword(newPassword);
-                localStorage.setItem(this.STORAGE_KEY, hashedPassword);
-                return true;
-            }
-
-            validatePassword(password) {
-                const hashedInput = this.hashPassword(password);
-                const storedHash = this.getHashedPassword();
-                return hashedInput === storedHash;
+            validatePassword(inputPassword) {
+                const storedHash = localStorage.getItem(this.PASSWORD_KEY);
+                const inputHash = this.simpleHash(inputPassword);
+                return inputHash === storedHash;
             }
 
             setAuthenticated() {
-                // Set session flag and timestamp
                 const sessionData = {
                     authenticated: true,
                     timestamp: Date.now(),
                     userAgent: navigator.userAgent.substring(0, 100)
                 };
-                sessionStorage.setItem(this.SESSION_FLAG, JSON.stringify(sessionData));
+                sessionStorage.setItem(this.SESSION_KEY, JSON.stringify(sessionData));
             }
 
             isAuthenticated() {
-                const sessionData = sessionStorage.getItem(this.SESSION_FLAG);
+                const sessionData = sessionStorage.getItem(this.SESSION_KEY);
                 if (!sessionData) return false;
                 
                 try {
                     const data = JSON.parse(sessionData);
-                    // Check if session is less than 8 hours old
                     const sessionAge = Date.now() - data.timestamp;
-                    return data.authenticated && sessionAge < (8 * 60 * 60 * 1000);
+                    return data.authenticated && sessionAge < this.SESSION_DURATION;
                 } catch {
                     return false;
                 }
             }
 
             logout() {
-                sessionStorage.removeItem(this.SESSION_FLAG);
-            }
-
-            // Data storage methods
-            saveNotesData(notes) {
-                try {
-                    localStorage.setItem(this.DATA_KEY, JSON.stringify(notes));
-                    return true;
-                } catch (e) {
-                    console.error('Failed to save notes:', e);
-                    return false;
-                }
-            }
-
-            loadNotesData() {
-                try {
-                    const data = localStorage.getItem(this.DATA_KEY);
-                    return data ? JSON.parse(data) : [];
-                } catch (e) {
-                    console.error('Failed to load notes:', e);
-                    return [];
-                }
-            }
-
-            clearAllData() {
-                localStorage.removeItem(this.STORAGE_KEY);
-                localStorage.removeItem(this.DATA_KEY);
-                sessionStorage.removeItem(this.SESSION_FLAG);
+                sessionStorage.removeItem(this.SESSION_KEY);
+                window.location.href = "index.html";
             }
         }
+        // END: SHARED AUTHENTICATION SYSTEM
 
-        // ENHANCED NOTES APP WITH MOBILE SUPPORT
+        // START: NOTES APP CLASS
         class NotesApp {
-            constructor() {
-                this.passwordManager = new PasswordManager();
-                this.notes = this.passwordManager.loadNotesData();
+            constructor(authSystem) {
+                this.authSystem = authSystem;
+                this.notes = JSON.parse(localStorage.getItem('dibesh_notes')) || [];
                 this.currentNoteId = null;
                 this.selectedColor = null;
                 this.selectedTag = null;
                 this.allTags = new Set();
-                this.imageResizeData = null;
-                this.isMobile = window.innerWidth <= 768;
                 this.updateAllTags();
                 this.init();
-                
-                // Handle window resize
-                window.addEventListener('resize', this.handleResize.bind(this));
-            }
-
-            handleResize() {
-                this.isMobile = window.innerWidth <= 768;
             }
 
             init() {
-                // Check if already authenticated
-                if (this.passwordManager.isAuthenticated()) {
+                if (this.authSystem.isAuthenticated()) {
                     this.showApp();
                 } else {
                     this.showLogin();
@@ -1282,30 +302,17 @@
             showLogin() {
                 const loginModal = document.getElementById('loginModal');
                 const mainApp = document.getElementById('mainApp');
-                
                 loginModal.style.display = 'flex';
                 mainApp.style.display = 'none';
-                
                 this.setupLoginListeners();
             }
 
             showApp() {
                 const loginModal = document.getElementById('loginModal');
                 const mainApp = document.getElementById('mainApp');
-                
                 loginModal.style.display = 'none';
                 mainApp.style.display = 'flex';
-                
-                this.initializeElements();
-                this.setupEventListeners();
-                this.renderNotes();
-                this.renderTagFilter();
-                
-                if (this.notes.length > 0) {
-                    this.selectNote(this.notes[0].id);
-                } else {
-                    this.createNewNote();
-                }
+                this.initializeApp();
             }
 
             setupLoginListeners() {
@@ -1314,398 +321,44 @@
                 const loginError = document.getElementById('loginError');
 
                 const handleLogin = () => {
-                    const password = passwordInput.value;
-                    
-                    if (this.passwordManager.validatePassword(password)) {
-                        this.passwordManager.setAuthenticated();
+                    if (this.authSystem.validatePassword(passwordInput.value)) {
+                        this.authSystem.setAuthenticated();
                         this.showApp();
                     } else {
                         loginError.style.display = 'block';
                         passwordInput.value = '';
                         passwordInput.focus();
-                        
-                        // Shake animation for wrong password
                         loginError.style.animation = 'shake 0.5s';
-                        setTimeout(() => {
-                            loginError.style.animation = '';
-                        }, 500);
+                        setTimeout(() => loginError.style.animation = '', 500);
                     }
                 };
 
                 loginSubmit.addEventListener('click', handleLogin);
-                
                 passwordInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        handleLogin();
-                    }
+                    if (e.key === 'Enter') handleLogin();
                 });
 
-                // Auto-focus on password input
-                setTimeout(() => {
-                    passwordInput.focus();
-                }, 100);
+                setTimeout(() => passwordInput.focus(), 100);
             }
 
-            initializeElements() {
-                this.notesList = document.getElementById('notesList');
-                this.noteTitle = document.getElementById('noteTitle');
-                this.noteEditor = document.getElementById('noteEditor');
-                this.noteCount = document.getElementById('noteCount');
-                this.searchBox = document.getElementById('searchBox');
-                this.charCount = document.getElementById('charCount');
-                this.autoSaveIndicator = document.getElementById('autoSaveIndicator');
-                this.storageInfo = document.getElementById('storageInfo');
-                this.tagsInput = document.getElementById('tagsInput');
-                this.noteTags = document.getElementById('noteTags');
-                this.tagFilter = document.getElementById('tagFilter');
-                this.clearFilters = document.getElementById('clearFilters');
+            initializeApp() {
+                // Initialize your notes app components here
+                console.log('Notes app initialized');
                 
-                // Buttons
-                this.newNoteBtn = document.getElementById('newNoteBtn');
-                this.saveNoteBtn = document.getElementById('saveNoteBtn');
-                this.deleteNoteBtn = document.getElementById('deleteNoteBtn');
-                this.exportBtn = document.getElementById('exportBtn');
-                this.exportOptions = document.getElementById('exportOptions');
-                this.importBtn = document.getElementById('importBtn');
-                this.importFileInput = document.getElementById('importFileInput');
-                this.saveToFolderBtn = document.getElementById('saveToFolderBtn');
-                this.logoutBtn = document.getElementById('logoutBtn');
-                this.insertTableBtn = document.getElementById('insertTableBtn');
-                
-                // Mobile buttons
-                this.mobileSaveBtn = document.getElementById('mobileSaveBtn');
-                this.mobileNewBtn = document.getElementById('mobileNewBtn');
-                this.mobileDeleteBtn = document.getElementById('mobileDeleteBtn');
-            }
-
-            setupEventListeners() {
-                // Note actions
-                this.newNoteBtn.addEventListener('click', () => this.createNewNote());
-                this.saveNoteBtn.addEventListener('click', () => this.saveNote());
-                this.deleteNoteBtn.addEventListener('click', () => this.deleteNote());
-                
-                // Mobile note actions
-                if (this.mobileSaveBtn) {
-                    this.mobileSaveBtn.addEventListener('click', () => this.saveNote());
-                }
-                if (this.mobileNewBtn) {
-                    this.mobileNewBtn.addEventListener('click', () => this.createNewNote());
-                }
-                if (this.mobileDeleteBtn) {
-                    this.mobileDeleteBtn.addEventListener('click', () => this.deleteNote());
-                }
-                
-                // Export/Import
-                this.exportBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    this.exportOptions.classList.toggle('show');
-                });
-                
-                document.querySelectorAll('.export-option').forEach(option => {
-                    option.addEventListener('click', (e) => {
-                        const format = e.currentTarget.dataset.format;
-                        this.exportNotes(format);
-                        this.exportOptions.classList.remove('show');
-                    });
-                });
-                
-                this.importBtn.addEventListener('click', () => this.importFileInput.click());
-                this.importFileInput.addEventListener('change', (e) => this.importNotes(e));
-                
-                this.saveToFolderBtn.addEventListener('click', () => this.backupToFolder());
-                this.logoutBtn.addEventListener('click', () => this.logout());
-                
-                // Search
-                this.searchBox.addEventListener('input', () => this.renderNotes());
-                
-                // Auto-save
-                this.noteTitle.addEventListener('input', () => {
-                    this.updateNoteTitleInList();
-                    this.saveNote();
-                });
-                
-                this.noteEditor.addEventListener('input', () => {
-                    this.updateCharacterCount();
-                    this.saveNote();
-                });
-                
-                // Color picker
-                document.querySelectorAll('.color-option').forEach(option => {
-                    option.addEventListener('click', (e) => {
-                        const color = e.target.dataset.color;
-                        this.setNoteColor(color);
-                    });
-                });
-                
-                // Color filter
-                document.querySelectorAll('.color-filter-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const color = e.target.dataset.color;
-                        this.toggleColorFilter(color);
-                    });
-                });
-                
-                // Tags
-                this.tagsInput.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        const tag = this.tagsInput.value.trim();
-                        if (tag) {
-                            this.addTagToCurrentNote(tag);
-                            this.tagsInput.value = '';
-                        }
-                    }
-                });
-                
-                // Clear filters
-                this.clearFilters.addEventListener('click', () => this.clearAllFilters());
-                
-                // Toolbar commands
-                document.querySelectorAll('.toolbar-btn[data-command]').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const command = e.currentTarget.dataset.command;
-                        const value = e.currentTarget.dataset.value;
-                        document.execCommand(command, false, value);
-                        this.noteEditor.focus();
-                        this.saveNote();
-                    });
-                });
-                
-                // Table insertion
-                this.insertTableBtn.addEventListener('click', () => {
-                    this.insertTable();
-                });
-                
-                // Image paste
-                this.noteEditor.addEventListener('paste', (e) => this.handlePaste(e));
-                
-                // Setup image resizing
-                this.setupImageResizing();
-                
-                // Close export menu when clicking outside
-                document.addEventListener('click', (e) => {
-                    if (!this.exportBtn.contains(e.target) && !this.exportOptions.contains(e.target)) {
-                        this.exportOptions.classList.remove('show');
-                    }
-                });
-                
-                // Keyboard shortcuts (desktop only)
-                if (!this.isMobile) {
-                    document.addEventListener('keydown', (e) => {
-                        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-                            e.preventDefault();
-                            this.saveNote();
-                        }
-                        if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
-                            e.preventDefault();
-                            this.createNewNote();
-                        }
-                        if (e.key === 'Escape' && this.currentNoteId) {
-                            this.noteEditor.blur();
-                            this.noteTitle.blur();
-                        }
+                // Add logout button functionality
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', () => {
+                        this.authSystem.logout();
                     });
                 }
                 
-                // Mobile-specific: Close keyboard when tapping outside editor
-                if (this.isMobile) {
-                    document.addEventListener('click', (e) => {
-                        if (!this.noteEditor.contains(e.target) && !this.noteTitle.contains(e.target)) {
-                            this.noteEditor.blur();
-                            this.noteTitle.blur();
-                        }
-                    });
+                // Load notes, setup UI, etc.
+                if (this.notes.length > 0) {
+                    // Load first note
+                } else {
+                    // Create new note
                 }
-            }
-
-            // Core note operations
-            createNewNote() {
-                const newNote = {
-                    id: Date.now().toString() + Math.random().toString(36).substr(2),
-                    title: 'Untitled Note',
-                    content: '',
-                    color: null,
-                    tags: [],
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString()
-                };
-
-                this.notes.unshift(newNote);
-                this.saveToStorage();
-                this.renderNotes();
-                this.selectNote(newNote.id);
-                
-                // Focus on title after a short delay
-                setTimeout(() => {
-                    this.noteTitle.focus();
-                    if (!this.isMobile) {
-                        this.noteTitle.setSelectionRange(this.noteTitle.value.length, this.noteTitle.value.length);
-                    }
-                }, 100);
-            }
-
-            selectNote(noteId) {
-                this.currentNoteId = noteId;
-                const note = this.notes.find(n => n.id === noteId);
-                
-                if (!note) return;
-                
-                this.noteTitle.value = note.title;
-                this.noteEditor.innerHTML = note.content || '<p><br></p>';
-                
-                // Update color picker
-                document.querySelectorAll('.color-option').forEach(option => {
-                    option.classList.remove('active');
-                    if (option.dataset.color === note.color) {
-                        option.classList.add('active');
-                    }
-                });
-                
-                // Update tags
-                this.renderNoteTags(note.tags);
-                this.updateCharacterCount();
-                
-                // Update active state in list
-                document.querySelectorAll('.note-item').forEach(item => {
-                    item.classList.remove('active');
-                    if (item.dataset.id === noteId) {
-                        item.classList.add('active');
-                        
-                        // Scroll into view on mobile
-                        if (this.isMobile) {
-                            item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                        }
-                    }
-                });
-                
-                // Setup image resizing
-                setTimeout(() => this.setupImageResizing(), 100);
-            }
-
-            saveNote() {
-                if (!this.currentNoteId) return;
-                
-                const noteIndex = this.notes.findIndex(n => n.id === this.currentNoteId);
-                if (noteIndex === -1) return;
-                
-                const title = this.noteTitle.value.trim() || 'Untitled Note';
-                const content = this.noteEditor.innerHTML;
-                
-                this.notes[noteIndex] = {
-                    ...this.notes[noteIndex],
-                    title: title,
-                    content: content,
-                    updatedAt: new Date().toISOString()
-                };
-                
-                this.saveToStorage();
-                this.renderNotes();
-                
-                // Show save confirmation
-                this.autoSaveIndicator.textContent = '✓ Saved';
-                this.autoSaveIndicator.style.color = '#10b981';
-                
-                setTimeout(() => {
-                    this.autoSaveIndicator.textContent = 'Auto-save enabled';
-                    this.autoSaveIndicator.style.color = '';
-                }, 1500);
-                
-                // On mobile, show a quick toast notification
-                if (this.isMobile) {
-                    this.showMobileToast('Note saved');
-                }
-            }
-
-            deleteNote() {
-                if (!this.currentNoteId) return;
-                
-                if (confirm('Are you sure you want to delete this note?')) {
-                    this.notes = this.notes.filter(n => n.id !== this.currentNoteId);
-                    this.saveToStorage();
-                    this.updateAllTags();
-                    this.renderTagFilter();
-                    this.renderNotes();
-                    
-                    if (this.notes.length > 0) {
-                        this.selectNote(this.notes[0].id);
-                    } else {
-                        this.createNewNote();
-                    }
-                }
-            }
-
-            // Color and tag management
-            setNoteColor(color) {
-                if (!this.currentNoteId) return;
-                
-                const noteIndex = this.notes.findIndex(n => n.id === this.currentNoteId);
-                if (noteIndex === -1) return;
-                
-                this.notes[noteIndex].color = color;
-                this.notes[noteIndex].updatedAt = new Date().toISOString();
-                
-                this.saveToStorage();
-                this.renderNotes();
-                
-                document.querySelectorAll('.color-option').forEach(option => {
-                    option.classList.remove('active');
-                    if (option.dataset.color === color) {
-                        option.classList.add('active');
-                    }
-                });
-            }
-
-            addTagToCurrentNote(tag) {
-                if (!this.currentNoteId) return;
-                
-                const noteIndex = this.notes.findIndex(n => n.id === this.currentNoteId);
-                if (noteIndex === -1) return;
-                
-                tag = tag.trim().toLowerCase();
-                if (!tag || this.notes[noteIndex].tags.includes(tag)) return;
-                
-                this.notes[noteIndex].tags.push(tag);
-                this.notes[noteIndex].updatedAt = new Date().toISOString();
-                
-                this.saveToStorage();
-                this.renderNoteTags(this.notes[noteIndex].tags);
-                this.updateAllTags();
-                this.renderTagFilter();
-                this.renderNotes();
-            }
-
-            removeTagFromCurrentNote(tag) {
-                if (!this.currentNoteId) return;
-                
-                const noteIndex = this.notes.findIndex(n => n.id === this.currentNoteId);
-                if (noteIndex === -1) return;
-                
-                this.notes[noteIndex].tags = this.notes[noteIndex].tags.filter(t => t !== tag);
-                this.notes[noteIndex].updatedAt = new Date().toISOString();
-                
-                this.saveToStorage();
-                this.renderNoteTags(this.notes[noteIndex].tags);
-                this.updateAllTags();
-                this.renderTagFilter();
-                this.renderNotes();
-            }
-
-            renderNoteTags(tags) {
-                this.noteTags.innerHTML = tags.map(tag => `
-                    <div class="note-tag">
-                        ${tag}
-                        <span class="note-tag-remove" data-tag="${tag}">×</span>
-                    </div>
-                `).join('');
-                
-                this.noteTags.querySelectorAll('.note-tag-remove').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        const tag = e.target.dataset.tag;
-                        this.removeTagFromCurrentNote(tag);
-                    });
-                });
             }
 
             updateAllTags() {
@@ -1714,758 +367,31 @@
                     note.tags.forEach(tag => this.allTags.add(tag));
                 });
             }
-
-            renderTagFilter() {
-                const label = this.tagFilter.querySelector('span');
-                this.tagFilter.innerHTML = '';
-                if (label) this.tagFilter.appendChild(label);
-                
-                Array.from(this.allTags).sort().forEach(tag => {
-                    const tagElement = document.createElement('div');
-                    tagElement.className = 'tag';
-                    if (this.selectedTag === tag) {
-                        tagElement.classList.add('active');
-                    }
-                    tagElement.textContent = tag;
-                    tagElement.dataset.tag = tag;
-                    tagElement.addEventListener('click', () => this.toggleTagFilter(tag));
-                    this.tagFilter.appendChild(tagElement);
-                });
-            }
-
-            toggleColorFilter(color) {
-                if (this.selectedColor === color) {
-                    this.selectedColor = null;
-                } else {
-                    this.selectedColor = color;
-                }
-                
-                document.querySelectorAll('.color-filter-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.dataset.color === this.selectedColor) {
-                        btn.classList.add('active');
-                    }
-                });
-                
-                this.renderNotes();
-            }
-
-            toggleTagFilter(tag) {
-                if (this.selectedTag === tag) {
-                    this.selectedTag = null;
-                } else {
-                    this.selectedTag = tag;
-                }
-                
-                this.renderTagFilter();
-                this.renderNotes();
-            }
-
-            clearAllFilters() {
-                this.selectedColor = null;
-                this.selectedTag = null;
-                
-                document.querySelectorAll('.color-filter-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                
-                this.renderTagFilter();
-                this.renderNotes();
-            }
-
-            // Rendering
-            renderNotes() {
-                const searchTerm = this.searchBox.value.toLowerCase();
-                let filteredNotes = this.notes;
-                
-                if (searchTerm) {
-                    filteredNotes = filteredNotes.filter(note => 
-                        note.title.toLowerCase().includes(searchTerm) || 
-                        this.stripHtml(note.content).toLowerCase().includes(searchTerm) ||
-                        note.tags.some(tag => tag.toLowerCase().includes(searchTerm))
-                    );
-                }
-                
-                if (this.selectedColor) {
-                    filteredNotes = filteredNotes.filter(note => note.color === this.selectedColor);
-                }
-                
-                if (this.selectedTag) {
-                    filteredNotes = filteredNotes.filter(note => note.tags.includes(this.selectedTag));
-                }
-                
-                filteredNotes.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-                
-                if (filteredNotes.length === 0) {
-                    this.notesList.innerHTML = `
-                        <div style="text-align: center; padding: 2rem; color: var(--secondary);">
-                            <i class="fas fa-sticky-note" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                            <p>${searchTerm || this.selectedColor || this.selectedTag ? 'No matching notes' : 'No notes yet'}</p>
-                            ${!searchTerm && !this.selectedColor && !this.selectedTag ? `
-                                <button class="btn" style="margin-top: 1rem;" id="createFirstNote">
-                                    <i class="fas fa-plus"></i> Create your first note
-                                </button>
-                            ` : ''}
-                        </div>
-                    `;
-                    
-                    const createFirstNoteBtn = document.getElementById('createFirstNote');
-                    if (createFirstNoteBtn) {
-                        createFirstNoteBtn.addEventListener('click', () => this.createNewNote());
-                    }
-                } else {
-                    this.notesList.innerHTML = filteredNotes.map(note => {
-                        const colorClass = note.color ? `color-${note.color}` : '';
-                        const colorStyle = note.color ? `style="background: var(--color-${note.color})"` : '';
-                        
-                        return `
-                            <div class="note-item ${note.id === this.currentNoteId ? 'active' : ''}" 
-                                 data-id="${note.id}">
-                                ${note.color ? `<div class="note-item-color ${colorClass}" ${colorStyle}></div>` : ''}
-                                <div class="note-item-content" style="${note.color ? 'margin-left: 1rem;' : ''}">
-                                    <div class="note-item-title">${note.title || 'Untitled Note'}</div>
-                                    <div class="note-item-preview">${this.stripHtml(note.content).substring(0, 100)}</div>
-                                    ${note.tags.length > 0 ? `
-                                        <div class="note-item-tags">
-                                            ${note.tags.map(tag => `<span class="note-item-tag">${tag}</span>`).join('')}
-                                        </div>
-                                    ` : ''}
-                                    <div class="note-item-date">${this.formatDate(note.updatedAt)}</div>
-                                </div>
-                            </div>
-                        `;
-                    }).join('');
-                    
-                    document.querySelectorAll('.note-item').forEach(item => {
-                        item.addEventListener('click', () => {
-                            this.selectNote(item.dataset.id);
-                            
-                            // On mobile, scroll editor into view after selecting note
-                            if (this.isMobile) {
-                                setTimeout(() => {
-                                    document.querySelector('.editor-container').scrollIntoView({ 
-                                        behavior: 'smooth', 
-                                        block: 'start' 
-                                    });
-                                }, 100);
-                            }
-                        });
-                    });
-                }
-                
-                this.noteCount.textContent = `${filteredNotes.length} note${filteredNotes.length !== 1 ? 's' : ''}`;
-                this.updateStorageInfo();
-            }
-
-            // Helper methods
-            updateNoteTitleInList() {
-                if (!this.currentNoteId) return;
-                
-                const noteIndex = this.notes.findIndex(n => n.id === this.currentNoteId);
-                if (noteIndex === -1) return;
-                
-                const title = this.noteTitle.value.trim() || 'Untitled Note';
-                this.notes[noteIndex].title = title;
-                this.notes[noteIndex].updatedAt = new Date().toISOString();
-                
-                this.saveToStorage();
-                this.renderNotes();
-            }
-
-            updateCharacterCount() {
-                const text = this.noteEditor.innerText || '';
-                const length = text.length;
-                this.charCount.textContent = `${length} characters`;
-            }
-
-            updateStorageInfo() {
-                const notesSize = JSON.stringify(this.notes).length;
-                const totalSize = (notesSize / 1024).toFixed(2);
-                this.storageInfo.textContent = `Storage: ${totalSize} KB | ${this.notes.length} notes`;
-            }
-
-            formatDate(dateString) {
-                const date = new Date(dateString);
-                const now = new Date();
-                const diffMs = now - date;
-                const diffMins = Math.floor(diffMs / 60000);
-                const diffHours = Math.floor(diffMs / 3600000);
-                const diffDays = Math.floor(diffMs / 86400000);
-                
-                if (diffMins < 1) return 'Just now';
-                if (diffMins < 60) return `${diffMins}m ago`;
-                if (diffHours < 24) return `${diffHours}h ago`;
-                if (diffDays < 7) return `${diffDays}d ago`;
-                
-                return date.toLocaleString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    year: diffDays > 365 ? 'numeric' : undefined
-                });
-            }
-
-            stripHtml(html) {
-                const div = document.createElement('div');
-                div.innerHTML = html;
-                return div.textContent || div.innerText || '';
-            }
-
-            // Table insertion
-            insertTable() {
-                if (this.isMobile) {
-                    const rows = prompt('Number of rows:', '3');
-                    const cols = prompt('Number of columns:', '3');
-                    
-                    if (rows && cols) {
-                        this.insertTableHtml(parseInt(rows), parseInt(cols));
-                    }
-                } else {
-                    // Desktop: show a simple modal
-                    const modalHtml = `
-                        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; display: flex; align-items: center; justify-content: center;">
-                            <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 300px;">
-                                <h3 style="margin-bottom: 1rem;">Insert Table</h3>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                                    <div>
-                                        <label style="display: block; margin-bottom: 0.5rem;">Rows</label>
-                                        <input type="number" id="tableRows" value="3" min="1" max="10" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
-                                    </div>
-                                    <div>
-                                        <label style="display: block; margin-bottom: 0.5rem;">Columns</label>
-                                        <input type="number" id="tableCols" value="3" min="1" max="10" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
-                                    </div>
-                                </div>
-                                <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-                                    <button id="cancelTable" style="padding: 0.5rem 1rem; background: #eee; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
-                                    <button id="insertTable" style="padding: 0.5rem 1rem; background: #0A66C2; color: white; border: none; border-radius: 4px; cursor: pointer;">Insert</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    
-                    const modal = document.createElement('div');
-                    modal.innerHTML = modalHtml;
-                    document.body.appendChild(modal);
-                    
-                    document.getElementById('insertTable').addEventListener('click', () => {
-                        const rows = parseInt(document.getElementById('tableRows').value) || 3;
-                        const cols = parseInt(document.getElementById('tableCols').value) || 3;
-                        this.insertTableHtml(rows, cols);
-                        modal.remove();
-                    });
-                    
-                    document.getElementById('cancelTable').addEventListener('click', () => {
-                        modal.remove();
-                    });
-                }
-            }
-
-            insertTableHtml(rows, cols) {
-                let tableHtml = '<table style="border-collapse: collapse; width: 100%; margin: 1rem 0;"><tbody>';
-                for (let i = 0; i < rows; i++) {
-                    tableHtml += '<tr>';
-                    for (let j = 0; j < cols; j++) {
-                        tableHtml += `<td style="border: 1px solid #ddd; padding: 8px;">&nbsp;</td>`;
-                    }
-                    tableHtml += '</tr>';
-                }
-                tableHtml += '</tbody></table>';
-                
-                document.execCommand('insertHTML', false, tableHtml);
-                this.saveNote();
-            }
-
-            // Image handling
-            handlePaste(event) {
-                const items = (event.clipboardData || event.originalEvent.clipboardData).items;
-                
-                for (const item of items) {
-                    if (item.type.indexOf('image') !== -1) {
-                        event.preventDefault();
-                        const blob = item.getAsFile();
-                        const reader = new FileReader();
-                        
-                        reader.onload = (e) => {
-                            const img = document.createElement('img');
-                            img.src = e.target.result;
-                            img.className = 'resizable-image';
-                            img.style.maxWidth = '300px';
-                            img.style.height = 'auto';
-                            
-                            const resizeHandle = document.createElement('div');
-                            resizeHandle.className = 'resize-handle';
-                            img.appendChild(resizeHandle);
-                            
-                            document.execCommand('insertHTML', false, img.outerHTML);
-                            this.setupImageResizing();
-                            this.saveNote();
-                        };
-                        
-                        reader.readAsDataURL(blob);
-                        break;
-                    }
-                }
-            }
-
-            setupImageResizing() {
-                document.querySelectorAll('.resizable-image').forEach(img => {
-                    img.removeEventListener('mousedown', this.handleImageMouseDown);
-                    img.removeEventListener('touchstart', this.handleImageTouchStart);
-                    
-                    img.addEventListener('mousedown', this.handleImageMouseDown.bind(this));
-                    img.addEventListener('touchstart', this.handleImageTouchStart.bind(this));
-                    
-                    if (!img.querySelector('.resize-handle')) {
-                        const resizeHandle = document.createElement('div');
-                        resizeHandle.className = 'resize-handle';
-                        img.appendChild(resizeHandle);
-                    }
-                });
-                
-                document.removeEventListener('mousemove', this.handleImageMouseMove);
-                document.removeEventListener('mouseup', this.handleImageMouseUp);
-                document.removeEventListener('touchmove', this.handleImageTouchMove);
-                document.removeEventListener('touchend', this.handleImageTouchEnd);
-                
-                document.addEventListener('mousemove', this.handleImageMouseMove.bind(this));
-                document.addEventListener('mouseup', this.handleImageMouseUp.bind(this));
-                document.addEventListener('touchmove', this.handleImageTouchMove.bind(this));
-                document.addEventListener('touchend', this.handleImageTouchEnd.bind(this));
-            }
-
-            handleImageMouseDown(e) {
-                if (e.target.classList.contains('resize-handle')) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    const img = e.target.parentElement;
-                    this.imageResizeData = {
-                        img: img,
-                        startX: e.clientX,
-                        startY: e.clientY,
-                        startWidth: parseInt(getComputedStyle(img).width),
-                        startHeight: parseInt(getComputedStyle(img).height)
-                    };
-                    
-                    img.classList.add('resizing');
-                }
-            }
-
-            handleImageTouchStart(e) {
-                if (e.target.classList.contains('resize-handle')) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    const img = e.target.parentElement;
-                    const touch = e.touches[0];
-                    this.imageResizeData = {
-                        img: img,
-                        startX: touch.clientX,
-                        startY: touch.clientY,
-                        startWidth: parseInt(getComputedStyle(img).width),
-                        startHeight: parseInt(getComputedStyle(img).height)
-                    };
-                    
-                    img.classList.add('resizing');
-                }
-            }
-
-            handleImageMouseMove(e) {
-                if (this.imageResizeData) {
-                    e.preventDefault();
-                    
-                    const { img, startX, startY, startWidth, startHeight } = this.imageResizeData;
-                    const deltaX = e.clientX - startX;
-                    const deltaY = e.clientY - startY;
-                    
-                    const newWidth = Math.max(50, startWidth + deltaX);
-                    const aspectRatio = startHeight / startWidth;
-                    const newHeight = newWidth * aspectRatio;
-                    
-                    img.style.width = `${newWidth}px`;
-                    img.style.height = `${newHeight}px`;
-                    img.style.maxWidth = 'none';
-                    
-                    this.saveNote();
-                }
-            }
-
-            handleImageTouchMove(e) {
-                if (this.imageResizeData) {
-                    e.preventDefault();
-                    
-                    const touch = e.touches[0];
-                    const { img, startX, startY, startWidth, startHeight } = this.imageResizeData;
-                    const deltaX = touch.clientX - startX;
-                    const deltaY = touch.clientY - startY;
-                    
-                    const newWidth = Math.max(50, startWidth + deltaX);
-                    const aspectRatio = startHeight / startWidth;
-                    const newHeight = newWidth * aspectRatio;
-                    
-                    img.style.width = `${newWidth}px`;
-                    img.style.height = `${newHeight}px`;
-                    img.style.maxWidth = 'none';
-                    
-                    this.saveNote();
-                }
-            }
-
-            handleImageMouseUp() {
-                if (this.imageResizeData) {
-                    this.imageResizeData.img.classList.remove('resizing');
-                    this.imageResizeData.img.style.maxWidth = '100%';
-                    this.imageResizeData = null;
-                    this.saveNote();
-                }
-            }
-
-            handleImageTouchEnd() {
-                if (this.imageResizeData) {
-                    this.imageResizeData.img.classList.remove('resizing');
-                    this.imageResizeData.img.style.maxWidth = '100%';
-                    this.imageResizeData = null;
-                    this.saveNote();
-                }
-            }
-
-            // Mobile helper methods
-            showMobileToast(message) {
-                const toast = document.createElement('div');
-                toast.style.cssText = `
-                    position: fixed;
-                    bottom: 80px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background: rgba(0,0,0,0.8);
-                    color: white;
-                    padding: 0.75rem 1.5rem;
-                    border-radius: 25px;
-                    font-size: 0.9rem;
-                    z-index: 10000;
-                    animation: fadeInOut 2s ease;
-                `;
-                toast.textContent = message;
-                document.body.appendChild(toast);
-                
-                setTimeout(() => {
-                    toast.remove();
-                }, 2000);
-            }
-
-            // Export functions
-            exportNotes(format) {
-                switch (format) {
-                    case 'txt-all':
-                        this.exportAllAsTXT();
-                        break;
-                    case 'txt-individual':
-                        this.exportEachAsTXT();
-                        break;
-                    case 'json-all':
-                        this.exportAllAsJSON();
-                        break;
-                    case 'html-individual':
-                        this.exportEachAsHTML();
-                        break;
-                    case 'md-individual':
-                        this.exportEachAsMarkdown();
-                        break;
-                }
-            }
-
-            exportAllAsTXT() {
-                const content = this.notes.map(note => 
-                    `=== ${note.title} ===\n\n${this.stripHtml(note.content)}\n\n`
-                ).join('\n\n---\n\n');
-                
-                this.downloadFile(content, `notes-all-${new Date().toISOString().split('T')[0]}.txt`, 'text/plain');
-            }
-
-            exportEachAsTXT() {
-                if (this.notes.length === 0) {
-                    alert('No notes to export');
-                    return;
-                }
-                
-                alert(`Exporting ${this.notes.length} notes as individual TXT files...`);
-                
-                this.notes.forEach((note, index) => {
-                    setTimeout(() => {
-                        this.downloadFile(
-                            `${note.title}\n\n${this.stripHtml(note.content)}`,
-                            `${this.sanitizeFilename(note.title)}.txt`,
-                            'text/plain'
-                        );
-                    }, index * 300);
-                });
-            }
-
-            exportAllAsJSON() {
-                const exportData = {
-                    notes: this.notes,
-                    exportedAt: new Date().toISOString(),
-                    version: '1.0'
-                };
-                
-                this.downloadFile(
-                    JSON.stringify(exportData, null, 2),
-                    `notes-backup-${new Date().toISOString().split('T')[0]}.json`,
-                    'application/json'
-                );
-            }
-
-            exportEachAsHTML() {
-                if (this.notes.length === 0) {
-                    alert('No notes to export');
-                    return;
-                }
-                
-                alert(`Exporting ${this.notes.length} notes as individual HTML files...`);
-                
-                this.notes.forEach((note, index) => {
-                    setTimeout(() => {
-                        const html = `
-                            <!DOCTYPE html>
-                            <html>
-                            <head>
-                                <meta charset="UTF-8">
-                                <title>${note.title}</title>
-                                <style>
-                                    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 2rem; max-width: 800px; margin: 0 auto; }
-                                    img { max-width: 100%; height: auto; }
-                                    table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
-                                    th, td { border: 1px solid #ddd; padding: 8px; }
-                                </style>
-                            </head>
-                            <body>
-                                <h1>${note.title}</h1>
-                                <div>${note.content}</div>
-                                <hr>
-                                <p><small>Exported from My Notes on ${new Date().toLocaleString()}</small></p>
-                            </body>
-                            </html>
-                        `;
-                        
-                        this.downloadFile(html, `${this.sanitizeFilename(note.title)}.html`, 'text/html');
-                    }, index * 300);
-                });
-            }
-
-            exportEachAsMarkdown() {
-                if (this.notes.length === 0) {
-                    alert('No notes to export');
-                    return;
-                }
-                
-                alert(`Exporting ${this.notes.length} notes as individual Markdown files...`);
-                
-                this.notes.forEach((note, index) => {
-                    setTimeout(() => {
-                        let md = `# ${note.title}\n\n`;
-                        md += this.htmlToMarkdown(note.content);
-                        md += `\n\n---\n*Exported from My Notes on ${new Date().toLocaleString()}*`;
-                        
-                        this.downloadFile(md, `${this.sanitizeFilename(note.title)}.md`, 'text/markdown');
-                    }, index * 300);
-                });
-            }
-
-            htmlToMarkdown(html) {
-                let md = html
-                    .replace(/<h1[^>]*>([^<]+)<\/h1>/g, '# $1\n\n')
-                    .replace(/<h2[^>]*>([^<]+)<\/h2>/g, '## $1\n\n')
-                    .replace(/<h3[^>]*>([^<]+)<\/h3>/g, '### $1\n\n')
-                    .replace(/<strong[^>]*>([^<]+)<\/strong>/g, '**$1**')
-                    .replace(/<b[^>]*>([^<]+)<\/b>/g, '**$1**')
-                    .replace(/<em[^>]*>([^<]+)<\/em>/g, '*$1*')
-                    .replace(/<i[^>]*>([^<]+)<\/i>/g, '*$1*')
-                    .replace(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/g, '[$2]($1)')
-                    .replace(/<img[^>]+src="([^"]+)"[^>]*alt="([^"]*)"[^>]*>/g, '![$2]($1)')
-                    .replace(/<ul[^>]*>|<\/ul>|<ol[^>]*>|<\/ol>/g, '')
-                    .replace(/<li[^>]*>([^<]+)<\/li>/g, '- $1\n')
-                    .replace(/<p[^>]*>([^<]+)<\/p>/g, '$1\n\n')
-                    .replace(/<br[^>]*>/g, '\n')
-                    .replace(/<[^>]+>/g, '')
-                    .replace(/\n{3,}/g, '\n\n')
-                    .trim();
-                    
-                return md;
-            }
-
-            // Import functions
-            async importNotes(event) {
-                const files = Array.from(event.target.files);
-                if (files.length === 0) return;
-                
-                let importedCount = 0;
-                
-                for (const file of files) {
-                    try {
-                        const content = await this.readFile(file);
-                        const note = this.createNoteFromFile(file, content);
-                        
-                        if (note) {
-                            this.notes.unshift(note);
-                            importedCount++;
-                        }
-                    } catch (error) {
-                        console.error(`Error importing ${file.name}:`, error);
-                    }
-                }
-                
-                if (importedCount > 0) {
-                    this.saveToStorage();
-                    this.updateAllTags();
-                    this.renderTagFilter();
-                    this.renderNotes();
-                    
-                    if (this.isMobile) {
-                        this.showMobileToast(`Imported ${importedCount} note${importedCount !== 1 ? 's' : ''}`);
-                    } else {
-                        alert(`Successfully imported ${importedCount} note${importedCount !== 1 ? 's' : ''}`);
-                    }
-                    
-                    if (this.notes.length > 0) {
-                        this.selectNote(this.notes[0].id);
-                    }
-                }
-                
-                event.target.value = '';
-            }
-
-            readFile(file) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => resolve(e.target.result);
-                    reader.onerror = (e) => reject(e);
-                    
-                    if (file.type.startsWith('image/')) {
-                        reader.readAsDataURL(file);
-                    } else {
-                        reader.readAsText(file);
-                    }
-                });
-            }
-
-            createNoteFromFile(file, content) {
-                const extension = file.name.split('.').pop().toLowerCase();
-                const filename = file.name.replace(/\.[^/.]+$/, "");
-                
-                let noteContent = content;
-                let noteTitle = filename;
-                
-                if (file.type.startsWith('image/')) {
-                    noteContent = `<img src="${content}" alt="${filename}" class="resizable-image" style="max-width: 300px; height: auto;">`;
-                } else if (extension === 'md') {
-                    noteContent = this.markdownToHtml(content);
-                } else if (extension === 'json') {
-                    try {
-                        const data = JSON.parse(content);
-                        if (data.title && data.content) {
-                            noteTitle = data.title;
-                            noteContent = data.content;
-                        }
-                    } catch (jsonError) {
-                        // Keep as plain text
-                    }
-                }
-                
-                return {
-                    id: Date.now().toString() + Math.random().toString(36).substr(2),
-                    title: noteTitle,
-                    content: noteContent,
-                    color: null,
-                    tags: [],
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString(),
-                    originalFilename: file.name
-                };
-            }
-
-            markdownToHtml(markdown) {
-                return markdown
-                    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-                    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-                    .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
-                    .replace(/\*(.*)\*/gim, '<em>$1</em>')
-                    .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="resizable-image" style="max-width: 300px; height: auto;">')
-                    .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>')
-                    .replace(/^\s*-\s(.*$)/gim, '<li>$1</li>')
-                    .replace(/^\s*\d+\.\s(.*$)/gim, '<li>$1</li>')
-                    .replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>')
-                    .replace(/\n/g, '<br>');
-            }
-
-            // Backup
-            async backupToFolder() {
-                this.exportEachAsTXT();
-                alert('📥 All notes exported as individual TXT files. Please save them to your backup folder.');
-            }
-
-            // Utility methods
-            sanitizeFilename(filename) {
-                return filename
-                    .replace(/[^a-z0-9]/gi, '_')
-                    .toLowerCase()
-                    .replace(/_+/g, '_')
-                    .replace(/^_|_$/g, '')
-                    .substring(0, 50) || 'note';
-            }
-
-            downloadFile(content, filename, mimeType) {
-                const blob = new Blob([content], { type: mimeType });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = filename;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            }
-
-            saveToStorage() {
-                this.passwordManager.saveNotesData(this.notes);
-            }
-
-            logout() {
-                this.passwordManager.logout();
-                window.location.href = 'index.html';
-            }
-        }
-
-        // Initialize app when page loads
-        window.addEventListener('DOMContentLoaded', () => {
-            new NotesApp();
-        });
-
-        // Add shake animation for login error
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-                20%, 40%, 60%, 80% { transform: translateX(5px); }
-            }
             
-            @keyframes fadeInOut {
-                0%, 100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
-                10%, 90% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            }
-        `;
-        document.head.appendChild(style);
+            // Add all your notes app methods here...
+        }
+        // END: NOTES APP CLASS
 
-        // TEMPORARY CODE - REMOVE AFTER USE
-// Run this in browser console to set a new password
-console.log("Temporary password reset code:");
-console.log("1. Open browser Developer Tools (F12)");
-console.log("2. Go to Console tab");
-console.log("3. Type: passwordManager.setPassword('YourNewPassword123')");
-console.log("4. Then refresh the page and use 'admin123'");
-        // TEMPORARY CODE - REMOVE AFTER USE
-        
+        // START: PAGE INITIALIZATION
+        document.addEventListener('DOMContentLoaded', () => {
+            const authSystem = new AuthSystem();
+            const notesApp = new NotesApp(authSystem);
+            
+            // Add animation styles
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                    20%, 40%, 60%, 80% { transform: translateX(5px); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            console.log('✅ Admin page ready. Shared authentication active.');
+        });
+        // END: PAGE INITIALIZATION
     </script>
+    <!-- END: JAVASCRIPT -->
 </body>
 </html>
