@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" id="htmlLang">
 <head>
+    <!-- ===== HEAD META & LINKS ===== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dibesh Shrestha | Enterprise Monitoring Expert & IT Consultant</title>
@@ -8,9 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- CHANGED: Favicon from 🔍 to 🔧 (magnifying glass) -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+    <!-- SATELLITE FAVICON -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>">
+    
+    <!-- ===== MAIN CSS ===== -->
     <style>
+        /* ===== CSS VARIABLES ===== */
         :root {
             --primary: #0A66C2;
             --primary-dark: #004182;
@@ -31,6 +35,7 @@
             --gradient: linear-gradient(135deg, #0A66C2 0%, #004182 100%);
         }
 
+        /* ===== RESET & BASE STYLES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -51,7 +56,7 @@
             padding: 0 20px;
         }
 
-        /* Header */
+        /* ===== HEADER STYLES ===== */
         header {
             padding: 1.5rem 0;
             position: fixed;
@@ -65,12 +70,13 @@
         }
 
         .header-content {
+            gap: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        /* UPDATED: Added satellite icon to logo */
+        /* SATELLITE LOGO */
         .logo {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
@@ -79,14 +85,9 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            /* display: flex;
+            display: flex;
             align-items: center;
-            gap: 10px; */
-        }
-
-        .logo-icon {
-            font-size: 1.5rem;
-            color: var(--primary-light);
+            gap: 0.5rem;
         }
 
         .header-left {
@@ -144,6 +145,7 @@
             background: linear-gradient(to bottom, #000 0%, #000 33%, #dd0000 33%, #dd0000 66%, #ffcc00 66%, #ffcc00 100%);
         }
 
+        /* NAVIGATION */
         nav ul {
             display: flex;
             list-style: none;
@@ -181,23 +183,60 @@
             width: 100%;
         }
 
-        /* Login Button - Very Small */
-        .login-btn {
-            background: transparent;
-            border: none;
-            color: var(--secondary);
-            cursor: pointer;
-            font-size: 0.8rem;
-            opacity: 0.5;
+        /* ZABBIX BUTTON */
+        .zabbix-btn {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1f4a7c 0%, #0d2c4f 100%);
+            border: 1px solid rgba(31, 74, 124, 0.4);
+            color: #FD3A4A;
+            font-size: 1rem;
+            font-weight: bold;
+            opacity: 0.8;
             transition: var(--transition);
-            margin-left: 1rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+        }
+
+        .zabbix-btn:hover {
+            opacity: 1;
+            background: linear-gradient(135deg, #255c9c 0%, #113a66 100%);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(31, 74, 124, 0.3);
+        }
+
+        .zabbix-icon {
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* LOGIN BUTTON */
+        .login-btn {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(10, 102, 194, 0.2);
+            border: 1px solid rgba(10, 102, 194, 0.3);
+            color: var(--primary-light);
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-left: 0;
+            margin-right: 0.5rem;
+            transition: var(--transition);
         }
 
         .login-btn:hover {
-            opacity: 0.8;
-            background: rgba(10, 102, 194, 0.1);
+            opacity: 1;
+            background: rgba(10, 102, 194, 0.3);
+            transform: scale(1.05);
         }
 
         .mobile-menu-btn {
@@ -215,7 +254,7 @@
             justify-content: center;
         }
 
-        /* Hero Section - Like your current design */
+        /* ===== HERO SECTION ===== */
         .hero {
             padding: 10rem 0 5rem;
             position: relative;
@@ -247,6 +286,7 @@
             flex-wrap: wrap;
         }
 
+        /* BUTTON STYLES */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -289,7 +329,7 @@
             background: #006567;
         }
 
-        /* Profile Card - Like your current design */
+        /* ===== PROFILE CARD ===== */
         .profile-card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
@@ -310,7 +350,7 @@
             background: var(--gradient);
         }
 
-        /* UPDATED: Added satellite icon to profile header */
+        /* SATELLITE PROFILE ICON */
         .profile-header {
             margin-bottom: 2rem;
             text-align: center;
@@ -387,7 +427,7 @@
             font-size: 1.2rem;
         }
 
-        /* Sections */
+        /* ===== SECTION STYLES ===== */
         .section {
             padding: 5rem 0;
         }
@@ -412,7 +452,7 @@
             border-radius: 2px;
         }
 
-        /* Skills Grid - Like your current design */
+        /* ===== SKILLS GRID ===== */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -463,7 +503,7 @@
             border: 1px solid rgba(10, 102, 194, 0.2);
         }
 
-        /* Experience Section - Like your current design */
+        /* ===== EXPERIENCE SECTION ===== */
         .experience-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
@@ -536,7 +576,7 @@
             text-decoration: underline;
         }
 
-        /* Certifications Section - NEW */
+        /* ===== CERTIFICATIONS SECTION ===== */
         .certifications-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -606,7 +646,7 @@
             margin-top: 0.5rem;
         }
 
-        /* Reference Section - Like your current design */
+        /* ===== REFERENCE SECTION ===== */
         .reference-card {
             background: var(--card-bg);
             padding: 3rem;
@@ -648,7 +688,7 @@
             margin-top: 0.3rem;
         }
 
-        /* Contact Section - Like your current design */
+        /* ===== CONTACT SECTION ===== */
         .contact-description {
             font-size: 1.2rem;
             margin-bottom: 3rem;
@@ -668,7 +708,7 @@
             flex-wrap: wrap;
         }
 
-        /* Footer - Like your current design */
+        /* ===== FOOTER ===== */
         footer {
             background: var(--darker);
             padding: 3rem 0 2rem;
@@ -682,7 +722,7 @@
             gap: 1.5rem;
         }
 
-        /* UPDATED: Added satellite icon to footer logo */
+        /* SATELLITE FOOTER LOGO */
         .footer-logo {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
@@ -691,9 +731,9 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            /* display: flex;
+            display: flex;
             align-items: center;
-            gap: 10px; */
+            gap: 0.5rem;
         }
 
         .footer-tagline {
@@ -726,7 +766,7 @@
             margin-top: 2rem;
         }
 
-        /* Login Modal */
+        /* ===== LOGIN MODAL ===== */
         .login-modal {
             display: none;
             position: fixed;
@@ -755,6 +795,18 @@
             max-width: 400px;
             text-align: center;
             position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .login-box h3 {
@@ -779,6 +831,23 @@
             border-color: var(--primary);
         }
 
+        .login-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .login-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(10, 102, 194, 0.4);
+        }
+
         .login-error {
             color: #f87171;
             margin-bottom: 1rem;
@@ -797,7 +866,73 @@
             cursor: pointer;
         }
 
-        /* Mobile Navigation */
+        .login-footer {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            text-align: center;
+        }
+
+        .change-password-btn {
+            background: transparent;
+            border: none;
+            color: var(--primary-light);
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .change-password-btn:hover {
+            color: var(--primary);
+        }
+
+        /* ===== PASSWORD CHANGE MODAL ===== */
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(6, 9, 15, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-modal.active {
+            display: flex;
+        }
+
+        .password-box {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(10, 102, 194, 0.3);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .password-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .password-success {
+            color: var(--success);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        /* ===== MOBILE NAVIGATION ===== */
         .mobile-nav {
             position: fixed;
             top: 90px;
@@ -834,7 +969,7 @@
             gap: 1rem;
         }
 
-        /* Language-specific content */
+        /* ===== LANGUAGE-SPECIFIC CONTENT ===== */
         .lang-en {
             display: block;
         }
@@ -843,7 +978,52 @@
             display: none;
         }
 
-        /* Responsive */
+
+        /* ===== MOBILE & TABLET LOGIN ===== */
+@media (max-width: 768px) {
+  .login-container, 
+  .auth-box, 
+  .login-form-wrapper {
+    width: 90% !important;
+    max-width: 400px !important;
+    margin: 20px auto !important;
+    padding: 25px !important;
+  }
+  
+  /* Make inputs bigger for touch */
+  input[type="text"], 
+  input[type="password"], 
+  input[type="email"] {
+    font-size: 16px !important; /* Prevents iOS zoom */
+    height: 50px !important;
+    padding: 12px 15px !important;
+  }
+  
+  /* Bigger login button */
+  .login-btn, 
+  .submit-btn, 
+  button[type="submit"] {
+    padding: 15px 25px !important;
+    font-size: 18px !important;
+    height: 55px !important;
+  }
+  
+  /* Adjust spacing */
+  .form-group {
+    margin-bottom: 20px !important;
+  }
+}
+
+/* For tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .login-container, 
+  .auth-box {
+    width: 70% !important;
+    max-width: 500px !important;
+  }
+}
+        
+        /* ===== RESPONSIVE STYLES ===== */
         @media (max-width: 992px) {
             .hero-content {
                 grid-template-columns: 1fr;
@@ -865,8 +1045,9 @@
                 display: flex;
             }
             
+            .zabbix-btn,
             .login-btn {
-                display: none;
+                display: none !important;
             }
             
             nav {
@@ -902,6 +1083,12 @@
                 flex-direction: column;
                 align-items: center;
             }
+            
+            .login-box,
+            .password-box {
+                padding: 2rem;
+                margin: 1rem;
+            }
         }
 
         @media (max-width: 576px) {
@@ -924,16 +1111,11 @@
             .reference-card {
                 padding: 2rem;
             }
-            
-            .login-box {
-                padding: 2rem;
-                margin: 1rem;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Login Modal -->
+    <!-- ===== LOGIN MODAL ===== -->
     <div class="login-modal" id="loginModal">
         <div class="login-box">
             <button class="login-close" id="loginClose">
@@ -946,22 +1128,49 @@
                 <span class="lang-de" style="display: none;">Ungültiges Passwort</span>
             </div>
             <input type="password" class="login-input" id="passwordInput" placeholder="Enter admin password">
-            <button class="btn" id="loginSubmit">
+            <button class="login-submit" id="loginSubmit">
                 <span class="lang-en">Login</span>
                 <span class="lang-de" style="display: none;">Anmelden</span>
+            </button>
+            <div class="login-footer">
+                <button class="change-password-btn" id="changePasswordBtn">
+                    <span class="lang-en">Change Password</span>
+                    <span class="lang-de" style="display: none;">Passwort ändern</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PASSWORD CHANGE MODAL ===== -->
+    <div class="password-modal" id="passwordModal">
+        <div class="password-box">
+            <button class="login-close" id="passwordClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="lang-en">Change Password</h3>
+            <h3 class="lang-de" style="display: none;">Passwort ändern</h3>
+            <div class="password-success" id="passwordSuccess">
+                <span class="lang-en">Password changed successfully!</span>
+                <span class="lang-de" style="display: none;">Passwort erfolgreich geändert!</span>
+            </div>
+            <input type="password" class="login-input" id="currentPassword" placeholder="Current password">
+            <input type="password" class="login-input" id="newPassword" placeholder="New password">
+            <input type="password" class="login-input" id="confirmPassword" placeholder="Confirm new password">
+            <button class="login-submit" id="changePasswordSubmit">
+                <span class="lang-en">Change Password</span>
+                <span class="lang-de" style="display: none;">Passwort ändern</span>
             </button>
         </div>
     </div>
 
-    <!-- Header -->
+    <!-- ===== HEADER ===== -->
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="header-left">
-                    <!-- UPDATED: Added satellite icon to logo -->
+                    
                     <div class="logo">
-                        
-                        Dibesh Shrestha
+                        <span></span> Dibesh Shrestha
                     </div>
                     <div class="language-switcher">
                         <button class="language-btn active" id="langEn">
@@ -984,10 +1193,19 @@
                         <li><a href="#contact" data-en="Contact" data-de="Kontakt">Contact</a></li>
                     </ul>
                 </nav>
-                <div>
+                <!-- ACTION BUTTONS -->
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <!-- ZABBIX LAB BUTTON -->
+                    <button class="zabbix-btn" id="zabbixBtn" title="Zabbix Lab">
+                        <span class="zabbix-icon">Z</span>
+                    </button>
+                    
+                    <!-- ADMIN LOGIN BUTTON -->
                     <button class="login-btn" id="loginBtn" title="Admin Login">
                         <i class="fas fa-lock"></i>
                     </button>
+                    
+                    <!-- MOBILE MENU BUTTON -->
                     <button class="mobile-menu-btn" id="mobileMenuBtn">
                         <i class="fas fa-bars"></i>
                     </button>
@@ -996,7 +1214,7 @@
         </div>
     </header>
 
-    <!-- Mobile Navigation -->
+    <!-- ===== MOBILE NAVIGATION ===== -->
     <div class="mobile-nav" id="mobileNav">
         <ul>
             <li><a href="#home" class="active" data-en="Home" data-de="Start">Home</a></li>
@@ -1018,7 +1236,7 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
+    <!-- ===== HERO SECTION ===== -->
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
@@ -1040,7 +1258,7 @@
                 
                 <div class="profile-card">
                     <div class="profile-header">
-                        <!-- UPDATED: Added satellite icon to profile header -->
+                        <!-- SATELLITE PROFILE ICON -->
                         <div class="profile-icon">📡</div>
                         <h2 class="lang-en">Dibesh Shrestha</h2>
                         <h2 class="lang-de" style="display: none;">Dibesh Shrestha</h2>
@@ -1081,7 +1299,7 @@
         </div>
     </section>
 
-    <!-- Expertise Section -->
+    <!-- ===== EXPERTISE SECTION ===== -->
     <section class="section" id="expertise" style="background: var(--section-bg);">
         <div class="container">
             <h2 class="section-title lang-en">Technical Expertise</h2>
@@ -1146,7 +1364,7 @@
         </div>
     </section>
 
-    <!-- Experience Section -->
+    <!-- ===== EXPERIENCE SECTION ===== -->
     <section class="section" id="experience">
         <div class="container">
             <h2 class="section-title lang-en">Professional Experience</h2>
@@ -1213,14 +1431,14 @@
         </div>
     </section>
 
-    <!-- Certifications Section - NEW -->
+    <!-- ===== CERTIFICATIONS SECTION ===== -->
     <section class="section" id="certifications" style="background: var(--section-bg);">
         <div class="container">
             <h2 class="section-title lang-en">Licenses & Certifications</h2>
             <h2 class="section-title lang-de" style="display: none;">Lizenzen & Zertifizierungen</h2>
             
             <div class="certifications-grid">
-                <!-- Zabbix Certification -->
+                <!-- ZABBIX CERTIFICATION -->
                 <div class="certification-card">
                     <div class="cert-icon">
                         <i class="fas fa-shield-alt"></i>
@@ -1240,7 +1458,7 @@
                     </div>
                 </div>
                 
-                <!-- ITIL Certification -->
+                <!-- ITIL CERTIFICATION -->
                 <div class="certification-card">
                     <div class="cert-icon">
                         <i class="fas fa-book"></i>
@@ -1260,7 +1478,7 @@
                     </div>
                 </div>
                 
-                <!-- CA APM Certification -->
+                <!-- CA APM CERTIFICATION -->
                 <div class="certification-card">
                     <div class="cert-icon">
                         <i class="fas fa-chart-line"></i>
@@ -1279,7 +1497,7 @@
                     </div>
                 </div>
                 
-                <!-- AppDynamics Certifications -->
+                <!-- APPDYNAMICS CERTIFICATIONS -->
                 <div class="certification-card">
                     <div class="cert-icon">
                         <i class="fas fa-rocket"></i>
@@ -1305,7 +1523,7 @@
         </div>
     </section>
 
-    <!-- Reference Section -->
+    <!-- ===== REFERENCE SECTION ===== -->
     <section class="section" id="reference">
         <div class="container">
             <h2 class="section-title lang-en">Professional Reference</h2>
@@ -1340,7 +1558,7 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- ===== CONTACT SECTION ===== -->
     <section class="section" id="contact" style="background: var(--section-bg);">
         <div class="container">
             <h2 class="section-title lang-en">Get In Touch</h2>
@@ -1370,14 +1588,13 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <!-- UPDATED: Added satellite icon to footer logo -->
+                <!-- SATELLITE FOOTER LOGO -->
                 <div class="footer-logo">
-                    
-                    Dibesh Shrestha
+                    <span>📡</span> Dibesh Shrestha
                 </div>
                 <p class="lang-en footer-tagline">
                     Enterprise Monitoring Expert | IT Consultant | Zabbix Certified Specialist | ITIL | CA APM | App Dynamics
@@ -1403,8 +1620,102 @@
         </div>
     </footer>
 
+    <!-- ===== MAIN JAVASCRIPT ===== -->
     <script>
-        // Language switching functionality
+        // ===== ENCRYPTION UTILITIES =====
+        // Simple XOR encryption for GitHub-safe storage
+        // This is NOT military-grade encryption, but suitable for public GitHub
+        const EncryptionUtils = {
+            // Encryption key - can be stored in GitHub as it's part of code
+            ENCRYPTION_KEY: 'dibesh-portfolio-2025-secure-key-12345',
+            
+            // Simple XOR encryption (safe for GitHub)
+            encrypt(text) {
+                let result = '';
+                for (let i = 0; i < text.length; i++) {
+                    const charCode = text.charCodeAt(i) ^ this.ENCRYPTION_KEY.charCodeAt(i % this.ENCRYPTION_KEY.length);
+                    result += String.fromCharCode(charCode);
+                }
+                // Convert to base64 for storage
+                return btoa(result);
+            },
+            
+            decrypt(encryptedText) {
+                try {
+                    // Decode from base64
+                    const decoded = atob(encryptedText);
+                    let result = '';
+                    for (let i = 0; i < decoded.length; i++) {
+                        const charCode = decoded.charCodeAt(i) ^ this.ENCRYPTION_KEY.charCodeAt(i % this.ENCRYPTION_KEY.length);
+                        result += String.fromCharCode(charCode);
+                    }
+                    return result;
+                } catch (error) {
+                    console.error('Decryption error:', error);
+                    return null;
+                }
+            },
+            
+            // Hash password (one-way for comparison)
+            hashPassword(password) {
+                let hash = 0;
+                for (let i = 0; i < password.length; i++) {
+                    const char = password.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash; // Convert to 32bit integer
+                }
+                return hash.toString(36);
+            }
+        };
+
+        // ===== PASSWORD MANAGER =====
+        class PasswordManager {
+            constructor() {
+                this.STORAGE_KEY = 'dibesh_admin_password';
+                this.DEFAULT_PASSWORD = 'admin123'; // Will be encrypted before storage
+                this.init();
+            }
+
+            init() {
+                // Check if encrypted password exists in localStorage
+                const storedEncryptedPassword = localStorage.getItem(this.STORAGE_KEY);
+                
+                if (!storedEncryptedPassword) {
+                    // First time setup - encrypt and store default password
+                    const encryptedDefault = EncryptionUtils.encrypt(this.DEFAULT_PASSWORD);
+                    localStorage.setItem(this.STORAGE_KEY, encryptedDefault);
+                }
+            }
+
+            getEncryptedPassword() {
+                return localStorage.getItem(this.STORAGE_KEY);
+            }
+
+            validatePassword(password) {
+                const encryptedStored = this.getEncryptedPassword();
+                if (!encryptedStored) return false;
+                
+                const decryptedPassword = EncryptionUtils.decrypt(encryptedStored);
+                return password === decryptedPassword;
+            }
+
+            setPassword(newPassword) {
+                // Validate password strength
+                if (newPassword.length < 6) {
+                    return { success: false, error: 'Password must be at least 6 characters' };
+                }
+                
+                // Encrypt and store
+                const encryptedPassword = EncryptionUtils.encrypt(newPassword);
+                localStorage.setItem(this.STORAGE_KEY, encryptedPassword);
+                return { success: true };
+            }
+        }
+
+        // Initialize Password Manager
+        const passwordManager = new PasswordManager();
+
+        // ===== LANGUAGE SWITCHING =====
         const langEnBtn = document.getElementById('langEn');
         const langDeBtn = document.getElementById('langDe');
         const langEnMobileBtn = document.getElementById('langEnMobile');
@@ -1458,7 +1769,7 @@
         const savedLanguage = localStorage.getItem('preferredLanguage') || 'en';
         switchLanguage(savedLanguage);
 
-        // Mobile menu toggle
+        // ===== MOBILE MENU TOGGLE =====
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileNav = document.getElementById('mobileNav');
 
@@ -1471,21 +1782,39 @@
             });
         }
 
-        // Login functionality
+        // ===== ZABBIX BUTTON =====
+        const zabbixBtn = document.getElementById('zabbixBtn');
+        if (zabbixBtn) {
+            zabbixBtn.addEventListener('click', () => {
+                // UPDATE THIS URL TO YOUR ACTUAL ZABBIX LAB URL
+                const zabbixUrl = "https://your-actual-zabbix-lab-url.com/";
+                window.open(zabbixUrl, '_blank');
+            });
+        }
+
+        // ===== LOGIN FUNCTIONALITY =====
         const loginBtn = document.getElementById('loginBtn');
         const loginModal = document.getElementById('loginModal');
         const loginClose = document.getElementById('loginClose');
         const loginSubmit = document.getElementById('loginSubmit');
         const passwordInput = document.getElementById('passwordInput');
         const loginError = document.getElementById('loginError');
+        const changePasswordBtn = document.getElementById('changePasswordBtn');
 
-        // Set your admin password here
-        const ADMIN_PASSWORD = "admin123"; // Change this to your desired password
+        // ===== PASSWORD CHANGE MODAL =====
+        const passwordModal = document.getElementById('passwordModal');
+        const passwordClose = document.getElementById('passwordClose');
+        const changePasswordSubmit = document.getElementById('changePasswordSubmit');
+        const currentPasswordInput = document.getElementById('currentPassword');
+        const newPasswordInput = document.getElementById('newPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const passwordSuccess = document.getElementById('passwordSuccess');
 
         if (loginBtn) {
             loginBtn.addEventListener('click', () => {
                 loginModal.classList.add('active');
                 passwordInput.focus();
+                loginError.style.display = 'none';
             });
         }
 
@@ -1498,34 +1827,127 @@
         }
 
         if (loginSubmit) {
-            loginSubmit.addEventListener('click', () => {
-                if (passwordInput.value === ADMIN_PASSWORD) {
-                    // Successful login - redirect to admin page or show admin content
-                    alert('Login successful! Welcome to admin section.');
-                    loginModal.classList.remove('active');
-                    passwordInput.value = '';
-                    loginError.style.display = 'none';
-                    
-                    // Here you can redirect to an admin page or show hidden content
-                    // window.location.href = "admin.html";
-                } else {
-                    loginError.style.display = 'block';
-                    passwordInput.value = '';
-                    passwordInput.focus();
-                }
-            });
+            loginSubmit.addEventListener('click', handleLogin);
+        }
+
+        // ===== HANDLE LOGIN FUNCTION =====
+        function handleLogin() {
+            if (passwordManager.validatePassword(passwordInput.value)) {
+                // Successful login - set authentication flag
+                localStorage.setItem('isAuthenticated', 'true');
+                // Redirect to admin page
+                window.location.href = "admin.html";
+            } else {
+                loginError.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
         }
 
         // Allow Enter key for login
         if (passwordInput) {
             passwordInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
-                    loginSubmit.click();
+                    handleLogin();
                 }
             });
         }
 
-        // Close modal when clicking outside
+        // ===== CHANGE PASSWORD BUTTON =====
+        if (changePasswordBtn) {
+            changePasswordBtn.addEventListener('click', () => {
+                loginModal.classList.remove('active');
+                passwordModal.classList.add('active');
+                currentPasswordInput.focus();
+                passwordSuccess.style.display = 'none';
+                // Clear inputs
+                currentPasswordInput.value = '';
+                newPasswordInput.value = '';
+                confirmPasswordInput.value = '';
+            });
+        }
+
+        // Password modal close
+        if (passwordClose) {
+            passwordClose.addEventListener('click', () => {
+                passwordModal.classList.remove('active');
+            });
+        }
+
+        // ===== CHANGE PASSWORD SUBMIT =====
+        if (changePasswordSubmit) {
+            changePasswordSubmit.addEventListener('click', () => {
+                const currentPassword = currentPasswordInput.value;
+                const newPassword = newPasswordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                // Validate current password
+                if (!passwordManager.validatePassword(currentPassword)) {
+                    alert('Current password is incorrect');
+                    currentPasswordInput.focus();
+                    return;
+                }
+
+                // Validate new password
+                if (newPassword.length < 6) {
+                    alert('New password must be at least 6 characters long');
+                    newPasswordInput.focus();
+                    return;
+                }
+
+                // Check if passwords match
+                if (newPassword !== confirmPassword) {
+                    alert('New passwords do not match');
+                    confirmPasswordInput.focus();
+                    return;
+                }
+
+                // Check if new password is same as current
+                if (newPassword === currentPassword) {
+                    alert('New password cannot be the same as current password');
+                    newPasswordInput.focus();
+                    return;
+                }
+
+                // Change password
+                const result = passwordManager.setPassword(newPassword);
+                if (!result.success) {
+                    alert(result.error);
+                    return;
+                }
+                
+                // Show success message
+                passwordSuccess.style.display = 'block';
+                
+                // Clear inputs
+                currentPasswordInput.value = '';
+                newPasswordInput.value = '';
+                confirmPasswordInput.value = '';
+                
+                // Auto-close after 2 seconds
+                setTimeout(() => {
+                    passwordModal.classList.remove('active');
+                    passwordSuccess.style.display = 'none';
+                    
+                    // Show login modal again
+                    loginModal.classList.add('active');
+                    passwordInput.focus();
+                }, 2000);
+            });
+        }
+
+        // Allow Enter key for password change
+        [currentPasswordInput, newPasswordInput, confirmPasswordInput].forEach(input => {
+            if (input) {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        changePasswordSubmit.click();
+                    }
+                });
+            }
+        });
+
+        // ===== CLOSE MODALS WHEN CLICKING OUTSIDE =====
         loginModal.addEventListener('click', (e) => {
             if (e.target === loginModal) {
                 loginModal.classList.remove('active');
@@ -1534,7 +1956,13 @@
             }
         });
 
-        // Smooth scrolling for anchor links
+        passwordModal.addEventListener('click', (e) => {
+            if (e.target === passwordModal) {
+                passwordModal.classList.remove('active');
+            }
+        });
+
+        // ===== SMOOTH SCROLLING FOR ANCHOR LINKS =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1556,11 +1984,17 @@
                         });
                         this.classList.add('active');
                     }
+                    
+                    // Close mobile menu if open
+                    if (mobileNav.classList.contains('active')) {
+                        mobileNav.classList.remove('active');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
                 }
             });
         });
 
-        // Update active link on scroll
+        // ===== UPDATE ACTIVE LINK ON SCROLL =====
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('nav a, .mobile-nav a');
@@ -1581,6 +2015,39 @@
                 }
             });
         });
+
+        // ===== CLOSE MOBILE MENU WHEN CLICKING OUTSIDE =====
+        document.addEventListener('click', (e) => {
+            if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target) && mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+
+        // ===== SESSION MANAGEMENT =====
+        // Auto-logout after 30 minutes of inactivity
+        let inactivityTimer;
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            // Only set timer if logged in
+            if (localStorage.getItem('isAuthenticated') === 'true') {
+                inactivityTimer = setTimeout(() => {
+                    localStorage.removeItem('isAuthenticated');
+                    // Only redirect if on admin page
+                    if (window.location.pathname.includes('admin.html')) {
+                        window.location.href = 'index.html';
+                    }
+                }, 30 * 60 * 1000); // 30 minutes
+            }
+        }
+
+        // Reset on user activity
+        document.addEventListener('mousemove', resetInactivityTimer);
+        document.addEventListener('keypress', resetInactivityTimer);
+        document.addEventListener('click', resetInactivityTimer);
+
+        // Initialize inactivity timer
+        resetInactivityTimer();
     </script>
 </body>
 </html>
