@@ -1,0 +1,14 @@
+MAP OF THE FILES:
+###############################################
+
+├── index.html          (main site)
+├── admin.html          (main admin HTML)
+├── css/
+│   └── admin.css           (admin styles)
+│   └── index.css       (main site CSS)
+├── js/
+│   └──admin.js            (admin JavaScript)
+│   └── index.js       (main site JS)
+
+###############################################
+
