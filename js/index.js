@@ -323,7 +323,7 @@ function initializeMobileMenu() {
     }
 }
 
-// ===== IMPROVED LANGUAGE SWITCHING =====
+// ===== FIXED LANGUAGE SWITCHING FUNCTION =====
 function switchLanguage(lang) {
     console.log(`🌐 Switching language to: ${lang}`);
     
@@ -343,18 +343,39 @@ function switchLanguage(lang) {
     console.log(`Found ${selectedLangElements.length} elements for ${lang}`);
     
     selectedLangElements.forEach(el => {
+        // Show the element
         el.style.display = '';
         
-        // Special handling for elements that should be block/inline
+        // Special handling for different element types
         if (el.classList.contains('section-title') || 
             el.classList.contains('skill-card') ||
             el.classList.contains('experience-card') ||
-            el.classList.contains('certification-card')) {
+            el.classList.contains('certification-card') ||
+            el.classList.contains('profile-card') ||
+            el.classList.contains('hero-text') ||
+            el.classList.contains('reference-card')) {
             el.style.display = 'block';
-        } else if (el.tagName === 'SPAN' || el.tagName === 'LI') {
+        } else if (el.tagName === 'SPAN' || el.tagName === 'LI' || el.tagName === 'P') {
             el.style.display = 'inline';
-        } else if (el.tagName === 'A' && el.parentElement.tagName === 'LI') {
+        } else if (el.tagName === 'A') {
             el.style.display = 'inline-block';
+        } else if (el.tagName === 'DIV') {
+            el.style.display = 'block';
+        } else if (el.tagName === 'H2' || el.tagName === 'H3' || el.tagName === 'H4') {
+            el.style.display = 'block';
+        }
+    });
+    
+    // Special handling for tags inside skill-tags
+    document.querySelectorAll('.skill-tags .tag').forEach(tag => {
+        if (tag.classList.contains(`lang-${lang}`)) {
+            tag.style.display = 'inline-block';
+        } else if (tag.classList.contains('lang-en') || tag.classList.contains('lang-de')) {
+            // Hide tags that have language classes but aren't for current language
+            tag.style.display = 'none';
+        } else {
+            // Show tags without language classes (like "Nagios", "Zabbix")
+            tag.style.display = 'inline-block';
         }
     });
     
@@ -651,6 +672,15 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("Stored password:", localStorage.getItem('admin_password'));
         console.log("Number of EN elements:", document.querySelectorAll('.lang-en').length);
         console.log("Number of DE elements:", document.querySelectorAll('.lang-de').length);
+        
+        // Debug language switching
+        console.log("Current language elements visible:");
+        document.querySelectorAll('.lang-en, .lang-de').forEach(el => {
+            if (el.style.display !== 'none') {
+                console.log("Visible:", el.className, el.tagName, el.textContent?.substring(0, 50));
+            }
+        });
+        
         console.log("=================");
         alert("Check console (F12) for debug info");
     });
