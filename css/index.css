@@ -54,10 +54,10 @@ header {
 }
 
 .header-content {
-    gap: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
 }
 
 /* SATELLITE LOGO */
@@ -78,6 +78,13 @@ header {
     display: flex;
     align-items: center;
     gap: 2rem;
+}
+
+/* Header buttons container */
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .language-switcher {
@@ -212,9 +219,8 @@ nav a:hover::after, nav a.active::after {
     color: var(--primary-light);
     font-size: 1rem;
     opacity: 0.8;
-    margin-left: 0;
-    margin-right: 0.5rem;
     transition: var(--transition);
+    cursor: pointer;
 }
 
 .login-btn:hover {
@@ -236,6 +242,11 @@ nav a:hover::after, nav a.active::after {
     border-radius: 10px;
     align-items: center;
     justify-content: center;
+    transition: var(--transition);
+}
+
+.mobile-menu-btn:hover {
+    background: rgba(10, 102, 194, 0.2);
 }
 
 /* ===== HERO SECTION ===== */
@@ -848,6 +859,11 @@ footer {
     color: var(--secondary);
     font-size: 1.5rem;
     cursor: pointer;
+    transition: var(--transition);
+}
+
+.login-close:hover {
+    color: var(--light);
 }
 
 .login-footer {
@@ -865,6 +881,7 @@ footer {
     text-decoration: underline;
     font-size: 0.9rem;
     margin-top: 0.5rem;
+    transition: var(--transition);
 }
 
 .change-password-btn:hover {
@@ -922,8 +939,8 @@ footer {
     top: 90px;
     left: 0;
     width: 100%;
-    background: rgba(6, 9, 15, 0.95);
-    padding: 1.5rem;
+    background: rgba(6, 9, 15, 0.98);
+    padding: 2rem;
     box-shadow: var(--shadow);
     z-index: 999;
     border-top: 1px solid var(--gray);
@@ -933,24 +950,63 @@ footer {
 
 .mobile-nav.active {
     display: block;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .mobile-nav ul {
+    display: flex;
     flex-direction: column;
+    list-style: none;
     gap: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.mobile-nav li {
+    width: 100%;
 }
 
 .mobile-nav a {
     display: block;
-    padding: 0.8rem 0;
+    padding: 1rem 1.5rem;
     font-size: 1.1rem;
+    text-decoration: none;
+    color: var(--secondary);
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    width: 100%;
+}
+
+.mobile-nav a:hover,
+.mobile-nav a.active {
+    color: var(--light);
+    background: rgba(10, 102, 194, 0.1);
 }
 
 .mobile-language-switcher {
     display: none;
     justify-content: center;
-    margin-top: 1.5rem;
     gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray);
+}
+
+.mobile-language-switcher .language-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    width: 140px;
+    justify-content: center;
 }
 
 /* ===== LANGUAGE-SPECIFIC CONTENT ===== */
@@ -1007,6 +1063,12 @@ footer {
 }
 
 /* ===== RESPONSIVE STYLES ===== */
+@media (max-width: 1100px) {
+    nav ul {
+        gap: 1.5rem;
+    }
+}
+
 @media (max-width: 992px) {
     .hero-content {
         grid-template-columns: 1fr;
@@ -1020,25 +1082,67 @@ footer {
         grid-template-columns: 1fr;
     }
     
+    /* Hide desktop navigation and language switcher */
+    nav,
     .language-switcher {
         display: none;
     }
     
+    /* Show mobile language switcher */
     .mobile-language-switcher {
         display: flex;
     }
     
+    /* Keep all buttons visible */
     .zabbix-btn,
     .login-btn {
-        display: none !important;
-    }
-    
-    nav {
-        display: none;
+        display: flex !important;
     }
     
     .mobile-menu-btn {
         display: flex;
+    }
+    
+    /* Adjust header layout for mobile */
+    .header-content {
+        flex-wrap: nowrap;
+    }
+    
+    .header-left {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .header-buttons {
+        flex-shrink: 0;
+        gap: 0.5rem;
+    }
+    
+    /* Adjust button sizes for mobile */
+    .zabbix-btn,
+    .login-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+    }
+    
+    .mobile-menu-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.3rem;
+    }
+    
+    /* Adjust mobile nav */
+    .mobile-nav {
+        top: 85px;
+        padding: 1.5rem;
     }
 }
 
@@ -1072,6 +1176,26 @@ footer {
         padding: 2rem;
         margin: 1rem;
     }
+    
+    /* Adjust header for smaller screens */
+    .header-left {
+        gap: 1rem;
+    }
+    
+    .logo {
+        font-size: 1.3rem;
+    }
+    
+    .header-buttons {
+        gap: 0.4rem;
+    }
+    
+    .zabbix-btn,
+    .login-btn,
+    .mobile-menu-btn {
+        width: 42px;
+        height: 42px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -1093,5 +1217,60 @@ footer {
     
     .reference-card {
         padding: 2rem;
+    }
+    
+    /* Adjust header for very small screens */
+    .logo {
+        font-size: 1.2rem;
+    }
+    
+    .header-buttons {
+        gap: 0.3rem;
+    }
+    
+    .zabbix-btn,
+    .login-btn,
+    .mobile-menu-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    /* Adjust mobile nav */
+    .mobile-nav {
+        padding: 1.2rem;
+    }
+    
+    .mobile-nav a {
+        padding: 0.8rem 1.2rem;
+        font-size: 1rem;
+    }
+    
+    .mobile-language-switcher .language-btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+        width: 120px;
+    }
+}
+
+@media (max-width: 400px) {
+    .logo {
+        font-size: 1.1rem;
+    }
+    
+    .header-buttons {
+        gap: 0.2rem;
+    }
+    
+    .zabbix-btn,
+    .login-btn,
+    .mobile-menu-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 0.9rem;
+    }
+    
+    .mobile-menu-btn {
+        font-size: 1.1rem;
     }
 }
