@@ -13,8 +13,91 @@
     
     <!-- ===== ADMIN CSS ===== -->
     <link rel="stylesheet" href="css/admin.css">
+    
+    <!-- Firebase loading styles -->
+    <style>
+        .firebase-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: var(--light);
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--gray);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .firebase-error {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: var(--light);
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .firebase-error i {
+            font-size: 3rem;
+            color: #f43f5e;
+            margin-bottom: 1.5rem;
+        }
+        
+        .firebase-error h2 {
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+        
+        .firebase-error p {
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+    </style>
 </head>
 <body>
+    <!-- Firebase Loading Screen -->
+    <div class="firebase-loading" id="firebaseLoading">
+        <div class="loading-spinner"></div>
+        <p>Connecting to Firebase...</p>
+    </div>
+    
+    <!-- Firebase Error Screen -->
+    <div class="firebase-error" id="firebaseError">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h2>Firebase Connection Error</h2>
+        <p>Unable to connect to Firebase services. Please check your internet connection and refresh the page.</p>
+        <button class="btn btn-primary" onclick="window.location.reload()">
+            <i class="fas fa-redo"></i> Refresh Page
+        </button>
+    </div>
+
     <!-- ===== AUTHENTICATION CHECK ===== -->
     <div class="auth-error" id="authError">
         <div class="error-box">
@@ -35,6 +118,7 @@
             <div class="header-left">
                 <div class="logo">📝 My Notes</div>
                 <div class="note-count" id="noteCount">0 notes</div>
+                <div class="user-info" id="userInfo" style="font-size: 0.85rem; color: var(--secondary);"></div>
             </div>
             <div class="header-actions">
                 <button class="btn" id="newNoteBtn" title="Create new note">
@@ -170,17 +254,14 @@
         <div class="status-bar">
             <div id="charCount">0 characters</div>
             <div class="auto-save-indicator" id="autoSaveIndicator">Auto-save enabled</div>
-            <div id="storageInfo">Local Storage</div>
+            <div id="storageInfo">Firestore Database</div>
         </div>
 
         <!-- HIDDEN FILE INPUTS -->
         <input type="file" id="importFileInput" multiple accept=".md,.txt,.html,.json,.rtf,.doc,.docx" style="display: none;">
     </div>
 
-    <!-- ===== ADMIN JAVASCRIPT ===== -->
-    <script src="js/admin.js"></script>
-    
-    <!-- Firebase SDKs - SAME AS INDEX.HTML -->
+    <!-- Firebase SDKs - MUST BE BEFORE YOUR CUSTOM SCRIPTS -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
@@ -188,5 +269,7 @@
     <!-- Your Firebase Configuration -->
     <script src="js/firebase-config.js"></script>
     
+    <!-- ===== ADMIN JAVASCRIPT ===== -->
+    <script src="js/admin.js"></script>
 </body>
 </html>
