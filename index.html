@@ -56,7 +56,7 @@
             padding: 0 20px;
         }
 
-        /* ===== HEADER STYLES ===== */
+        /* ===== HEADER STYLES ===== -->
         header {
             padding: 1.5rem 0;
             position: fixed;
@@ -76,7 +76,7 @@
             align-items: center;
         }
 
-        /* SATELLITE LOGO */
+        /* LOGO STYLES */
         .logo {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
@@ -254,7 +254,7 @@
             justify-content: center;
         }
 
-        /* ===== HERO SECTION ===== */
+        /* ===== HERO SECTION ===== -->
         .hero {
             padding: 10rem 0 5rem;
             position: relative;
@@ -329,7 +329,7 @@
             background: #006567;
         }
 
-        /* ===== PROFILE CARD ===== */
+        /* ===== PROFILE CARD ===== -->
         .profile-card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
@@ -350,7 +350,6 @@
             background: var(--gradient);
         }
 
-        /* SATELLITE PROFILE ICON */
         .profile-header {
             margin-bottom: 2rem;
             text-align: center;
@@ -427,7 +426,7 @@
             font-size: 1.2rem;
         }
 
-        /* ===== SECTION STYLES ===== */
+        /* ===== SECTION STYLES ===== -->
         .section {
             padding: 5rem 0;
         }
@@ -452,7 +451,7 @@
             border-radius: 2px;
         }
 
-        /* ===== SKILLS GRID ===== */
+        /* ===== SKILLS GRID ===== -->
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -503,7 +502,7 @@
             border: 1px solid rgba(10, 102, 194, 0.2);
         }
 
-        /* ===== EXPERIENCE SECTION ===== */
+        /* ===== EXPERIENCE SECTION ===== -->
         .experience-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
@@ -576,7 +575,7 @@
             text-decoration: underline;
         }
 
-        /* ===== CERTIFICATIONS SECTION ===== */
+        /* ===== CERTIFICATIONS SECTION ===== -->
         .certifications-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -646,7 +645,7 @@
             margin-top: 0.5rem;
         }
 
-        /* ===== REFERENCE SECTION ===== */
+        /* ===== REFERENCE SECTION ===== -->
         .reference-card {
             background: var(--card-bg);
             padding: 3rem;
@@ -688,7 +687,7 @@
             margin-top: 0.3rem;
         }
 
-        /* ===== CONTACT SECTION ===== */
+        /* ===== CONTACT SECTION ===== -->
         .contact-description {
             font-size: 1.2rem;
             margin-bottom: 3rem;
@@ -708,7 +707,7 @@
             flex-wrap: wrap;
         }
 
-        /* ===== FOOTER ===== */
+        /* ===== FOOTER ===== -->
         footer {
             background: var(--darker);
             padding: 3rem 0 2rem;
@@ -722,7 +721,6 @@
             gap: 1.5rem;
         }
 
-        /* SATELLITE FOOTER LOGO */
         .footer-logo {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
@@ -766,7 +764,7 @@
             margin-top: 2rem;
         }
 
-        /* ===== LOGIN MODAL ===== */
+        /* ===== LOGIN MODAL ===== -->
         .login-modal {
             display: none;
             position: fixed;
@@ -887,7 +885,7 @@
             color: var(--primary);
         }
 
-        /* ===== PASSWORD CHANGE MODAL ===== */
+        /* ===== PASSWORD CHANGE MODAL ===== -->
         .password-modal {
             display: none;
             position: fixed;
@@ -932,7 +930,7 @@
             display: none;
         }
 
-        /* ===== MOBILE NAVIGATION ===== */
+        /* ===== MOBILE NAVIGATION ===== -->
         .mobile-nav {
             position: fixed;
             top: 90px;
@@ -969,7 +967,7 @@
             gap: 1rem;
         }
 
-        /* ===== LANGUAGE-SPECIFIC CONTENT ===== */
+        /* ===== LANGUAGE-SPECIFIC CONTENT ===== -->
         .lang-en {
             display: block;
         }
@@ -978,52 +976,43 @@
             display: none;
         }
 
+        /* ===== MOBILE & TABLET OPTIMIZATIONS ===== -->
+        /* Universal fixes for all forms on mobile */
+        @media (max-width: 768px) {
+            /* Prevent iOS zoom on inputs */
+            input[type="text"], 
+            input[type="password"], 
+            input[type="email"] {
+                font-size: 16px !important;
+                min-height: 44px !important;
+            }
+            
+            /* Make all buttons touch-friendly */
+            button, .btn, a.button {
+                min-height: 44px !important;
+                min-width: 44px !important;
+            }
+            
+            /* Login modal adjustments */
+            .login-box, .password-box {
+                padding: 2rem !important;
+                margin: 1rem !important;
+                width: 95% !important;
+                max-width: 95% !important;
+            }
+            
+            .login-input, .login-submit {
+                font-size: 16px !important;
+                height: 50px !important;
+            }
+            
+            .login-submit {
+                padding: 15px !important;
+                font-size: 18px !important;
+            }
+        }
 
-        /* ===== MOBILE & TABLET LOGIN ===== */
-@media (max-width: 768px) {
-  .login-container, 
-  .auth-box, 
-  .login-form-wrapper {
-    width: 90% !important;
-    max-width: 400px !important;
-    margin: 20px auto !important;
-    padding: 25px !important;
-  }
-  
-  /* Make inputs bigger for touch */
-  input[type="text"], 
-  input[type="password"], 
-  input[type="email"] {
-    font-size: 16px !important; /* Prevents iOS zoom */
-    height: 50px !important;
-    padding: 12px 15px !important;
-  }
-  
-  /* Bigger login button */
-  .login-btn, 
-  .submit-btn, 
-  button[type="submit"] {
-    padding: 15px 25px !important;
-    font-size: 18px !important;
-    height: 55px !important;
-  }
-  
-  /* Adjust spacing */
-  .form-group {
-    margin-bottom: 20px !important;
-  }
-}
-
-/* For tablets */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .login-container, 
-  .auth-box {
-    width: 70% !important;
-    max-width: 500px !important;
-  }
-}
-        
-        /* ===== RESPONSIVE STYLES ===== */
+        /* ===== RESPONSIVE STYLES ===== -->
         @media (max-width: 992px) {
             .hero-content {
                 grid-template-columns: 1fr;
@@ -1045,10 +1034,11 @@
                 display: flex;
             }
             
-            .zabbix-btn,
+            /* REMOVED: Don't hide Zabbix and Login buttons on mobile */
+            /* .zabbix-btn,
             .login-btn {
                 display: none !important;
-            }
+            } */
             
             nav {
                 display: none;
@@ -1084,10 +1074,44 @@
                 align-items: center;
             }
             
-            .login-box,
-            .password-box {
-                padding: 2rem;
-                margin: 1rem;
+            /* Additional mobile fixes */
+            .profile-card,
+            .skill-card,
+            .experience-card,
+            .certification-card {
+                padding: 1.5rem !important;
+            }
+            
+            .section {
+                padding: 3rem 0 !important;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            /* MAKE ZABBIX AND LOGIN BUTTONS LARGER FOR MOBILE */
+            .zabbix-btn,
+            .login-btn {
+                width: 50px !important;
+                height: 50px !important;
+                font-size: 1.2rem !important;
+            }
+            
+            /* ADJUST HEADER SPACING FOR MOBILE */
+            .header-content {
+                gap: 0.5rem;
+            }
+            
+            /* Make sure the button container has enough space */
+            .header-content > div:last-child {
+                gap: 0.5rem;
             }
         }
 
@@ -1111,6 +1135,55 @@
             .reference-card {
                 padding: 2rem;
             }
+            
+            /* Mobile header fixes */
+            .header-left {
+                gap: 1rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            /* MAKE BUTTONS EVEN LARGER ON VERY SMALL SCREENS */
+            .zabbix-btn,
+            .login-btn,
+            .mobile-menu-btn {
+                width: 48px !important;
+                height: 48px !important;
+                min-width: 48px !important;
+                min-height: 48px !important;
+            }
+            
+            /* Ensure proper spacing */
+            .header-content {
+                justify-content: space-between;
+            }
+        }
+
+        /* Tablet specific fixes */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero-content {
+                gap: 2rem;
+            }
+            
+            .skills-grid,
+            .experience-grid,
+            .certifications-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            /* Make buttons larger for tablets */
+            .btn {
+                padding: 1rem 2.5rem;
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* EXTRA: Ensure Zabbix and Login buttons are always visible */
+        .zabbix-btn,
+        .login-btn {
+            display: flex !important;
         }
     </style>
 </head>
@@ -1168,9 +1241,8 @@
         <div class="container">
             <div class="header-content">
                 <div class="header-left">
-                    
                     <div class="logo">
-                        <span></span> Dibesh Shrestha
+                        Dibesh Shrestha
                     </div>
                     <div class="language-switcher">
                         <button class="language-btn active" id="langEn">
@@ -1258,8 +1330,6 @@
                 
                 <div class="profile-card">
                     <div class="profile-header">
-                        <!-- SATELLITE PROFILE ICON -->
-                        <div class="profile-icon">📡</div>
                         <h2 class="lang-en">Dibesh Shrestha</h2>
                         <h2 class="lang-de" style="display: none;">Dibesh Shrestha</h2>
                         <h3 class="lang-en">Enterprise Monitoring Expert</h3>
@@ -1592,9 +1662,8 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <!-- SATELLITE FOOTER LOGO -->
                 <div class="footer-logo">
-                    <span>📡</span> Dibesh Shrestha
+                    Dibesh Shrestha
                 </div>
                 <p class="lang-en footer-tagline">
                     Enterprise Monitoring Expert | IT Consultant | Zabbix Certified Specialist | ITIL | CA APM | App Dynamics
