@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" id="htmlLang">
 <head>
-    <!-- START: HEAD META & STYLES -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dibesh Shrestha | Enterprise Monitoring Expert & IT Consultant</title>
@@ -9,12 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- CHANGED: Favicon from 🔍 to 🔧 (magnifying glass) -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
-    <!-- END: HEAD META & STYLES -->
-
-    <!-- START: CSS STYLES -->
     <style>
-        /* START: CSS VARIABLES */
         :root {
             --primary: #0A66C2;
             --primary-dark: #004182;
@@ -34,9 +30,7 @@
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --gradient: linear-gradient(135deg, #0A66C2 0%, #004182 100%);
         }
-        /* END: CSS VARIABLES */
 
-        /* START: BASE STYLES */
         * {
             margin: 0;
             padding: 0;
@@ -56,9 +50,8 @@
             margin: 0 auto;
             padding: 0 20px;
         }
-        /* END: BASE STYLES */
 
-        /* START: HEADER STYLES */
+        /* Header */
         header {
             padding: 1.5rem 0;
             position: fixed;
@@ -78,6 +71,7 @@
             align-items: center;
         }
 
+        /* UPDATED: Added satellite icon to logo */
         .logo {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
@@ -88,14 +82,17 @@
             background-clip: text;
         }
 
+        .logo-icon {
+            font-size: 1.5rem;
+            color: var(--primary-light);
+        }
+
         .header-left {
             display: flex;
             align-items: center;
             gap: 2rem;
         }
-        /* END: HEADER STYLES */
 
-        /* START: LANGUAGE SWITCHER STYLES */
         .language-switcher {
             display: flex;
             align-items: center;
@@ -144,9 +141,7 @@
         .flag-icon.de {
             background: linear-gradient(to bottom, #000 0%, #000 33%, #dd0000 33%, #dd0000 66%, #ffcc00 66%, #ffcc00 100%);
         }
-        /* END: LANGUAGE SWITCHER STYLES */
 
-        /* START: NAVIGATION STYLES */
         nav ul {
             display: flex;
             list-style: none;
@@ -183,9 +178,8 @@
         nav a:hover::after, nav a.active::after {
             width: 100%;
         }
-        /* END: NAVIGATION STYLES */
 
-        /* START: ZABBIX BUTTON STYLES */
+        /* Zabbix Button Styles */
         .zabbix-btn {
             display: flex !important;
             align-items: center;
@@ -195,7 +189,7 @@
             border-radius: 50%;
             background: linear-gradient(135deg, #1f4a7c 0%, #0d2c4f 100%);
             border: 1px solid rgba(31, 74, 124, 0.4);
-            color: #4bb1f7;
+            color: 	#FD3A4A; /*#4bb1f7;*/
             font-size: 1rem;
             font-weight: bold;
             opacity: 0.8;
@@ -216,9 +210,8 @@
             font-weight: 700;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
-        /* END: ZABBIX BUTTON STYLES */
 
-        /* START: LOGIN BUTTON STYLES */
+        /* Login Button */
         .login-btn {
             display: flex !important;
             align-items: center;
@@ -256,9 +249,516 @@
             align-items: center;
             justify-content: center;
         }
-        /* END: LOGIN BUTTON STYLES */
 
-        /* START: LOGIN MODAL STYLES */
+        /* Hero Section - Like your current design */
+        .hero {
+            padding: 10rem 0 5rem;
+            position: relative;
+            overflow: hidden;
+            background: var(--darker);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.9rem 2.2rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+            box-shadow: 0 4px 14px 0 rgba(10, 102, 194, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px 0 rgba(10, 102, 194, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--gray);
+            color: var(--light);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            background: rgba(10, 102, 194, 0.1);
+        }
+
+        .btn-linkedin {
+            background: #0A66C2;
+        }
+
+        .btn-xing {
+            background: #006567;
+        }
+
+        /* Profile Card - Like your current design */
+        .profile-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        /* UPDATED: Added satellite icon to profile header */
+        .profile-header {
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-icon {
+            font-size: 2rem;
+            color: var(--primary-light);
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .profile-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            color: var(--light);
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-header h3 {
+            font-size: 1.2rem;
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+
+        .detail-item {
+            margin-bottom: 2rem;
+        }
+
+        .detail-item h4 {
+            font-size: 1.3rem;
+            color: var(--light);
+            margin-bottom: 0.5rem;
+            border-bottom: 2px solid var(--gray);
+            padding-bottom: 0.5rem;
+        }
+
+        .detail-item p {
+            color: var(--secondary);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .highlight-text {
+            background: rgba(10, 102, 194, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: var(--primary-light);
+            font-weight: 600;
+            display: inline-block;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 1rem;
+        }
+
+        .detail-item ul {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .detail-item li {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .detail-item li:before {
+            content: "•";
+            color: var(--primary-light);
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            color: var(--light);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        /* Skills Grid - Like your current design */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray);
+            transition: var(--transition);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(10, 102, 194, 0.3);
+            box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .skill-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .skill-card p {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            background: rgba(10, 102, 194, 0.1);
+            color: var(--primary-light);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid rgba(10, 102, 194, 0.2);
+        }
+
+        /* Experience Section - Like your current design */
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .experience-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray);
+            transition: var(--transition);
+        }
+
+        .experience-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(10, 102, 194, 0.3);
+        }
+
+        .experience-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            border-bottom: 2px solid var(--gray);
+            padding-bottom: 0.5rem;
+        }
+
+        .experience-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .experience-card li {
+            margin-bottom: 0.8rem;
+            color: var(--secondary);
+            position: relative;
+            padding-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .experience-card li:before {
+            content: "▸";
+            color: var(--primary-light);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .experience-note {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(10, 102, 194, 0.05);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(10, 102, 194, 0.1);
+            color: var(--secondary);
+            margin-top: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .experience-note a {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .experience-note a:hover {
+            text-decoration: underline;
+        }
+
+        /* Certifications Section - NEW */
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .certification-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray);
+            transition: var(--transition);
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .certification-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(10, 102, 194, 0.3);
+            box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .cert-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(10, 102, 194, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary-light);
+            flex-shrink: 0;
+            border: 1px solid rgba(10, 102, 194, 0.2);
+        }
+
+        .cert-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .cert-issuer {
+            color: var(--primary-light);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cert-details {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-id {
+            background: rgba(10, 102, 194, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            color: var(--primary-light);
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        /* Reference Section - Like your current design */
+        .reference-card {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .reference-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--secondary);
+        }
+
+        .reference-content p.highlight {
+            color: var(--light);
+            font-weight: 500;
+            background: rgba(10, 102, 194, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .reference-author {
+            margin-top: 2.5rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            font-size: 1.1rem;
+        }
+
+        .reference-author span {
+            display: block;
+            color: var(--secondary);
+            font-weight: 400;
+            font-size: 0.95rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Contact Section - Like your current design */
+        .contact-description {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: var(--secondary);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        /* Footer - Like your current design */
+        footer {
+            background: var(--darker);
+            padding: 3rem 0 2rem;
+            border-top: 1px solid var(--gray);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* UPDATED: Added satellite icon to footer logo */
+        .footer-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-tagline {
+            color: var(--secondary);
+            text-align: center;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--primary-light);
+        }
+
+        .copyright {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        /* Login Modal */
         .login-modal {
             display: none;
             position: fixed;
@@ -364,9 +864,113 @@
             color: var(--secondary);
             text-align: center;
         }
-        /* END: LOGIN MODAL STYLES */
 
-        /* START: RESPONSIVE STYLES */
+        .change-password-btn {
+            background: transparent;
+            border: none;
+            color: var(--primary-light);
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .change-password-btn:hover {
+            color: var(--primary);
+        }
+
+        /* Password Change Modal */
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(6, 9, 15, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-modal.active {
+            display: flex;
+        }
+
+        .password-box {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(10, 102, 194, 0.3);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .password-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .password-success {
+            color: var(--success);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 90px;
+            left: 0;
+            width: 100%;
+            background: rgba(6, 9, 15, 0.95);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            z-index: 999;
+            border-top: 1px solid var(--gray);
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav ul {
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 0.8rem 0;
+            font-size: 1.1rem;
+        }
+
+        .mobile-language-switcher {
+            display: none;
+            justify-content: center;
+            margin-top: 1.5rem;
+            gap: 1rem;
+        }
+
+        /* Language-specific content */
+        .lang-en {
+            display: block;
+        }
+        
+        .lang-de {
+            display: none;
+        }
+
+        /* Responsive */
         @media (max-width: 992px) {
             .hero-content {
                 grid-template-columns: 1fr;
@@ -411,26 +1015,54 @@
                 font-size: 2rem;
             }
             
+            .certification-card {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .cert-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            
             .contact-buttons {
                 flex-direction: column;
                 align-items: center;
             }
             
-            .login-box {
+            .login-box,
+            .password-box {
                 padding: 2rem;
                 margin: 1rem;
             }
         }
-        /* END: RESPONSIVE STYLES */
 
-        /* The rest of your CSS styles remain here... */
-        /* (I've shortened for brevity, but include all your original styles) */
-
+        @media (max-width: 576px) {
+            .btn {
+                padding: 0.8rem 1.8rem;
+                font-size: 0.95rem;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .profile-card,
+            .skill-card,
+            .experience-card,
+            .certification-card {
+                padding: 1.5rem;
+            }
+            
+            .reference-card {
+                padding: 2rem;
+            }
+        }
     </style>
-    <!-- END: CSS STYLES -->
 </head>
 <body>
-    <!-- START: LOGIN MODAL HTML -->
+    <!-- Login Modal -->
     <div class="login-modal" id="loginModal">
         <div class="login-box">
             <button class="login-close" id="loginClose">
@@ -448,23 +1080,46 @@
                 <span class="lang-de" style="display: none;">Anmelden</span>
             </button>
             <div class="login-footer">
-                <p class="lang-en" style="margin-top: 1rem; color: var(--secondary); font-size: 0.85rem;">
-                    Default password: admin123
-                </p>
-                <p class="lang-de" style="display: none; margin-top: 1rem; color: var(--secondary); font-size: 0.85rem;">
-                    Standard-Passwort: admin123
-                </p>
+                <button class="change-password-btn" id="changePasswordBtn">
+                    <span class="lang-en">Change Password</span>
+                    <span class="lang-de" style="display: none;">Passwort ändern</span>
+                </button>
             </div>
         </div>
     </div>
-    <!-- END: LOGIN MODAL HTML -->
 
-    <!-- START: HEADER HTML -->
+    <!-- Password Change Modal -->
+    <div class="password-modal" id="passwordModal">
+        <div class="password-box">
+            <button class="login-close" id="passwordClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="lang-en">Change Password</h3>
+            <h3 class="lang-de" style="display: none;">Passwort ändern</h3>
+            <div class="password-success" id="passwordSuccess">
+                <span class="lang-en">Password changed successfully!</span>
+                <span class="lang-de" style="display: none;">Passwort erfolgreich geändert!</span>
+            </div>
+            <input type="password" class="login-input" id="currentPassword" placeholder="Current password">
+            <input type="password" class="login-input" id="newPassword" placeholder="New password">
+            <input type="password" class="login-input" id="confirmPassword" placeholder="Confirm new password">
+            <button class="login-submit" id="changePasswordSubmit">
+                <span class="lang-en">Change Password</span>
+                <span class="lang-de" style="display: none;">Passwort ändern</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="header-left">
-                    <div class="logo">Dibesh Shrestha</div>
+                    <!-- UPDATED: Added satellite icon to logo -->
+                    <div class="logo">
+                        
+                        Dibesh Shrestha
+                    </div>
                     <div class="language-switcher">
                         <button class="language-btn active" id="langEn">
                             <div class="flag-icon en"></div>
@@ -486,13 +1141,19 @@
                         <li><a href="#contact" data-en="Contact" data-de="Kontakt">Contact</a></li>
                     </ul>
                 </nav>
+                <!-- UPDATED: Added Zabbix button -->
                 <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <!-- Zabbix Lab Button -->
                     <button class="zabbix-btn" id="zabbixBtn" title="Zabbix Lab">
                         <span class="zabbix-icon">Z</span>
                     </button>
+                    
+                    <!-- Admin Login Button -->
                     <button class="login-btn" id="loginBtn" title="Admin Login">
                         <i class="fas fa-lock"></i>
                     </button>
+                    
+                    <!-- Mobile Menu Button -->
                     <button class="mobile-menu-btn" id="mobileMenuBtn">
                         <i class="fas fa-bars"></i>
                     </button>
@@ -500,298 +1161,755 @@
             </div>
         </div>
     </header>
-    <!-- END: HEADER HTML -->
 
-    <!-- Your existing content sections here... -->
-    <!-- (I've shortened for brevity, but include all your original content) -->
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul>
+            <li><a href="#home" class="active" data-en="Home" data-de="Start">Home</a></li>
+            <li><a href="#expertise" data-en="Expertise" data-de="Expertise">Expertise</a></li>
+            <li><a href="#experience" data-en="Experience" data-de="Erfahrung">Experience</a></li>
+            <li><a href="#certifications" data-en="Certifications" data-de="Zertifizierungen">Certifications</a></li>
+            <li><a href="#reference" data-en="Reference" data-de="Referenz">Reference</a></li>
+            <li><a href="#contact" data-en="Contact" data-de="Kontakt">Contact</a></li>
+        </ul>
+        <div class="mobile-language-switcher">
+            <button class="language-btn active" id="langEnMobile">
+                <div class="flag-icon en"></div>
+                English
+            </button>
+            <button class="language-btn" id="langDeMobile">
+                <div class="flag-icon de"></div>
+                Deutsch
+            </button>
+        </div>
+    </div>
 
-    <!-- START: JAVASCRIPT -->
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <p class="lang-en hero-description">
+                        Expert in enterprise monitoring infrastructure, IT consulting, and customer escalation management. Proven track record in leading complex migrations and solving critical system issues with exceptional client-facing communication skills.
+                    </p>
+                    <p class="lang-de hero-description" style="display: none;">
+                        Experte für Enterprise-Monitoring-Infrastruktur, IT-Beratung und Eskalationsmanagement. Bewährte Erfolgsbilanz bei der Leitung komplexer Migrationen und Lösung kritischer Systemprobleme mit herausragenden Kundenkommunikationsfähigkeiten.
+                    </p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn lang-en">Get in Touch</a>
+                        <a href="#contact" class="btn lang-de" style="display: none;">Kontakt aufnehmen</a>
+                        <a href="#certifications" class="btn btn-outline lang-en">View Certifications</a>
+                        <a href="#certifications" class="btn btn-outline lang-de" style="display: none;">Zertifizierungen anzeigen</a>
+                    </div>
+                </div>
+                
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <!-- UPDATED: Added satellite icon to profile header -->
+                        <div class="profile-icon">📡</div>
+                        <h2 class="lang-en">Dibesh Shrestha</h2>
+                        <h2 class="lang-de" style="display: none;">Dibesh Shrestha</h2>
+                        <h3 class="lang-en">Enterprise Monitoring Expert</h3>
+                        <h3 class="lang-de" style="display: none;">Enterprise-Monitoring-Experte</h3>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <h4 class="lang-en">Client Communication</h4>
+                        <h4 class="lang-de" style="display: none;">Kundenkommunikation</h4>
+                        <p class="lang-en">Escalation Management & Consulting</p>
+                        <p class="lang-de" style="display: none;">Eskalationsmanagement & Beratung</p>
+                        <div class="highlight-text lang-en">200+ Customers, 30,000+ Hosts</div>
+                        <div class="highlight-text lang-de" style="display: none;">200+ Kunden, 30.000+ Hosts</div>
+                        <ul>
+                            <li class="lang-en">Coached and mentored team members, improving incident resolution times</li>
+                            <li class="lang-de" style="display: none;">Trainierte und betreute Teammitglieder, verbesserte Incident-Lösungszeiten</li>
+                            <li class="lang-en">Recognized for calm and precise communication during high-pressure situations</li>
+                            <li class="lang-de" style="display: none;">Anerkannt für ruhige und präzise Kommunikation in Drucksituationen</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <h4 class="lang-en">Zabbix Certified Specialist</h4>
+                        <h4 class="lang-de" style="display: none;">Zabbix Zertifizierter Specialist</h4>
+                        <p class="lang-en">Validated expertise in enterprise monitoring</p>
+                        <p class="lang-de" style="display: none;">Validierte Expertise im Enterprise-Monitoring</p>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <h4 class="lang-en">13+ Years Experience</h4>
+                        <h4 class="lang-de" style="display: none;">13+ Jahre Erfahrung</h4>
+                        <p class="lang-en">Senior IT Administrator & Consultant</p>
+                        <p class="lang-de" style="display: none;">Senior IT Administrator & Berater</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise Section -->
+    <section class="section" id="expertise" style="background: var(--section-bg);">
+        <div class="container">
+            <h2 class="section-title lang-en">Technical Expertise</h2>
+            <h2 class="section-title lang-de" style="display: none;">Technische Expertise</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3 class="lang-en">Monitoring Infrastructure</h3>
+                    <h3 class="lang-de" style="display: none;">Monitoring-Infrastruktur</h3>
+                    <p class="lang-en">Deep expertise in enterprise monitoring solutions with hands-on experience managing large-scale infrastructures across multiple platforms.</p>
+                    <p class="lang-de" style="display: none;">Umfassende Expertise in Enterprise-Monitoring-Lösungen mit praktischer Erfahrung in der Verwaltung groß angelegter Infrastrukturen über mehrere Plattformen hinweg.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Nagios</span>
+                        <span class="tag">Zabbix</span>
+                        <span class="tag">Centreon</span>
+                        <span class="tag">Check MK</span>
+                        <span class="tag">App Dynamics</span>
+                        <span class="tag">CA APM</span>
+                        <span class="tag lang-en">200+ Servers</span>
+                        <span class="tag lang-de" style="display: none;">200+ Server</span>
+                        <span class="tag lang-en">46+ Clusters</span>
+                        <span class="tag lang-de" style="display: none;">46+ Cluster</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card">
+                    <h3 class="lang-en">Migration & Implementation</h3>
+                    <h3 class="lang-de" style="display: none;">Migration & Implementierung</h3>
+                    <p class="lang-en">Led complex migration projects from legacy systems to modern monitoring platforms for enterprise clients with minimal disruption.</p>
+                    <p class="lang-de" style="display: none;">Leitung komplexer Migrationsprojekte von Legacy-Systemen zu modernen Monitoring-Plattformen für Unternehmenskunden mit minimalen Unterbrechungen.</p>
+                    <div class="skill-tags">
+                        <span class="tag lang-en">Migration Planning</span>
+                        <span class="tag lang-de" style="display: none;">Migrationsplanung</span>
+                        <span class="tag lang-en">Zabbix Implementation</span>
+                        <span class="tag lang-de" style="display: none;">Zabbix-Implementierung</span>
+                        <span class="tag">30,000+ Hosts</span>
+                        <span class="tag lang-en">Cross-Platform</span>
+                        <span class="tag lang-de" style="display: none;">Plattformübergreifend</span>
+                        <span class="tag lang-en">Technical Leadership</span>
+                        <span class="tag lang-de" style="display: none;">Technische Leitung</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card">
+                    <h3 class="lang-en">Consulting & Escalation</h3>
+                    <h3 class="lang-de" style="display: none;">Beratung & Eskalation</h3>
+                    <p class="lang-en">Exceptional ability to communicate complex technical issues with clarity to any audience - from management to engineering teams.</p>
+                    <p class="lang-de" style="display: none;">Außergewöhnliche Fähigkeit, komplexe technische Probleme klar für jedes Publikum zu kommunizieren - vom Management bis zu Engineering-Teams.</p>
+                    <div class="skill-tags">
+                        <span class="tag lang-en">Escalation Management</span>
+                        <span class="tag lang-de" style="display: none;">Eskalationsmanagement</span>
+                        <span class="tag lang-en">Incident Resolution</span>
+                        <span class="tag lang-de" style="display: none;">Incident-Lösung</span>
+                        <span class="tag lang-en">Technical Consulting</span>
+                        <span class="tag lang-de" style="display: none;">Technische Beratung</span>
+                        <span class="tag lang-en">Team Coaching</span>
+                        <span class="tag lang-de" style="display: none;">Team-Coaching</span>
+                        <span class="tag">200+ Customers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="section" id="experience">
+        <div class="container">
+            <h2 class="section-title lang-en">Professional Experience</h2>
+            <h2 class="section-title lang-de" style="display: none;">Berufserfahrung</h2>
+            
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <h3 class="lang-en">Large-Scale Infrastructure Migrations</h3>
+                    <h3 class="lang-de" style="display: none;">Groß angelegte Infrastruktur-Migrationen</h3>
+                    <ul>
+                        <li class="lang-en">Technical lead for enterprise-wide migration from Nagios to Zabbix across 10+ organizations</li>
+                        <li class="lang-de" style="display: none;">Technischer Leiter für unternehmensweite Migration von Nagios zu Zabbix bei 10+ Organisationen</li>
+                        <li class="lang-en">Managed monitoring infrastructure supporting 30,000+ hosts across 200+ servers</li>
+                        <li class="lang-de" style="display: none;">Verwaltung der Monitoring-Infrastruktur für 30.000+ Hosts über 200+ Server</li>
+                        <li class="lang-en">Cross-platform expertise covering legacy and modern monitoring solutions</li>
+                        <li class="lang-de" style="display: none;">Plattformübergreifende Expertise für Legacy- und moderne Monitoring-Lösungen</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-card">
+                    <h3 class="lang-en">Client-Facing Leadership & Consulting</h3>
+                    <h3 class="lang-de" style="display: none;">Kundenorientierte Führung & Beratung</h3>
+                    <ul>
+                        <li class="lang-en">Direct escalation management with resolution of 30+ daily critical incidents</li>
+                        <li class="lang-de" style="display: none;">Direktes Eskalationsmanagement mit Lösung von 30+ täglichen kritischen Incidents</li>
+                        <li class="lang-en">Coached Service Desk teams, improving incident resolution times by 40%</li>
+                        <li class="lang-de" style="display: none;">Trainierte Service Desk Teams, verbesserte Incident-Lösungszeiten um 40%</li>
+                        <li class="lang-en">Recognized by enterprise clients for exceptional problem-solving during high-pressure situations</li>
+                        <li class="lang-de" style="display: none;">Von Unternehmenskunden anerkannt für außergewöhnliche Problemlösung in Drucksituationen</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-card">
+                    <h3 class="lang-en">Monitoring Infrastructure Expertise</h3>
+                    <h3 class="lang-de" style="display: none;">Monitoring-Infrastruktur-Expertise</h3>
+                    <ul>
+                        <li class="lang-en">Specialized in Nagios, Zabbix, Centreon, Check MK, App Dynamics, and CA APM</li>
+                        <li class="lang-de" style="display: none;">Spezialisierung auf Nagios, Zabbix, Centreon, Check MK, App Dynamics und CA APM</li>
+                        <li class="lang-en">Developed and optimized monitoring strategies for improved system reliability</li>
+                        <li class="lang-de" style="display: none;">Entwicklung und Optimierung von Monitoring-Strategien für verbesserte Systemzuverlässigkeit</li>
+                        <li class="lang-en">Built comprehensive monitoring solutions with ticketing system integration</li>
+                        <li class="lang-de" style="display: none;">Aufbau umfassender Monitoring-Lösungen mit Ticketing-System-Integration</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-card">
+                    <h3 class="lang-en">Strategic Consulting & Process Improvement</h3>
+                    <h3 class="lang-de" style="display: none;">Strategische Beratung & Prozessverbesserung</h3>
+                    <ul>
+                        <li class="lang-en">13+ years of progressive experience in enterprise monitoring and IT consulting</li>
+                        <li class="lang-de" style="display: none;">13+ Jahre progressive Erfahrung im Enterprise-Monitoring und IT-Beratung</li>
+                        <li class="lang-en">Consulted on monitoring solutions for diverse enterprise clients across industries</li>
+                        <li class="lang-de" style="display: none;">Beratung zu Monitoring-Lösungen für verschiedene Unternehmenskunden in verschiedenen Branchen</li>
+                        <li class="lang-en">Systematic approach to incident management and resolution process optimization</li>
+                        <li class="lang-de" style="display: none;">Systematischer Ansatz für Incident-Management und Optimierung des Lösungsprozesses</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="experience-note">
+                <p class="lang-en">For detailed employment history and specific roles, please visit my <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank">LinkedIn profile</a></p>
+                <p class="lang-de" style="display: none;">Für detaillierte Beschäftigungsgeschichte und spezifische Rollen, besuchen Sie bitte mein <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank">LinkedIn-Profil</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section - NEW -->
+    <section class="section" id="certifications" style="background: var(--section-bg);">
+        <div class="container">
+            <h2 class="section-title lang-en">Licenses & Certifications</h2>
+            <h2 class="section-title lang-de" style="display: none;">Lizenzen & Zertifizierungen</h2>
+            
+            <div class="certifications-grid">
+                <!-- Zabbix Certification -->
+                <div class="certification-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="lang-en">Zabbix Certified Specialist 7.0</h3>
+                        <h3 class="lang-de" style="display: none;">Zabbix Certified Specialist 7.0</h3>
+                        <div class="cert-issuer">
+                            <i class="fas fa-building"></i>
+                            <span>Zabbix</span>
+                        </div>
+                        <div class="cert-details">
+                            <span class="lang-en">Issued Dec 2024</span>
+                            <span class="lang-de" style="display: none;">Ausgestellt Dez 2024</span>
+                        </div>
+                        <div class="cert-id">Credential ID CS-2412-151</div>
+                    </div>
+                </div>
+                
+                <!-- ITIL Certification -->
+                <div class="certification-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="lang-en">IT Information Library Foundations (ITIL)</h3>
+                        <h3 class="lang-de" style="display: none;">IT Information Library Foundations (ITIL)</h3>
+                        <div class="cert-issuer">
+                            <i class="fas fa-building"></i>
+                            <span>PeopleCert</span>
+                        </div>
+                        <div class="cert-details">
+                            <span class="lang-en">Issued Oct 2018</span>
+                            <span class="lang-de" style="display: none;">Ausgestellt Okt 2018</span>
+                        </div>
+                        <div class="cert-id">Credential ID GR750484175DS</div>
+                    </div>
+                </div>
+                
+                <!-- CA APM Certification -->
+                <div class="certification-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="lang-en">CA APM 10.x Foundation for the Administrator 200</h3>
+                        <h3 class="lang-de" style="display: none;">CA APM 10.x Foundation for the Administrator 200</h3>
+                        <div class="cert-issuer">
+                            <i class="fas fa-building"></i>
+                            <span>CA EDUCATIONAL LTD</span>
+                        </div>
+                        <div class="cert-details">
+                            <span class="lang-en">Issued Jan 2019</span>
+                            <span class="lang-de" style="display: none;">Ausgestellt Jan 2019</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AppDynamics Certifications -->
+                <div class="certification-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="lang-en">AppDynamics Certified Implementer</h3>
+                        <h3 class="lang-de" style="display: none;">AppDynamics Zertifizierter Implementierer</h3>
+                        <div class="cert-issuer">
+                            <i class="fas fa-building"></i>
+                            <span>AppDynamics</span>
+                        </div>
+                        <div class="cert-details">
+                            <span class="lang-en">Issued Jun 2018</span>
+                            <span class="lang-de" style="display: none;">Ausgestellt Jun 2018</span>
+                        </div>
+                        <div class="cert-details">
+                            <span class="lang-en">Foundation Workshop 4.4 & Kickstarter Certificate</span>
+                            <span class="lang-de" style="display: none;">Foundation Workshop 4.4 & Kickstarter Zertifikat</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reference Section -->
+    <section class="section" id="reference">
+        <div class="container">
+            <h2 class="section-title lang-en">Professional Reference</h2>
+            <h2 class="section-title lang-de" style="display: none;">Berufliche Referenz</h2>
+            
+            <div class="reference-card">
+                <div class="reference-content">
+                    <p class="lang-en">To Whom It May Concern,</p>
+                    <p class="lang-de" style="display: none;">An alle, die es betrifft,</p>
+                    
+                    <p class="lang-en">I have had the pleasure of supervising Dibesh at Cancom for several years in his role as Senior Administrator Monitoring. I am pleased to provide this letter of recommendation.</p>
+                    <p class="lang-de" style="display: none;">Ich hatte das Vergnügen, Herrn Shrestha bei Cancom mehrere Jahre in seiner Rolle als Senior Administrator Monitoring zu betreuen. Ich freue mich, dieses Empfehlungsschreiben zu verfassen.</p>
+                    
+                    <p class="lang-en">Dibesh was the technical owner and lead for our legacy Nagios monitoring infrastructure. He proactively expanded his responsibilities, taking over and stabilizing our Centreon platform following a team member's departure, and subsequently demonstrated deep expertise in Zabbix.</p>
+                    <p class="lang-de" style="display: none;">Herr Shrestha war der technische Eigentümer und Leiter unserer Legacy-Nagios-Monitoring-Infrastruktur. Er erweiterte proaktiv seine Verantwortlichkeiten, übernahm und stabilisierte unsere Centreon-Plattform nach dem Ausscheiden eines Teammitglieds und zeigte anschließend tiefgreifende Expertise in Zabbix.</p>
+                    
+                    <p class="highlight lang-en">His most significant contribution was serving as the technical lead for a large-scale, cross-platform migration project from Nagios to Zabbix.</p>
+                    <p class="highlight lang-de" style="display: none;">Sein bedeutendster Beitrag war die technische Leitung eines groß angelegten, plattformübergreifenden Migrationsprojekts von Nagios zu Zabbix.</p>
+                    
+                    <p class="lang-en">A key strength is his ability to communicate complex technical issues with clarity to any audience. This skill made him an invaluable consultant during client escalations and critical incidents, where his calm and precise communication consistently helped resolve issues and build trust.</p>
+                    <p class="lang-de" style="display: none;">Eine zentrale Stärke ist seine Fähigkeit, komplexe technische Probleme klar für jedes Publikum zu kommunizieren. Diese Fähigkeit machte ihn zu einem unschätzbaren Berater während Kundeneskalationen und kritischen Incidents, wo seine ruhige und präzise Kommunikation konsequent zur Problemlösung und Vertrauensbildung beitrug.</p>
+                    
+                    <div class="reference-author">
+                        <span class="lang-en">Former Supervisor at Cancom</span>
+                        <span class="lang-de" style="display: none;">Ehemaliger Vorgesetzter bei Cancom</span>
+                        <br>
+                        <span class="lang-en">Senior Management</span>
+                        <span class="lang-de" style="display: none;">Senior Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact" style="background: var(--section-bg);">
+        <div class="container">
+            <h2 class="section-title lang-en">Get In Touch</h2>
+            <h2 class="section-title lang-de" style="display: none;">Kontakt aufnehmen</h2>
+            
+            <div>
+                <p class="lang-en contact-description">
+                    I'm available for consulting opportunities, escalation management, and infrastructure projects. Let's discuss how I can help your organization with monitoring solutions and technical leadership.
+                </p>
+                <p class="lang-de contact-description" style="display: none;">
+                    Ich stehe für Beratungsmöglichkeiten, Eskalationsmanagement und Infrastrukturprojekte zur Verfügung. Lassen Sie uns besprechen, wie ich Ihre Organisation mit Monitoring-Lösungen und technischer Leitung unterstützen kann.
+                </p>
+                
+                <div class="contact-buttons">
+                    <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank" class="btn btn-linkedin">
+                        <i class="fab fa-linkedin" style="margin-right: 0.7rem;"></i> 
+                        <span class="lang-en">Connect on LinkedIn</span>
+                        <span class="lang-de" style="display: none;">Auf LinkedIn verbinden</span>
+                    </a>
+                    <a href="https://www.xing.com/profile/Dibesh_Shrestha2/web_profiles?nwt_nav=profile&expandNeffi=true" target="_blank" class="btn btn-xing">
+                        <i class="fab fa-xing" style="margin-right: 0.7rem;"></i> 
+                        <span class="lang-en">Connect on XING</span>
+                        <span class="lang-de" style="display: none;">Auf XING verbinden</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <!-- UPDATED: Added satellite icon to footer logo -->
+                <div class="footer-logo">
+                    
+                    Dibesh Shrestha
+                </div>
+                <p class="lang-en footer-tagline">
+                    Enterprise Monitoring Expert | IT Consultant | Zabbix Certified Specialist | ITIL | CA APM | App Dynamics
+                </p>
+                <p class="lang-de footer-tagline" style="display: none;">
+                    Enterprise-Monitoring-Experte | IT-Berater | Zabbix Certified Specialist | ITIL | CA APM | App Dynamics
+                </p>
+                
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.xing.com/profile/Dibesh_Shrestha2/web_profiles?nwt_nav=profile&expandNeffi=true" target="_blank" title="XING">
+                        <i class="fab fa-xing"></i>
+                    </a>
+                </div>
+                
+                <div class="copyright">
+                    <span class="lang-en">&copy; 2025 Dibesh Shrestha. All rights reserved.</span>
+                    <span class="lang-de" style="display: none;">&copy; 2025 Dibesh Shrestha. Alle Rechte vorbehalten.</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // START: AUTHENTICATION SYSTEM
-        class AuthSystem {
+        // Password Management System
+        class PasswordManager {
             constructor() {
-                this.SESSION_KEY = 'notes_auth_session';
-                this.PASSWORD_KEY = 'notes_password_hash';
-                this.SESSION_DURATION = 8 * 60 * 60 * 1000; // 8 hours
-                this.DEFAULT_PASSWORD = 'admin123';
-                this.PASSWORD_FILE_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/password-config.json';
+                this.STORAGE_KEY = 'dibesh_admin_password';
+                this.DEFAULT_PASSWORD = 'admin123'; // Default password
                 this.init();
             }
 
-            async init() {
-                // Try to load password from GitHub file
-                try {
-                    const response = await fetch(this.PASSWORD_FILE_URL + '?t=' + Date.now());
-                    if (response.ok) {
-                        const config = await response.json();
-                        if (config.encryptedPassword) {
-                            localStorage.setItem(this.PASSWORD_KEY, config.encryptedPassword);
-                        }
-                    }
-                } catch (error) {
-                    console.log('Using local password storage');
-                }
-
-                // Set default password if none exists
-                if (!localStorage.getItem(this.PASSWORD_KEY)) {
-                    // Simple hash for default password
-                    const defaultHash = this.simpleHash(this.DEFAULT_PASSWORD);
-                    localStorage.setItem(this.PASSWORD_KEY, defaultHash);
+            init() {
+                // Check if password exists in localStorage, if not, set default
+                if (!localStorage.getItem(this.STORAGE_KEY)) {
+                    localStorage.setItem(this.STORAGE_KEY, this.DEFAULT_PASSWORD);
                 }
             }
 
-            simpleHash(password) {
-                // Simple hash function for basic security
-                let hash = 0;
-                for (let i = 0; i < password.length; i++) {
-                    const char = password.charCodeAt(i);
-                    hash = ((hash << 5) - hash) + char;
-                    hash = hash & hash;
-                }
-                return Math.abs(hash).toString(36);
+            getPassword() {
+                return localStorage.getItem(this.STORAGE_KEY);
             }
 
-            validatePassword(inputPassword) {
-                const storedHash = localStorage.getItem(this.PASSWORD_KEY);
-                const inputHash = this.simpleHash(inputPassword);
-                return inputHash === storedHash;
-            }
-
-            setAuthenticated() {
-                const sessionData = {
-                    authenticated: true,
-                    timestamp: Date.now(),
-                    userAgent: navigator.userAgent.substring(0, 100)
-                };
-                sessionStorage.setItem(this.SESSION_KEY, JSON.stringify(sessionData));
-            }
-
-            isAuthenticated() {
-                const sessionData = sessionStorage.getItem(this.SESSION_KEY);
-                if (!sessionData) return false;
-                
-                try {
-                    const data = JSON.parse(sessionData);
-                    const sessionAge = Date.now() - data.timestamp;
-                    return data.authenticated && sessionAge < this.SESSION_DURATION;
-                } catch {
-                    return false;
-                }
-            }
-
-            logout() {
-                sessionStorage.removeItem(this.SESSION_KEY);
-            }
-
-            changePassword(newPassword) {
-                const newHash = this.simpleHash(newPassword);
-                localStorage.setItem(this.PASSWORD_KEY, newHash);
+            setPassword(newPassword) {
+                localStorage.setItem(this.STORAGE_KEY, newPassword);
                 return true;
             }
-        }
-        // END: AUTHENTICATION SYSTEM
 
-        // START: PAGE INITIALIZATION
-        document.addEventListener('DOMContentLoaded', () => {
-            const authSystem = new AuthSystem();
-            
-            // Check if already authenticated from admin page
-            if (authSystem.isAuthenticated()) {
-                // Redirect to admin page if already logged in
-                window.location.href = "admin.html";
-                return;
+            validatePassword(password) {
+                return password === this.getPassword();
             }
+        }
 
-            // Initialize language switching
-            initLanguageSwitching();
-            
-            // Initialize mobile menu
-            initMobileMenu();
-            
-            // Initialize smooth scrolling
-            initSmoothScrolling();
-            
-            // Initialize Zabbix button
-            initZabbixButton();
-            
-            // Initialize login functionality
-            initLoginFunctionality(authSystem);
-        });
-        // END: PAGE INITIALIZATION
+        // Initialize Password Manager
+        const passwordManager = new PasswordManager();
 
-        // START: LANGUAGE SWITCHING FUNCTIONS
-        function initLanguageSwitching() {
-            const langEnBtn = document.getElementById('langEn');
-            const langDeBtn = document.getElementById('langDe');
-            const langEnMobileBtn = document.getElementById('langEnMobile');
-            const langDeMobileBtn = document.getElementById('langDeMobile');
-            const htmlElement = document.getElementById('htmlLang');
+        // Language switching functionality
+        const langEnBtn = document.getElementById('langEn');
+        const langDeBtn = document.getElementById('langDe');
+        const langEnMobileBtn = document.getElementById('langEnMobile');
+        const langDeMobileBtn = document.getElementById('langDeMobile');
+        const htmlElement = document.getElementById('htmlLang');
 
-            function switchLanguage(lang) {
-                document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
-                
-                if (lang === 'en') {
-                    if (langEnBtn) langEnBtn.classList.add('active');
-                    if (langEnMobileBtn) langEnMobileBtn.classList.add('active');
-                    htmlElement.setAttribute('lang', 'en');
-                } else {
-                    if (langDeBtn) langDeBtn.classList.add('active');
-                    if (langDeMobileBtn) langDeMobileBtn.classList.add('active');
-                    htmlElement.setAttribute('lang', 'de');
+        function switchLanguage(lang) {
+            // Update active buttons
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (lang === 'en') {
+                if (langEnBtn) langEnBtn.classList.add('active');
+                if (langEnMobileBtn) langEnMobileBtn.classList.add('active');
+                htmlElement.setAttribute('lang', 'en');
+            } else {
+                if (langDeBtn) langDeBtn.classList.add('active');
+                if (langDeMobileBtn) langDeMobileBtn.classList.add('active');
+                htmlElement.setAttribute('lang', 'de');
+            }
+            
+            // Show/hide language-specific content
+            document.querySelectorAll('.lang-en').forEach(el => {
+                el.style.display = lang === 'en' ? 'block' : 'none';
+            });
+            
+            document.querySelectorAll('.lang-de').forEach(el => {
+                el.style.display = lang === 'de' ? 'block' : 'none';
+            });
+            
+            // Update navigation links
+            document.querySelectorAll('nav a, .mobile-nav a').forEach(link => {
+                const text = link.getAttribute(`data-${lang}`);
+                if (text) {
+                    link.textContent = text;
                 }
-                
-                document.querySelectorAll('.lang-en').forEach(el => {
-                    el.style.display = lang === 'en' ? 'block' : 'none';
-                });
-                
-                document.querySelectorAll('.lang-de').forEach(el => {
-                    el.style.display = lang === 'de' ? 'block' : 'none';
-                });
-                
-                document.querySelectorAll('nav a, .mobile-nav a').forEach(link => {
-                    const text = link.getAttribute(`data-${lang}`);
-                    if (text) link.textContent = text;
-                });
-                
-                localStorage.setItem('preferredLanguage', lang);
-            }
-
-            if (langEnBtn) langEnBtn.addEventListener('click', () => switchLanguage('en'));
-            if (langDeBtn) langDeBtn.addEventListener('click', () => switchLanguage('de'));
+            });
             
-            const savedLanguage = localStorage.getItem('preferredLanguage') || 'en';
-            switchLanguage(savedLanguage);
+            // Store preference in localStorage
+            localStorage.setItem('preferredLanguage', lang);
         }
-        // END: LANGUAGE SWITCHING FUNCTIONS
 
-        // START: MOBILE MENU FUNCTIONS
-        function initMobileMenu() {
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const mobileNav = document.getElementById('mobileNav');
+        // Event listeners for language buttons
+        if (langEnBtn) langEnBtn.addEventListener('click', () => switchLanguage('en'));
+        if (langDeBtn) langDeBtn.addEventListener('click', () => switchLanguage('de'));
+        if (langEnMobileBtn) langEnMobileBtn.addEventListener('click', () => switchLanguage('en'));
+        if (langDeMobileBtn) langDeMobileBtn.addEventListener('click', () => switchLanguage('de'));
 
-            if (mobileMenuBtn && mobileNav) {
-                mobileMenuBtn.addEventListener('click', () => {
-                    mobileNav.classList.toggle('active');
-                    mobileMenuBtn.innerHTML = mobileNav.classList.contains('active') 
-                        ? '<i class="fas fa-times"></i>' 
-                        : '<i class="fas fa-bars"></i>';
-                });
-            }
-        }
-        // END: MOBILE MENU FUNCTIONS
+        // Check for saved language preference
+        const savedLanguage = localStorage.getItem('preferredLanguage') || 'en';
+        switchLanguage(savedLanguage);
 
-        // START: SMOOTH SCROLLING FUNCTIONS
-        function initSmoothScrolling() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if(targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if(targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 100,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.toggle('active');
+                mobileMenuBtn.innerHTML = mobileNav.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
             });
         }
-        // END: SMOOTH SCROLLING FUNCTIONS
 
-        // START: ZABBIX BUTTON FUNCTIONS
-        function initZabbixButton() {
-            const zabbixBtn = document.getElementById('zabbixBtn');
-            if (zabbixBtn) {
-                zabbixBtn.addEventListener('click', () => {
-                    const zabbixUrl = "https://your-zabbix-lab.com";
-                    alert('Configure Zabbix URL in JavaScript (line ~380)');
-                    // window.open(zabbixUrl, '_blank');
-                });
+        // Zabbix Lab button functionality
+        const zabbixBtn = document.getElementById('zabbixBtn');
+        if (zabbixBtn) {
+            zabbixBtn.addEventListener('click', () => {
+                // You can update this URL to your actual Zabbix lab URL
+                const zabbixUrl = "https://www.zabbix.com/";
+                
+                // For now, we'll show an alert and let you configure it
+               // alert('Zabbix Lab link will be configured when your Zabbix site is ready.\n\nUpdate the URL in the JavaScript code (line ~714).');
+                
+                // When you have your Zabbix URL ready, uncomment this line:
+                 window.open(zabbixUrl, '_blank');
+            });
+        }
+
+        // Login functionality
+        const loginBtn = document.getElementById('loginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const loginClose = document.getElementById('loginClose');
+        const loginSubmit = document.getElementById('loginSubmit');
+        const passwordInput = document.getElementById('passwordInput');
+        const loginError = document.getElementById('loginError');
+        const changePasswordBtn = document.getElementById('changePasswordBtn');
+
+        // Password change modal
+        const passwordModal = document.getElementById('passwordModal');
+        const passwordClose = document.getElementById('passwordClose');
+        const changePasswordSubmit = document.getElementById('changePasswordSubmit');
+        const currentPasswordInput = document.getElementById('currentPassword');
+        const newPasswordInput = document.getElementById('newPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const passwordSuccess = document.getElementById('passwordSuccess');
+
+        if (loginBtn) {
+            loginBtn.addEventListener('click', () => {
+                loginModal.classList.add('active');
+                passwordInput.focus();
+                loginError.style.display = 'none';
+            });
+        }
+
+        if (loginClose) {
+            loginClose.addEventListener('click', () => {
+                loginModal.classList.remove('active');
+                passwordInput.value = '';
+                loginError.style.display = 'none';
+            });
+        }
+
+        if (loginSubmit) {
+            loginSubmit.addEventListener('click', handleLogin);
+        }
+
+        // Handle login function
+        function handleLogin() {
+            if (passwordManager.validatePassword(passwordInput.value)) {
+                // Successful login - redirect to admin page
+                localStorage.setItem('isAuthenticated', 'true');
+                window.location.href = "admin.html";
+            } else {
+                loginError.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
             }
         }
-        // END: ZABBIX BUTTON FUNCTIONS
 
-        // START: LOGIN FUNCTIONS
-        function initLoginFunctionality(authSystem) {
-            const loginBtn = document.getElementById('loginBtn');
-            const loginModal = document.getElementById('loginModal');
-            const loginClose = document.getElementById('loginClose');
-            const loginSubmit = document.getElementById('loginSubmit');
-            const passwordInput = document.getElementById('passwordInput');
-            const loginError = document.getElementById('loginError');
+        // Allow Enter key for login
+        if (passwordInput) {
+            passwordInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    handleLogin();
+                }
+            });
+        }
 
-            // Show login modal
-            if (loginBtn) {
-                loginBtn.addEventListener('click', () => {
+        // Change password button
+        if (changePasswordBtn) {
+            changePasswordBtn.addEventListener('click', () => {
+                loginModal.classList.remove('active');
+                passwordModal.classList.add('active');
+                currentPasswordInput.focus();
+                passwordSuccess.style.display = 'none';
+                // Clear inputs
+                currentPasswordInput.value = '';
+                newPasswordInput.value = '';
+                confirmPasswordInput.value = '';
+            });
+        }
+
+        // Password modal close
+        if (passwordClose) {
+            passwordClose.addEventListener('click', () => {
+                passwordModal.classList.remove('active');
+            });
+        }
+
+        // Change password submit
+        if (changePasswordSubmit) {
+            changePasswordSubmit.addEventListener('click', () => {
+                const currentPassword = currentPasswordInput.value;
+                const newPassword = newPasswordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                // Validate current password
+                if (!passwordManager.validatePassword(currentPassword)) {
+                    alert('Current password is incorrect');
+                    currentPasswordInput.focus();
+                    return;
+                }
+
+                // Validate new password
+                if (newPassword.length < 6) {
+                    alert('New password must be at least 6 characters long');
+                    newPasswordInput.focus();
+                    return;
+                }
+
+                // Check if passwords match
+                if (newPassword !== confirmPassword) {
+                    alert('New passwords do not match');
+                    confirmPasswordInput.focus();
+                    return;
+                }
+
+                // Check if new password is same as current
+                if (newPassword === currentPassword) {
+                    alert('New password cannot be the same as current password');
+                    newPasswordInput.focus();
+                    return;
+                }
+
+                // Change password
+                passwordManager.setPassword(newPassword);
+                
+                // Show success message
+                passwordSuccess.style.display = 'block';
+                
+                // Clear inputs
+                currentPasswordInput.value = '';
+                newPasswordInput.value = '';
+                confirmPasswordInput.value = '';
+                
+                // Auto-close after 2 seconds
+                setTimeout(() => {
+                    passwordModal.classList.remove('active');
+                    passwordSuccess.style.display = 'none';
+                    
+                    // Show login modal again
                     loginModal.classList.add('active');
                     passwordInput.focus();
-                    loginError.style.display = 'none';
-                });
-            }
+                }, 2000);
+            });
+        }
 
-            // Close login modal
-            if (loginClose) {
-                loginClose.addEventListener('click', () => {
-                    loginModal.classList.remove('active');
-                    passwordInput.value = '';
-                    loginError.style.display = 'none';
-                });
-            }
-
-            // Handle login submission
-            if (loginSubmit) {
-                loginSubmit.addEventListener('click', () => handleLogin(authSystem));
-            }
-
-            // Enter key support
-            if (passwordInput) {
-                passwordInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') handleLogin(authSystem);
-                });
-            }
-
-            // Close modal when clicking outside
-            if (loginModal) {
-                loginModal.addEventListener('click', (e) => {
-                    if (e.target === loginModal) {
-                        loginModal.classList.remove('active');
-                        passwordInput.value = '';
-                        loginError.style.display = 'none';
+        // Allow Enter key for password change
+        [currentPasswordInput, newPasswordInput, confirmPasswordInput].forEach(input => {
+            if (input) {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        changePasswordSubmit.click();
                     }
                 });
             }
+        });
 
-            function handleLogin(authSystem) {
-                if (authSystem.validatePassword(passwordInput.value)) {
-                    authSystem.setAuthenticated();
-                    window.location.href = "admin.html";
-                } else {
-                    loginError.style.display = 'block';
-                    passwordInput.value = '';
-                    passwordInput.focus();
+        // Close modals when clicking outside
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.classList.remove('active');
+                passwordInput.value = '';
+                loginError.style.display = 'none';
+            }
+        });
+
+        passwordModal.addEventListener('click', (e) => {
+            if (e.target === passwordModal) {
+                passwordModal.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
                     
-                    // Shake animation
-                    loginError.style.animation = 'shake 0.5s';
-                    setTimeout(() => loginError.style.animation = '', 500);
+                    // Update active link
+                    if(this.getAttribute('href') !== '#contact') {
+                        document.querySelectorAll('nav a, .mobile-nav a').forEach(a => {
+                            a.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                    
+                    // Close mobile menu if open
+                    if (mobileNav.classList.contains('active')) {
+                        mobileNav.classList.remove('active');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
                 }
-            }
-        }
-        // END: LOGIN FUNCTIONS
+            });
+        });
 
-        // START: ANIMATION STYLES
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-                20%, 40%, 60%, 80% { transform: translateX(5px); }
+        // Update active link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('nav a, .mobile-nav a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if(scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target) && mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             }
-        `;
-        document.head.appendChild(style);
-        // END: ANIMATION STYLES
+        });
     </script>
-    <!-- END: JAVASCRIPT -->
 </body>
 </html>
