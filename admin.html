@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ===== HEAD META & LINKS ===== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Notes - Dibesh Shrestha</title>
@@ -8,7 +9,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- ===== ADMIN CSS ===== -->
     <style>
+        /* ===== CSS VARIABLES ===== */
         :root {
             --primary: #0A66C2;
             --primary-dark: #004182;
@@ -26,6 +30,7 @@
             --transition: all 0.2s ease;
         }
 
+        /* ===== RESET & BASE STYLES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -42,7 +47,7 @@
             overflow: hidden;
         }
 
-        /* Header - Compact */
+        /* ===== HEADER STYLES ===== */
         .header {
             background: var(--dark);
             padding: 0.8rem 1.5rem;
@@ -75,6 +80,7 @@
             gap: 0.8rem;
         }
 
+        /* ===== BUTTON STYLES ===== */
         .btn {
             padding: 0.5rem 1rem;
             border-radius: var(--border-radius);
@@ -103,14 +109,14 @@
             background: var(--primary-dark);
         }
 
-        /* Main Layout - Full screen */
+        /* ===== MAIN LAYOUT ===== */
         .main-container {
             display: flex;
             flex: 1;
             overflow: hidden;
         }
 
-        /* Sidebar - Fixed width */
+        /* ===== SIDEBAR STYLES ===== */
         .sidebar {
             width: 300px;
             background: var(--dark);
@@ -189,7 +195,7 @@
             margin-top: 0.3rem;
         }
 
-        /* Editor - Takes remaining space */
+        /* ===== EDITOR CONTAINER ===== */
         .editor-container {
             flex: 1;
             display: flex;
@@ -283,7 +289,7 @@
             min-height: 400px;
         }
 
-        /* Resizable Images */
+        /* ===== RESIZABLE IMAGES ===== */
         .resizable-image {
             max-width: 100%;
             height: auto;
@@ -320,7 +326,7 @@
             display: block;
         }
 
-        /* Rich Text Editor Styles */
+        /* ===== RICH TEXT EDITOR STYLES ===== */
         #noteEditor:focus {
             outline: none;
         }
@@ -384,7 +390,7 @@
             font-weight: 600;
         }
 
-        /* Export Options */
+        /* ===== EXPORT OPTIONS ===== */
         .export-options {
             display: none;
             position: absolute;
@@ -416,7 +422,7 @@
             background: var(--card-bg);
         }
 
-        /* Status Bar */
+        /* ===== STATUS BAR ===== */
         .status-bar {
             padding: 0.5rem 1rem;
             background: var(--dark);
@@ -433,7 +439,7 @@
             font-weight: 500;
         }
 
-        /* Authentication Error */
+        /* ===== AUTHENTICATION ERROR ===== */
         .auth-error {
             position: fixed;
             top: 0;
@@ -473,7 +479,7 @@
             margin-bottom: 2rem;
         }
 
-        /* Scrollbar */
+        /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -493,7 +499,7 @@
             background: var(--primary);
         }
 
-        /* Responsive */
+        /* ===== RESPONSIVE STYLES ===== */
         @media (max-width: 768px) {
             .main-container {
                 flex-direction: column;
@@ -513,7 +519,7 @@
     </style>
 </head>
 <body>
-    <!-- Authentication Check -->
+    <!-- ===== AUTHENTICATION CHECK ===== -->
     <div class="auth-error" id="authError" style="display: none;">
         <div class="error-box">
             <i class="fas fa-exclamation-triangle"></i>
@@ -526,9 +532,9 @@
         </div>
     </div>
 
-    <!-- Main Interface (hidden until authenticated) -->
+    <!-- ===== MAIN INTERFACE ===== -->
     <div id="mainApp" style="display: none; flex-direction: column; height: 100vh;">
-        <!-- Header -->
+        <!-- HEADER -->
         <header class="header">
             <div class="header-left">
                 <div class="logo">📝 My Notes</div>
@@ -586,9 +592,9 @@
             </div>
         </header>
 
-        <!-- Main Content -->
+        <!-- MAIN CONTENT -->
         <div class="main-container">
-            <!-- Sidebar -->
+            <!-- SIDEBAR -->
             <div class="sidebar">
                 <div class="sidebar-header">
                     <input type="text" class="search-box" id="searchBox" placeholder="Search notes...">
@@ -598,9 +604,9 @@
                 </div>
             </div>
 
-            <!-- Editor -->
+            <!-- EDITOR -->
             <div class="editor-container">
-                <!-- Toolbar -->
+                <!-- TOOLBAR -->
                 <div class="editor-toolbar">
                     <div class="toolbar-group">
                         <button class="toolbar-btn" data-command="formatBlock" data-value="h1" title="Heading 1">
@@ -654,61 +660,111 @@
                     </div>
                 </div>
 
-                <!-- Note Title -->
+                <!-- NOTE TITLE -->
                 <input type="text" class="note-title-input" id="noteTitle" placeholder="Note Title" maxlength="200">
 
-                <!-- Rich Text Editor -->
+                <!-- RICH TEXT EDITOR -->
                 <div class="editor-content">
                     <div id="noteEditor" contenteditable="true" placeholder="Start typing your note here... Press Ctrl+V to paste images"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Status Bar -->
+        <!-- STATUS BAR -->
         <div class="status-bar">
             <div id="charCount">0 characters</div>
             <div class="auto-save-indicator" id="autoSaveIndicator">Auto-save enabled</div>
             <div id="storageInfo">Local Storage</div>
         </div>
 
-        <!-- Hidden file inputs -->
+        <!-- HIDDEN FILE INPUTS -->
         <input type="file" id="importFileInput" multiple accept=".md,.txt,.html,.json,.rtf,.doc,.docx" style="display: none;">
     </div>
 
+    <!-- ===== ADMIN JAVASCRIPT ===== -->
     <script>
-        // Password Manager (must match index.html)
+        // ===== ENCRYPTION UTILITIES (MUST MATCH INDEX.HTML) =====
+        const EncryptionUtils = {
+            ENCRYPTION_KEY: 'dibesh-portfolio-2025-secure-key-12345',
+            
+            encrypt(text) {
+                let result = '';
+                for (let i = 0; i < text.length; i++) {
+                    const charCode = text.charCodeAt(i) ^ this.ENCRYPTION_KEY.charCodeAt(i % this.ENCRYPTION_KEY.length);
+                    result += String.fromCharCode(charCode);
+                }
+                return btoa(result);
+            },
+            
+            decrypt(encryptedText) {
+                try {
+                    const decoded = atob(encryptedText);
+                    let result = '';
+                    for (let i = 0; i < decoded.length; i++) {
+                        const charCode = decoded.charCodeAt(i) ^ this.ENCRYPTION_KEY.charCodeAt(i % this.ENCRYPTION_KEY.length);
+                        result += String.fromCharCode(charCode);
+                    }
+                    return result;
+                } catch (error) {
+                    console.error('Decryption error:', error);
+                    return null;
+                }
+            },
+            
+            hashPassword(password) {
+                let hash = 0;
+                for (let i = 0; i < password.length; i++) {
+                    const char = password.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash;
+                }
+                return hash.toString(36);
+            }
+        };
+
+        // ===== PASSWORD MANAGER (MUST MATCH INDEX.HTML) =====
         class PasswordManager {
             constructor() {
                 this.STORAGE_KEY = 'dibesh_admin_password';
-                this.DEFAULT_PASSWORD = 'admin123';
-                this.init();
             }
 
-            init() {
-                if (!localStorage.getItem(this.STORAGE_KEY)) {
-                    localStorage.setItem(this.STORAGE_KEY, this.DEFAULT_PASSWORD);
-                }
-            }
-
-            getPassword() {
+            getEncryptedPassword() {
                 return localStorage.getItem(this.STORAGE_KEY);
+            }
+
+            validatePassword(password) {
+                const encryptedStored = this.getEncryptedPassword();
+                if (!encryptedStored) return false;
+                
+                const decryptedPassword = EncryptionUtils.decrypt(encryptedStored);
+                return password === decryptedPassword;
+            }
+
+            setPassword(newPassword) {
+                if (newPassword.length < 6) {
+                    return { success: false, error: 'Password must be at least 6 characters' };
+                }
+                
+                const encryptedPassword = EncryptionUtils.encrypt(newPassword);
+                localStorage.setItem(this.STORAGE_KEY, encryptedPassword);
+                return { success: true };
             }
         }
 
-        // Enhanced Notes App with all requested features
+        // ===== ENHANCED NOTES APP =====
         class EnhancedNotesApp {
             constructor() {
                 this.notes = JSON.parse(localStorage.getItem('dibesh_notes')) || [];
                 this.currentNoteId = null;
                 this.saveTimeout = null;
-                this.AUTO_SAVE_DELAY = 1000; // 1 second auto-save
+                this.AUTO_SAVE_DELAY = 1000;
                 this.isSaving = false;
                 this.imageResizeData = null;
                 this.init();
             }
 
             init() {
-                // Check authentication
+                // ===== AUTHENTICATION CHECK =====
                 const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
                 const authError = document.getElementById('authError');
                 const mainApp = document.getElementById('mainApp');
@@ -720,7 +776,7 @@
 
                 mainApp.style.display = 'flex';
                 
-                // DOM Elements
+                // ===== DOM ELEMENTS =====
                 this.notesList = document.getElementById('notesList');
                 this.noteTitle = document.getElementById('noteTitle');
                 this.noteEditor = document.getElementById('noteEditor');
@@ -730,7 +786,7 @@
                 this.autoSaveIndicator = document.getElementById('autoSaveIndicator');
                 this.storageInfo = document.getElementById('storageInfo');
                 
-                // Buttons
+                // ===== BUTTONS =====
                 this.newNoteBtn = document.getElementById('newNoteBtn');
                 this.saveNoteBtn = document.getElementById('saveNoteBtn');
                 this.deleteNoteBtn = document.getElementById('deleteNoteBtn');
@@ -742,10 +798,10 @@
                 this.logoutBtn = document.getElementById('logoutBtn');
                 this.insertTableBtn = document.getElementById('insertTableBtn');
                 
-                // Event Listeners
+                // ===== EVENT LISTENERS =====
                 this.setupEventListeners();
                 
-                // Load notes
+                // ===== INITIAL LOAD =====
                 this.renderNotes();
                 
                 // Select first note if available
@@ -755,13 +811,8 @@
                     this.createNewNote();
                 }
                 
-                // Update character count
                 this.updateCharacterCount();
-                
-                // Show storage info
                 this.updateStorageInfo();
-                
-                // Set initial cursor position
                 this.setCursorToEnd();
             }
 
@@ -796,7 +847,7 @@
                 // Search
                 this.searchBox.addEventListener('input', () => this.filterNotes());
                 
-                // Auto-save on input (with cursor preservation)
+                // Auto-save
                 this.noteTitle.addEventListener('input', () => {
                     this.autoSave();
                     this.updateNoteTitleInList();
@@ -805,7 +856,7 @@
                 this.noteEditor.addEventListener('input', () => {
                     this.autoSave();
                     this.updateCharacterCount();
-                    this.setCursorToEnd(); // Keep cursor at end
+                    this.setCursorToEnd();
                 });
                 
                 // Keyboard shortcuts
@@ -839,10 +890,10 @@
                     this.setCursorToEnd();
                 });
                 
-                // Handle image paste
+                // Image paste
                 this.noteEditor.addEventListener('paste', (e) => this.handlePaste(e));
                 
-                // Handle image resizing
+                // Image resizing
                 this.setupImageResizing();
                 
                 // Close export menu when clicking outside
@@ -853,38 +904,31 @@
                 });
             }
 
-            // Cursor management
+            // ===== CURSOR MANAGEMENT =====
             setCursorToEnd() {
                 const selection = window.getSelection();
                 const range = document.createRange();
-                
-                // Move cursor to end of content
                 range.selectNodeContents(this.noteEditor);
-                range.collapse(false); // false = to end
-                
+                range.collapse(false);
                 selection.removeAllRanges();
                 selection.addRange(range);
-                
-                // Ensure editor has focus
                 this.noteEditor.focus();
             }
 
             preserveCursorPosition(callback) {
                 const selection = window.getSelection();
                 const range = selection.rangeCount > 0 ? selection.getRangeAt(0).cloneRange() : null;
-                
                 callback();
-                
                 if (range) {
                     selection.removeAllRanges();
                     selection.addRange(range);
                 } else {
                     this.setCursorToEnd();
                 }
-                
                 this.noteEditor.focus();
             }
 
+            // ===== NOTE MANAGEMENT =====
             generateId() {
                 return Date.now().toString(36) + Math.random().toString(36).substr(2);
             }
@@ -903,7 +947,6 @@
                 this.renderNotes();
                 this.selectNote(newNote.id);
                 
-                // Focus on title and set cursor at end
                 setTimeout(() => {
                     this.noteTitle.focus();
                     this.noteTitle.setSelectionRange(this.noteTitle.value.length, this.noteTitle.value.length);
@@ -916,11 +959,9 @@
                 
                 if (!note) return;
                 
-                // Update editor
                 this.noteTitle.value = note.title;
                 this.noteEditor.innerHTML = note.content || '<p><br></p>';
                 
-                // Update active state in list
                 document.querySelectorAll('.note-item').forEach(item => {
                     item.classList.remove('active');
                     if (item.dataset.id === noteId) {
@@ -928,13 +969,8 @@
                     }
                 });
                 
-                // Update character count
                 this.updateCharacterCount();
-                
-                // Set cursor to end
                 setTimeout(() => this.setCursorToEnd(), 50);
-                
-                // Setup image resizing for any images in the content
                 setTimeout(() => this.setupImageResizing(), 100);
             }
 
@@ -958,7 +994,6 @@
                 this.saveToStorage();
                 this.renderNotes();
                 
-                // Show save confirmation
                 this.autoSaveIndicator.textContent = '✓ Saved';
                 this.autoSaveIndicator.style.color = '#10b981';
                 
@@ -989,7 +1024,6 @@
                     this.saveToStorage();
                     this.renderNotes();
                     
-                    // Create new note or select next
                     if (this.notes.length === 0) {
                         this.createNewNote();
                     } else {
@@ -1039,7 +1073,6 @@
                     );
                 }
                 
-                // Sort by updatedAt (newest first)
                 filteredNotes.sort((a, b) => 
                     new Date(b.updatedAt) - new Date(a.updatedAt)
                 );
@@ -1061,7 +1094,6 @@
                         </div>
                     `).join('');
                     
-                    // Add click events
                     document.querySelectorAll('.note-item').forEach(item => {
                         item.addEventListener('click', () => {
                             this.selectNote(item.dataset.id);
@@ -1082,14 +1114,13 @@
                 return div.textContent || div.innerText || '';
             }
 
-            // Rich Text Editor Commands
+            // ===== RICH TEXT EDITOR COMMANDS =====
             executeCommand(command, value = null) {
                 this.preserveCursorPosition(() => {
                     document.execCommand(command, false, value);
                 });
             }
 
-            // Table Creation
             insertTable() {
                 const rows = prompt('Number of rows:', '3');
                 const cols = prompt('Number of columns:', '3');
@@ -1111,7 +1142,7 @@
                 }
             }
 
-            // Image Handling
+            // ===== IMAGE HANDLING =====
             handlePaste(event) {
                 const items = (event.clipboardData || event.originalEvent.clipboardData).items;
                 
@@ -1126,16 +1157,15 @@
                                 const img = document.createElement('img');
                                 img.src = e.target.result;
                                 img.className = 'resizable-image';
-                                img.style.maxWidth = '300px'; // Default size
+                                img.style.maxWidth = '300px';
                                 img.style.height = 'auto';
                                 
-                                // Add resize handle
                                 const resizeHandle = document.createElement('div');
                                 resizeHandle.className = 'resize-handle';
                                 img.appendChild(resizeHandle);
                                 
                                 document.execCommand('insertHTML', false, img.outerHTML);
-                                this.setupImageResizing(); // Re-setup resizing for new image
+                                this.setupImageResizing();
                             });
                         };
                         
@@ -1146,16 +1176,10 @@
             }
 
             setupImageResizing() {
-                // Remove old event listeners
                 document.querySelectorAll('.resizable-image').forEach(img => {
                     img.removeEventListener('mousedown', this.handleImageMouseDown);
-                });
-                
-                // Add new event listeners
-                document.querySelectorAll('.resizable-image').forEach(img => {
                     img.addEventListener('mousedown', this.handleImageMouseDown.bind(this));
                     
-                    // Ensure resize handle exists
                     if (!img.querySelector('.resize-handle')) {
                         const resizeHandle = document.createElement('div');
                         resizeHandle.className = 'resize-handle';
@@ -1163,7 +1187,6 @@
                     }
                 });
                 
-                // Add global mouse events
                 document.removeEventListener('mousemove', this.handleImageMouseMove);
                 document.removeEventListener('mouseup', this.handleImageMouseUp);
                 
@@ -1197,16 +1220,14 @@
                     const deltaX = e.clientX - startX;
                     const deltaY = e.clientY - startY;
                     
-                    // Calculate new dimensions (maintain aspect ratio)
                     const newWidth = Math.max(50, startWidth + deltaX);
                     const aspectRatio = startHeight / startWidth;
                     const newHeight = newWidth * aspectRatio;
                     
                     img.style.width = `${newWidth}px`;
                     img.style.height = `${newHeight}px`;
-                    img.style.maxWidth = 'none'; // Override max-width during resize
+                    img.style.maxWidth = 'none';
                     
-                    // Auto-save after resize
                     this.autoSave();
                 }
             }
@@ -1214,33 +1235,21 @@
             handleImageMouseUp() {
                 if (this.imageResizeData) {
                     this.imageResizeData.img.classList.remove('resizing');
-                    this.imageResizeData.img.style.maxWidth = '100%'; // Restore max-width
+                    this.imageResizeData.img.style.maxWidth = '100%';
                     this.imageResizeData = null;
-                    this.saveNote(); // Save after resize complete
+                    this.saveNote();
                 }
             }
 
-            // Export Functions
+            // ===== EXPORT FUNCTIONS =====
             exportNotes(format) {
                 switch (format) {
-                    case 'txt':
-                        this.exportAllAsTXT();
-                        break;
-                    case 'json':
-                        this.exportAllAsJSON();
-                        break;
-                    case 'html':
-                        this.exportAllAsHTML();
-                        break;
-                    case 'markdown':
-                        this.exportAllAsMarkdown();
-                        break;
-                    case 'single-txt':
-                        this.exportCurrentAsTXT();
-                        break;
-                    case 'single-html':
-                        this.exportCurrentAsHTML();
-                        break;
+                    case 'txt': this.exportAllAsTXT(); break;
+                    case 'json': this.exportAllAsJSON(); break;
+                    case 'html': this.exportAllAsHTML(); break;
+                    case 'markdown': this.exportAllAsMarkdown(); break;
+                    case 'single-txt': this.exportCurrentAsTXT(); break;
+                    case 'single-html': this.exportCurrentAsHTML(); break;
                 }
             }
 
@@ -1344,17 +1353,13 @@
             }
 
             exportMultipleFiles(extension, mimeType, contentGenerator) {
-                // Create a zip file containing all notes
                 if (this.notes.length === 0) {
                     alert('No notes to export');
                     return;
                 }
                 
-                // For simplicity, we'll create individual files
-                // In a real app, you might want to use a zip library
                 alert(`Exporting ${this.notes.length} notes as ${extension.toUpperCase()} files...\n\nThey will be downloaded one by one.`);
                 
-                // Download each note as separate file
                 setTimeout(() => {
                     this.notes.forEach((note, index) => {
                         setTimeout(() => {
@@ -1363,13 +1368,12 @@
                                 `${this.sanitizeFilename(note.title)}-${index + 1}.${extension}`,
                                 mimeType
                             );
-                        }, index * 500); // Stagger downloads
+                        }, index * 500);
                     });
                 }, 1000);
             }
 
             htmlToMarkdown(html) {
-                // Simple HTML to Markdown conversion
                 let md = html
                     .replace(/<h1[^>]*>([^<]+)<\/h1>/g, '# $1\n\n')
                     .replace(/<h2[^>]*>([^<]+)<\/h2>/g, '## $1\n\n')
@@ -1412,7 +1416,7 @@
                 URL.revokeObjectURL(url);
             }
 
-            // Import Functions
+            // ===== IMPORT FUNCTIONS =====
             async importNotes(event) {
                 const files = Array.from(event.target.files);
                 if (files.length === 0) return;
@@ -1438,13 +1442,11 @@
                     this.renderNotes();
                     alert(`Successfully imported ${importedCount} note${importedCount !== 1 ? 's' : ''}`);
                     
-                    // Select the first imported note
                     if (this.notes.length > 0) {
                         this.selectNote(this.notes[0].id);
                     }
                 }
                 
-                // Clear input
                 event.target.value = '';
             }
 
@@ -1459,7 +1461,7 @@
 
             createNoteFromFile(file, content) {
                 const extension = file.name.split('.').pop().toLowerCase();
-                const filename = file.name.replace(/\.[^/.]+$/, ""); // Remove extension
+                const filename = file.name.replace(/\.[^/.]+$/, "");
                 
                 let noteContent = '';
                 let noteTitle = filename;
@@ -1469,7 +1471,6 @@
                     case 'txt':
                     case 'html':
                     case 'rtf':
-                        // For simple text files, use as-is
                         noteContent = content;
                         break;
                         
@@ -1489,7 +1490,6 @@
                         noteContent = content;
                 }
                 
-                // Convert markdown to HTML if needed
                 if (extension === 'md') {
                     noteContent = this.markdownToHtml(noteContent);
                 }
@@ -1505,7 +1505,6 @@
             }
 
             markdownToHtml(markdown) {
-                // Simple Markdown to HTML conversion
                 return markdown
                     .replace(/^# (.*$)/gim, '<h1>$1</h1>')
                     .replace(/^## (.*$)/gim, '<h2>$1</h2>')
@@ -1520,10 +1519,9 @@
                     .replace(/\n/g, '<br>');
             }
 
-            // Local Folder Saving
+            // ===== LOCAL FOLDER SAVING =====
             async saveToLocalFolder() {
                 try {
-                    // Try using File System Access API
                     if ('showDirectoryPicker' in window) {
                         const directoryHandle = await window.showDirectoryPicker({
                             startIn: 'documents'
@@ -1555,7 +1553,6 @@
                     }
                 }
                 
-                // Fallback: Regular download
                 this.downloadBackupFile();
             }
 
@@ -1591,10 +1588,27 @@
             }
         }
 
-        // Initialize app
+        // ===== INITIALIZE APP =====
         document.addEventListener('DOMContentLoaded', () => {
             new EnhancedNotesApp();
         });
+
+        // ===== SESSION MANAGEMENT =====
+        let inactivityTimer;
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            if (localStorage.getItem('isAuthenticated') === 'true') {
+                inactivityTimer = setTimeout(() => {
+                    localStorage.removeItem('isAuthenticated');
+                    window.location.href = 'index.html';
+                }, 30 * 60 * 1000);
+            }
+        }
+
+        document.addEventListener('mousemove', resetInactivityTimer);
+        document.addEventListener('keypress', resetInactivityTimer);
+        document.addEventListener('click', resetInactivityTimer);
+        resetInactivityTimer();
     </script>
 </body>
 </html>
