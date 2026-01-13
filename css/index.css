@@ -80,13 +80,6 @@ header {
     gap: 2rem;
 }
 
-/* Header buttons container */
-.header-buttons {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
 .language-switcher {
     display: flex;
     align-items: center;
@@ -1090,7 +1083,7 @@ footer {
         display: none;
     }
     
-    /* Keep language switcher visible on mobile - FIXED */
+    /* Keep language switcher visible on mobile */
     .language-switcher {
         display: flex !important;
         background: rgba(10, 102, 194, 0.1);
@@ -1146,13 +1139,6 @@ footer {
         text-overflow: ellipsis;
         flex-shrink: 0;
         max-width: 150px;
-    }
-    
-    .header-buttons {
-        flex-shrink: 0;
-        gap: 0.5rem;
-        display: flex;
-        align-items: center;
     }
     
     /* Adjust button sizes for mobile */
@@ -1235,10 +1221,6 @@ footer {
         min-height: 16px;
     }
     
-    .header-buttons {
-        gap: 0.4rem;
-    }
-    
     .zabbix-btn,
     .login-btn,
     .mobile-menu-btn {
@@ -1276,12 +1258,10 @@ footer {
     .logo {
         font-size: 1.2rem;
         max-width: 100px;
-        order: 1;
     }
     
     .language-switcher {
         padding: 0.3rem;
-        order: 2;
     }
     
     .language-btn {
@@ -1296,11 +1276,6 @@ footer {
         height: 15px !important;
         min-width: 20px;
         min-height: 15px;
-    }
-    
-    .header-buttons {
-        gap: 0.3rem;
-        order: 3;
     }
     
     .zabbix-btn,
@@ -1349,10 +1324,6 @@ footer {
         height: 14px !important;
         min-width: 18px;
         min-height: 14px;
-    }
-    
-    .header-buttons {
-        gap: 0.2rem;
     }
     
     .zabbix-btn,
