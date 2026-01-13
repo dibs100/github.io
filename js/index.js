@@ -317,6 +317,63 @@ function initializeMobileMenu() {
     }
 }
 
+// ===== ENHANCED LANGUAGE SWITCHING =====
+function updatePlaceholdersAndTitles(lang) {
+    // Update input placeholders
+    const passwordInput = document.getElementById('passwordInput');
+    const currentPasswordInput = document.getElementById('currentPassword');
+    const newPasswordInput = document.getElementById('newPassword');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    
+    if (passwordInput) {
+        const placeholder = passwordInput.getAttribute(`placeholder-lang-${lang}`);
+        if (placeholder) passwordInput.placeholder = placeholder;
+    }
+    
+    if (currentPasswordInput) {
+        const placeholder = currentPasswordInput.getAttribute(`placeholder-lang-${lang}`);
+        if (placeholder) currentPasswordInput.placeholder = placeholder;
+    }
+    
+    if (newPasswordInput) {
+        const placeholder = newPasswordInput.getAttribute(`placeholder-lang-${lang}`);
+        if (placeholder) newPasswordInput.placeholder = placeholder;
+    }
+    
+    if (confirmPasswordInput) {
+        const placeholder = confirmPasswordInput.getAttribute(`placeholder-lang-${lang}`);
+        if (placeholder) confirmPasswordInput.placeholder = placeholder;
+    }
+    
+    // Update button titles
+    const zabbixBtn = document.getElementById('zabbixBtn');
+    const loginBtn = document.getElementById('loginBtn');
+    const socialLinks = document.querySelectorAll('.social-links a');
+    
+    if (zabbixBtn) {
+        const title = zabbixBtn.getAttribute(`title-lang-${lang}`);
+        if (title) zabbixBtn.title = title;
+    }
+    
+    if (loginBtn) {
+        const title = loginBtn.getAttribute(`title-lang-${lang}`);
+        if (title) loginBtn.title = title;
+    }
+    
+    socialLinks.forEach(link => {
+        const title = link.getAttribute(`title-lang-${lang}`);
+        if (title) link.title = title;
+    });
+    
+    // Update navigation text from data attributes
+    document.querySelectorAll('nav a, .mobile-nav a').forEach(link => {
+        const text = link.getAttribute(`data-${lang}`);
+        if (text) {
+            link.textContent = text;
+        }
+    });
+}
+
 // ===== MAIN INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
     console.log("📄 DOM loaded, initializing...");
@@ -420,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeFirebase();
     }, 1000);
     
-    // ===== EXISTING LANGUAGE & NAVIGATION CODE =====
+    // ===== LANGUAGE SWITCHING =====
     
     // Language switcher
     const langEnBtn = document.getElementById('langEn');
@@ -454,6 +511,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update document language attribute for accessibility
         document.documentElement.lang = lang;
+        
+        // Update placeholders and titles
+        updatePlaceholdersAndTitles(lang);
     }
     
     // Add event listeners for language switching
@@ -461,6 +521,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (langDeBtn) langDeBtn.addEventListener('click', () => switchLanguage('de'));
     if (langEnMobile) langEnMobile.addEventListener('click', () => switchLanguage('en'));
     if (langDeMobile) langDeMobile.addEventListener('click', () => switchLanguage('de'));
+    
+    // ===== SMOOTH SCROLLING =====
     
     // Smooth scrolling for navigation links
     document.querySelectorAll('nav a, .mobile-nav a').forEach(anchor => {
@@ -486,7 +548,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Active navigation link on scroll
+    // ===== ACTIVE NAVIGATION ON SCROLL =====
+    
     window.addEventListener('scroll', () => {
         const scrollPosition = window.scrollY + 100;
         
@@ -515,7 +578,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Check if user is already logged in
+    // ===== CHECK IF USER IS ALREADY LOGGED IN =====
+    
     if (passwordManager.isAuthenticated()) {
         console.log("✅ User already logged in");
         const loginBtn = document.getElementById('loginBtn');
