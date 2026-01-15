@@ -3,18 +3,18 @@
     --primary: #0A66C2;
     --primary-dark: #004182;
     --primary-light: #378FE9;
-    --secondary: #94a3b8;
-    --dark: #242c38;
-    --darker: #1a2029;
-    --section-bg: #242c38;
-    --card-bg: #303846;
-    --light: #f8fafc;
-    --gray: #30363d;
-    --gray-light: #161b22;
-    --gray-dark: #8b949e;
+    --secondary: #666666;           /* Darker gray for better contrast on white */
+    --dark: #1a1a1a;               /* Dark text instead of dark background */
+    --darker: #ffffff;             /* Changed: Pure white background */
+    --section-bg: #f8f9fa;         /* Changed: Very light gray for sections */
+    --card-bg: #ffffff;            /* Changed: White cards */
+    --light: #1a1a1a;              /* Changed: Dark text on white */
+    --gray: #e9ecef;               /* Changed: Light border color */
+    --gray-light: #f8f9fa;         /* Changed: Very light gray */
+    --gray-dark: #495057;          /* Changed: Medium gray */
     --success: #10b981;
     --border-radius: 12px;
-    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Lighter shadow */
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --gradient: linear-gradient(135deg, #0A66C2 0%, #004182 100%);
 }
@@ -29,8 +29,8 @@
 body {
     font-family: 'Inter', sans-serif;
     line-height: 1.7;
-    color: var(--light);
-    background-color: var(--darker);
+    color: var(--light);           /* Dark text */
+    background-color: var(--darker); /* White background */
     overflow-x: hidden;
 }
 
@@ -47,10 +47,10 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(6, 9, 15, 0.97);
+    background-color: rgba(255, 255, 255, 0.97); /* White with slight transparency */
     backdrop-filter: blur(10px);
     z-index: 1000;
-    border-bottom: 1px solid rgba(48, 54, 61, 0.3);
+    border-bottom: 1px solid rgba(233, 236, 239, 0.8); /* Light border */
 }
 
 .header-content {
@@ -84,10 +84,10 @@ header {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(10, 102, 194, 0.1);
+    background: rgba(10, 102, 194, 0.08); /* Lighter blue tint */
     padding: 0.5rem 1rem;
     border-radius: 30px;
-    border: 1px solid rgba(10, 102, 194, 0.2);
+    border: 1px solid rgba(10, 102, 194, 0.15);
 }
 
 .language-btn {
@@ -152,7 +152,7 @@ nav a {
 }
 
 nav a:hover, nav a.active {
-    color: var(--light);
+    color: var(--primary); /* Use primary color instead of light */
 }
 
 nav a::after {
@@ -211,18 +211,18 @@ nav a:hover::after, nav a.active::after {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: rgba(10, 102, 194, 0.2);
-    border: 1px solid rgba(10, 102, 194, 0.3);
-    color: var(--primary-light);
+    background: rgba(10, 102, 194, 0.12); /* Lighter blue */
+    border: 1px solid rgba(10, 102, 194, 0.2);
+    color: var(--primary);
     font-size: 1rem;
-    opacity: 0.8;
+    opacity: 0.9;
     transition: var(--transition);
     cursor: pointer;
 }
 
 .login-btn:hover {
     opacity: 1;
-    background: rgba(10, 102, 194, 0.3);
+    background: rgba(10, 102, 194, 0.2);
     transform: scale(1.05);
 }
 
@@ -231,9 +231,9 @@ nav a:hover::after, nav a.active::after {
     background: none;
     border: none;
     font-size: 1.5rem;
-    color: var(--light);
+    color: var(--primary); /* Primary color on white */
     cursor: pointer;
-    background: rgba(10, 102, 194, 0.1);
+    background: rgba(10, 102, 194, 0.08); /* Lighter blue */
     width: 48px;
     height: 48px;
     border-radius: 10px;
@@ -243,7 +243,7 @@ nav a:hover::after, nav a.active::after {
 }
 
 .mobile-menu-btn:hover {
-    background: rgba(10, 102, 194, 0.2);
+    background: rgba(10, 102, 194, 0.15);
 }
 
 /* ===== HERO SECTION ===== */
@@ -251,7 +251,7 @@ nav a:hover::after, nav a.active::after {
     padding: 10rem 0 5rem;
     position: relative;
     overflow: hidden;
-    background: var(--darker);
+    background: var(--darker); /* White background */
 }
 
 .hero-content {
@@ -293,24 +293,24 @@ nav a:hover::after, nav a.active::after {
     cursor: pointer;
     font-size: 1rem;
     letter-spacing: 0.3px;
-    box-shadow: 0 4px 14px 0 rgba(10, 102, 194, 0.3);
+    box-shadow: 0 4px 14px 0 rgba(10, 102, 194, 0.2); /* Lighter shadow */
 }
 
 .btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px 0 rgba(10, 102, 194, 0.4);
+    box-shadow: 0 6px 20px 0 rgba(10, 102, 194, 0.25);
 }
 
 .btn-outline {
     background: transparent;
     border: 2px solid var(--gray);
-    color: var(--light);
+    color: var(--light); /* Dark text */
     box-shadow: none;
 }
 
 .btn-outline:hover {
     border-color: var(--primary);
-    background: rgba(10, 102, 194, 0.1);
+    background: rgba(10, 102, 194, 0.08); /* Lighter blue */
 }
 
 .btn-linkedin {
@@ -323,11 +323,11 @@ nav a:hover::after, nav a.active::after {
 
 /* ===== PROFILE CARD ===== */
 .profile-card {
-    background: var(--card-bg);
+    background: var(--card-bg); /* White */
     border-radius: var(--border-radius);
     padding: 2.5rem;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--gray);
+    box-shadow: var(--shadow); /* Lighter shadow */
+    border: 1px solid var(--gray); /* Light border */
     position: relative;
     overflow: hidden;
 }
@@ -351,7 +351,7 @@ nav a:hover::after, nav a.active::after {
 
 .profile-icon {
     font-size: 2rem;
-    color: var(--primary-light);
+    color: var(--primary);
     margin-bottom: 1rem;
     display: inline-block;
 }
@@ -359,13 +359,13 @@ nav a:hover::after, nav a.active::after {
 .profile-header h2 {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 2.2rem;
-    color: var(--light);
+    color: var(--light); /* Dark text */
     margin-bottom: 0.5rem;
 }
 
 .profile-header h3 {
     font-size: 1.2rem;
-    color: var(--primary-light);
+    color: var(--primary);
     font-weight: 500;
 }
 
@@ -375,7 +375,7 @@ nav a:hover::after, nav a.active::after {
 
 .detail-item h4 {
     font-size: 1.3rem;
-    color: var(--light);
+    color: var(--light); /* Dark text */
     margin-bottom: 0.5rem;
     border-bottom: 2px solid var(--gray);
     padding-bottom: 0.5rem;
@@ -388,10 +388,10 @@ nav a:hover::after, nav a.active::after {
 }
 
 .highlight-text {
-    background: rgba(10, 102, 194, 0.1);
+    background: rgba(10, 102, 194, 0.08); /* Lighter blue */
     padding: 0.5rem 1rem;
     border-radius: 8px;
-    color: var(--primary-light);
+    color: var(--primary);
     font-weight: 600;
     display: inline-block;
     margin: 0.5rem 0 1rem 0;
@@ -413,7 +413,7 @@ nav a:hover::after, nav a.active::after {
 
 .detail-item li:before {
     content: "•";
-    color: var(--primary-light);
+    color: var(--primary);
     position: absolute;
     left: 0;
     font-size: 1.2rem;
@@ -422,6 +422,7 @@ nav a:hover::after, nav a.active::after {
 /* ===== SECTION STYLES ===== */
 .section {
     padding: 5rem 0;
+    background-color: var(--section-bg); /* Light gray sections */
 }
 
 .section-title {
@@ -430,7 +431,7 @@ nav a:hover::after, nav a.active::after {
     margin-bottom: 3rem;
     position: relative;
     display: inline-block;
-    color: var(--light);
+    color: var(--light); /* Dark text */
 }
 
 .section-title::after {
@@ -452,24 +453,24 @@ nav a:hover::after, nav a.active::after {
 }
 
 .skill-card {
-    background: var(--card-bg);
+    background: var(--card-bg); /* White */
     padding: 2rem;
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    border: 1px solid var(--gray);
+    box-shadow: var(--shadow); /* Lighter shadow */
+    border: 1px solid var(--gray); /* Light border */
     transition: var(--transition);
 }
 
 .skill-card:hover {
     transform: translateY(-5px);
     border-color: rgba(10, 102, 194, 0.3);
-    box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.08); /* Lighter shadow */
 }
 
 .skill-card h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    color: var(--light);
+    color: var(--light); /* Dark text */
 }
 
 .skill-card p {
@@ -486,13 +487,13 @@ nav a:hover::after, nav a.active::after {
 }
 
 .tag {
-    background: rgba(10, 102, 194, 0.1);
-    color: var(--primary-light);
+    background: rgba(10, 102, 194, 0.08); /* Lighter blue */
+    color: var(--primary);
     padding: 0.4rem 1rem;
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: 500;
-    border: 1px solid rgba(10, 102, 194, 0.2);
+    border: 1px solid rgba(10, 102, 194, 0.15);
 }
 
 /* ===== EXPERIENCE SECTION ===== */
@@ -503,11 +504,11 @@ nav a:hover::after, nav a.active::after {
 }
 
 .experience-card {
-    background: var(--card-bg);
+    background: var(--card-bg); /* White */
     padding: 2rem;
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    border: 1px solid var(--gray);
+    box-shadow: var(--shadow); /* Lighter shadow */
+    border: 1px solid var(--gray); /* Light border */
     transition: var(--transition);
 }
 
@@ -519,7 +520,7 @@ nav a:hover::after, nav a.active::after {
 .experience-card h3 {
     font-size: 1.4rem;
     margin-bottom: 1rem;
-    color: var(--light);
+    color: var(--light); /* Dark text */
     border-bottom: 2px solid var(--gray);
     padding-bottom: 0.5rem;
 }
@@ -539,7 +540,7 @@ nav a:hover::after, nav a.active::after {
 
 .experience-card li:before {
     content: "▸";
-    color: var(--primary-light);
+    color: var(--primary);
     position: absolute;
     left: 0;
     font-weight: bold;
@@ -559,7 +560,7 @@ nav a:hover::after, nav a.active::after {
 }
 
 .experience-note a {
-    color: var(--primary-light);
+    color: var(--primary);
     text-decoration: none;
     font-weight: 600;
 }
@@ -576,11 +577,11 @@ nav a:hover::after, nav a.active::after {
 }
 
 .certification-card {
-    background: var(--card-bg);
+    background: var(--card-bg); /* White */
     padding: 2rem;
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    border: 1px solid var(--gray);
+    box-shadow: var(--shadow); /* Lighter shadow */
+    border: 1px solid var(--gray); /* Light border */
     transition: var(--transition);
     display: flex;
     gap: 1.5rem;
@@ -590,31 +591,31 @@ nav a:hover::after, nav a.active::after {
 .certification-card:hover {
     transform: translateY(-5px);
     border-color: rgba(10, 102, 194, 0.3);
-    box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.08); /* Lighter shadow */
 }
 
 .cert-icon {
     width: 60px;
     height: 60px;
-    background: rgba(10, 102, 194, 0.1);
+    background: rgba(10, 102, 194, 0.08); /* Lighter blue */
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.8rem;
-    color: var(--primary-light);
+    color: var(--primary);
     flex-shrink: 0;
-    border: 1px solid rgba(10, 102, 194, 0.2);
+    border: 1px solid rgba(10, 102, 194, 0.15);
 }
 
 .cert-content h3 {
     font-size: 1.4rem;
     margin-bottom: 0.5rem;
-    color: var(--light);
+    color: var(--light); /* Dark text */
 }
 
 .cert-issuer {
-    color: var(--primary-light);
+    color: var(--primary);
     font-weight: 600;
     margin-bottom: 0.5rem;
     display: flex;
@@ -629,10 +630,10 @@ nav a:hover::after, nav a.active::after {
 }
 
 .cert-id {
-    background: rgba(10, 102, 194, 0.1);
+    background: rgba(10, 102, 194, 0.08); /* Lighter blue */
     padding: 0.3rem 0.8rem;
     border-radius: 6px;
-    color: var(--primary-light);
+    color: var(--primary);
     font-size: 0.85rem;
     display: inline-block;
     margin-top: 0.5rem;
@@ -640,11 +641,11 @@ nav a:hover::after, nav a.active::after {
 
 /* ===== REFERENCE SECTION ===== */
 .reference-card {
-    background: var(--card-bg);
+    background: var(--card-bg); /* White */
     padding: 3rem;
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    border: 1px solid var(--gray);
+    box-shadow: var(--shadow); /* Lighter shadow */
+    border: 1px solid var(--gray); /* Light border */
     max-width: 800px;
     margin: 0 auto;
 }
@@ -657,7 +658,7 @@ nav a:hover::after, nav a.active::after {
 }
 
 .reference-content p.highlight {
-    color: var(--light);
+    color: var(--light); /* Dark text */
     font-weight: 500;
     background: rgba(10, 102, 194, 0.05);
     padding: 1rem;
@@ -668,7 +669,7 @@ nav a:hover::after, nav a.active::after {
 .reference-author {
     margin-top: 2.5rem;
     font-weight: 600;
-    color: var(--primary-light);
+    color: var(--primary);
     font-size: 1.1rem;
 }
 
@@ -702,7 +703,7 @@ nav a:hover::after, nav a.active::after {
 
 /* ===== FOOTER ===== */
 footer {
-    background: var(--darker);
+    background: var(--section-bg); /* Light gray */
     padding: 3rem 0 2rem;
     border-top: 1px solid var(--gray);
 }
@@ -748,7 +749,7 @@ footer {
 }
 
 .social-links a:hover {
-    color: var(--primary-light);
+    color: var(--primary);
 }
 
 .copyright {
@@ -766,7 +767,7 @@ footer {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(6, 9, 15, 0.95);
+    background: rgba(255, 255, 255, 0.95); /* White overlay */
     backdrop-filter: blur(10px);
     z-index: 2000;
     align-items: center;
@@ -778,11 +779,11 @@ footer {
 }
 
 .login-box {
-    background: var(--card-bg);
+    background: var(--card-bg); /* White */
     padding: 3rem;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-    border: 1px solid rgba(10, 102, 194, 0.3);
+    border: 1px solid rgba(10, 102, 194, 0.2);
     width: 90%;
     max-width: 400px;
     text-align: center;
@@ -804,17 +805,17 @@ footer {
 .login-box h3 {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
-    color: var(--light);
+    color: var(--light); /* Dark text */
 }
 
 .login-input {
     width: 100%;
     padding: 1rem;
     margin-bottom: 1.5rem;
-    background: rgba(22, 27, 34, 0.8);
+    background: #f8f9fa; /* Light gray input */
     border: 1px solid var(--gray);
     border-radius: var(--border-radius);
-    color: var(--light);
+    color: var(--light); /* Dark text */
     font-size: 1rem;
 }
 
@@ -837,11 +838,11 @@ footer {
 
 .login-submit:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px 0 rgba(10, 102, 194, 0.4);
+    box-shadow: 0 6px 20px 0 rgba(10, 102, 194, 0.25);
 }
 
 .login-error {
-    color: #f87171;
+    color: #dc3545; /* Standard red */
     margin-bottom: 1rem;
     font-size: 0.9rem;
     display: none;
@@ -860,7 +861,7 @@ footer {
 }
 
 .login-close:hover {
-    color: var(--light);
+    color: var(--light); /* Dark text */
 }
 
 .login-footer {
@@ -873,7 +874,7 @@ footer {
 .change-password-btn {
     background: transparent;
     border: none;
-    color: var(--primary-light);
+    color: var(--primary);
     cursor: pointer;
     text-decoration: underline;
     font-size: 0.9rem;
@@ -882,7 +883,7 @@ footer {
 }
 
 .change-password-btn:hover {
-    color: var(--primary);
+    color: var(--primary-dark);
 }
 
 /* ===== PASSWORD CHANGE MODAL ===== */
@@ -893,7 +894,7 @@ footer {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(6, 9, 15, 0.95);
+    background: rgba(255, 255, 255, 0.95); /* White overlay */
     backdrop-filter: blur(10px);
     z-index: 3000;
     align-items: center;
@@ -905,11 +906,11 @@ footer {
 }
 
 .password-box {
-    background: var(--card-bg);
+    background: var(--card-bg); /* White */
     padding: 3rem;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-    border: 1px solid rgba(10, 102, 194, 0.3);
+    border: 1px solid rgba(10, 102, 194, 0.2);
     width: 90%;
     max-width: 400px;
     text-align: center;
@@ -920,7 +921,7 @@ footer {
 .password-box h3 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    color: var(--light);
+    color: var(--light); /* Dark text */
 }
 
 .password-success {
@@ -936,7 +937,7 @@ footer {
     top: 90px;
     left: 0;
     width: 100%;
-    background: rgba(6, 9, 15, 0.98);
+    background: rgba(255, 255, 255, 0.98); /* White */
     padding: 2rem;
     box-shadow: var(--shadow);
     z-index: 999;
@@ -987,8 +988,8 @@ footer {
 
 .mobile-nav a:hover,
 .mobile-nav a.active {
-    color: var(--light);
-    background: rgba(10, 102, 194, 0.1);
+    color: var(--primary); /* Primary color */
+    background: rgba(10, 102, 194, 0.08); /* Lighter blue */
 }
 
 /* MOBILE LANGUAGE SWITCHER */
@@ -1086,10 +1087,10 @@ footer {
     /* Keep language switcher visible on mobile */
     .language-switcher {
         display: flex !important;
-        background: rgba(10, 102, 194, 0.1);
+        background: rgba(10, 102, 194, 0.08);
         padding: 0.5rem;
         border-radius: 30px;
-        border: 1px solid rgba(10, 102, 194, 0.2);
+        border: 1px solid rgba(10, 102, 194, 0.15);
         margin-right: 0.5rem;
     }
     
