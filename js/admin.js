@@ -1,34 +1,72 @@
-// ===== SIMPLE NOTES APP WITH AUTH CHECK =====
-class SimpleNotesApp {
+// ===== FIREBASE + LOCALSTORAGE HYBRID NOTES APP =====
+class HybridNotesApp {
     constructor() {
-        console.log('📝 NotesApp: Initializing...');
+        console.log('📝 HybridNotesApp: Initializing...');
         
         // FIRST: Check authentication before anything else
         if (!this.checkAuth()) {
             return; // Stop if not authenticated
         }
         
-        // SECOND: Initialize the app
-        this.initApp();
+        // Initialize storage modes
+        this.storageMode = 'checking'; // checking → firestore → localstorage
+        this.useFirestore = false;
+        this.firestoreAvailable = false;
+        
+        // SECOND: Initialize Firebase and app
+        this.initializeFirebase();
     }
     
     checkAuth() {
         console.log('🔐 Checking authentication...');
         
-        // Check if user is authenticated
-        const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-        const isAdmin = localStorage.getItem('isAdmin') === 'true';
+        // Check both Firebase and LocalStorage auth
+        const lsAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+        const lsAdmin = localStorage.getItem('isAdmin') === 'true';
         
-        console.log('Auth status:', { isAuthenticated, isAdmin });
+        console.log('Auth status:', { lsAuthenticated, lsAdmin });
         
-        if (!isAuthenticated) {
+        if (!lsAuthenticated) {
             console.log('❌ User not authenticated');
             this.showAuthError();
             return false;
         }
         
-        console.log('✅ User authenticated');
+        console.log('✅ User authenticated via LocalStorage');
         return true;
+    }
+    
+    async initializeFirebase() {
+        console.log('🔥 Initializing Firebase connection...');
+        
+        // Check if Firebase is available
+        if (typeof firebase === 'undefined' || !window.firebaseDB) {
+            console.log('⚠️ Firebase not available, using LocalStorage only');
+            this.storageMode = 'localstorage';
+            this.useFirestore = false;
+            this.firestoreAvailable = false;
+            this.initApp();
+            return;
+        }
+        
+        try {
+            // Test Firestore connection
+            const testRef = window.firebaseDB.collection('_test').doc('connection');
+            await testRef.set({ test: true, timestamp: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+            await testRef.delete();
+            
+            console.log('✅ Firebase Firestore connection successful');
+            this.storageMode = 'firestore';
+            this.useFirestore = true;
+            this.firestoreAvailable = true;
+        } catch (error) {
+            console.log('⚠️ Firebase Firestore connection failed, using LocalStorage:', error.message);
+            this.storageMode = 'localstorage';
+            this.useFirestore = false;
+            this.firestoreAvailable = false;
+        }
+        
+        this.initApp();
     }
     
     showAuthError() {
@@ -44,8 +82,8 @@ class SimpleNotesApp {
         if (authError) authError.style.display = 'flex';
     }
     
-    initApp() {
-        console.log('🚀 Initializing Notes App...');
+    async initApp() {
+        console.log(`🚀 Initializing Notes App (Storage: ${this.storageMode})...`);
         
         // Hide auth error, show main app
         const authError = document.getElementById('authError');
@@ -56,8 +94,9 @@ class SimpleNotesApp {
         if (loadingScreen) loadingScreen.style.display = 'none';
         if (mainApp) mainApp.style.display = 'flex';
         
-        // Initialize notes array
-        this.notes = JSON.parse(localStorage.getItem('dibesh_notes')) || [];
+        // Initialize notes arrays for both storages
+        this.notes = [];
+        this.localNotes = JSON.parse(localStorage.getItem('dibesh_notes')) || [];
         this.currentNoteId = null;
         this.saveTimeout = null;
         this.AUTO_SAVE_DELAY = 2000;
@@ -89,8 +128,13 @@ class SimpleNotesApp {
         // ===== EVENT LISTENERS =====
         this.setupEventListeners();
         
-        // ===== LOAD NOTES =====
-        this.loadNotes();
+        // ===== LOAD NOTES FROM APPROPRIATE STORAGE =====
+        await this.loadNotes();
+        
+        // ===== SYNC LOCALSTORAGE WITH FIRESTORE (if available) =====
+        if (this.useFirestore && this.firestoreAvailable) {
+            await this.syncLocalToFirestore();
+        }
         
         // Select first note if available
         if (this.notes.length > 0) {
@@ -98,21 +142,93 @@ class SimpleNotesApp {
             this.selectNote(this.notes[0].id);
         } else {
             console.log('📋 No notes, creating new one');
-            this.createNewNote();
+            await this.createNewNote();
         }
         
         this.updateCharacterCount();
         this.updateStorageInfo();
         this.setCursorToEnd();
         
-        console.log('✅ Notes App initialized');
+        console.log('✅ Notes App initialized with', this.notes.length, 'notes');
     }
     
-    loadNotes() {
-        console.log('📥 Loading notes...');
-        this.notes = JSON.parse(localStorage.getItem('dibesh_notes')) || [];
+    async loadNotes() {
+        console.log(`📥 Loading notes from ${this.useFirestore ? 'Firestore' : 'LocalStorage'}...`);
+        
+        if (this.useFirestore && this.firestoreAvailable) {
+            try {
+                await this.loadFromFirestore();
+            } catch (error) {
+                console.error('❌ Failed to load from Firestore, falling back to LocalStorage:', error);
+                this.useFirestore = false;
+                this.loadFromLocalStorage();
+            }
+        } else {
+            this.loadFromLocalStorage();
+        }
+        
         console.log(`📥 Loaded ${this.notes.length} notes`);
         this.renderNotes();
+    }
+    
+    async loadFromFirestore() {
+        try {
+            const snapshot = await window.firebaseDB.collection('notes').get();
+            this.notes = [];
+            
+            snapshot.forEach(doc => {
+                const note = doc.data();
+                note.id = doc.id; // Add Firestore document ID
+                this.notes.push(note);
+            });
+            
+            // Sort by updatedAt
+            this.notes.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+            
+            // Update LocalStorage backup
+            localStorage.setItem('dibesh_notes_backup', JSON.stringify(this.notes));
+        } catch (error) {
+            throw new Error(`Firestore load failed: ${error.message}`);
+        }
+    }
+    
+    loadFromLocalStorage() {
+        this.notes = JSON.parse(localStorage.getItem('dibesh_notes')) || [];
+        
+        // Sort by updatedAt
+        this.notes.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+    }
+    
+    async syncLocalToFirestore() {
+        try {
+            const localNotes = JSON.parse(localStorage.getItem('dibesh_notes')) || [];
+            
+            if (localNotes.length === 0) return;
+            
+            console.log('🔄 Syncing LocalStorage notes to Firestore...');
+            let syncCount = 0;
+            
+            for (const localNote of localNotes) {
+                // Check if note exists in Firestore
+                const docRef = window.firebaseDB.collection('notes').doc(localNote.id);
+                const doc = await docRef.get();
+                
+                if (!doc.exists) {
+                    // Note doesn't exist in Firestore, upload it
+                    await docRef.set({
+                        ...localNote,
+                        syncedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    syncCount++;
+                }
+            }
+            
+            if (syncCount > 0) {
+                console.log(`✅ Synced ${syncCount} notes to Firestore`);
+            }
+        } catch (error) {
+            console.error('❌ Failed to sync to Firestore:', error);
+        }
     }
     
     setupEventListeners() {
@@ -209,7 +325,7 @@ class SimpleNotesApp {
         return Date.now().toString(36) + Math.random().toString(36).substr(2);
     }
     
-    createNewNote() {
+    async createNewNote() {
         console.log('📝 Creating new note');
         const newNote = {
             id: this.generateId(),
@@ -218,9 +334,11 @@ class SimpleNotesApp {
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString()
         };
-
+        
+        // Save to both storages
+        await this.saveNoteToAllStorages(newNote);
+        
         this.notes.unshift(newNote);
-        this.saveToStorage();
         this.renderNotes();
         this.selectNote(newNote.id);
         
@@ -255,7 +373,7 @@ class SimpleNotesApp {
         setTimeout(() => this.setupImageResizing(), 100);
     }
     
-    saveNote() {
+    async saveNote() {
         if (!this.currentNoteId || this.isSaving) return;
         
         console.log('💾 Saving note:', this.currentNoteId);
@@ -267,24 +385,47 @@ class SimpleNotesApp {
         const title = this.noteTitle.value.trim() || 'Untitled Note';
         const content = this.noteEditor.innerHTML;
         
-        this.notes[noteIndex] = {
+        const updatedNote = {
             ...this.notes[noteIndex],
             title: title,
             content: content,
             updatedAt: new Date().toISOString()
         };
         
-        this.saveToStorage();
+        this.notes[noteIndex] = updatedNote;
+        
+        // Save to both storages
+        await this.saveNoteToAllStorages(updatedNote);
+        
         this.renderNotes();
         
         this.autoSaveIndicator.textContent = '✓ Saved';
         this.autoSaveIndicator.style.color = '#10b981';
         
         setTimeout(() => {
-            this.autoSaveIndicator.textContent = 'Auto-save enabled';
+            this.autoSaveIndicator.textContent = `Auto-save enabled (${this.useFirestore ? 'Firestore' : 'Local'})`;
             this.autoSaveIndicator.style.color = '';
             this.isSaving = false;
         }, 1500);
+    }
+    
+    async saveNoteToAllStorages(note) {
+        // Always save to LocalStorage
+        this.saveToLocalStorage();
+        
+        // Save to Firestore if available
+        if (this.useFirestore && this.firestoreAvailable) {
+            try {
+                await window.firebaseDB.collection('notes').doc(note.id).set({
+                    ...note,
+                    syncedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+            } catch (error) {
+                console.error('❌ Failed to save to Firestore:', error);
+                this.useFirestore = false;
+                this.storageInfo.textContent = 'Storage: Local (Firestore failed)';
+            }
+        }
     }
     
     autoSave() {
@@ -299,16 +440,28 @@ class SimpleNotesApp {
         }, this.AUTO_SAVE_DELAY);
     }
     
-    deleteNote() {
+    async deleteNote() {
         if (!this.currentNoteId) return;
         
         if (confirm('Are you sure you want to delete this note?')) {
-            this.notes = this.notes.filter(n => n.id !== this.currentNoteId);
-            this.saveToStorage();
+            const noteId = this.currentNoteId;
+            
+            // Delete from Firestore
+            if (this.useFirestore && this.firestoreAvailable) {
+                try {
+                    await window.firebaseDB.collection('notes').doc(noteId).delete();
+                } catch (error) {
+                    console.error('❌ Failed to delete from Firestore:', error);
+                }
+            }
+            
+            // Delete from LocalStorage
+            this.notes = this.notes.filter(n => n.id !== noteId);
+            this.saveToLocalStorage();
             this.renderNotes();
             
             if (this.notes.length === 0) {
-                this.createNewNote();
+                await this.createNewNote();
             } else {
                 this.selectNote(this.notes[0].id);
             }
@@ -325,7 +478,8 @@ class SimpleNotesApp {
         this.notes[noteIndex].title = title;
         this.notes[noteIndex].updatedAt = new Date().toISOString();
         
-        this.saveToStorage();
+        // Save to both storages
+        this.saveNoteToAllStorages(this.notes[noteIndex]);
         this.renderNotes();
     }
     
@@ -333,6 +487,11 @@ class SimpleNotesApp {
         const text = this.noteEditor.innerText || '';
         const length = text.length;
         this.charCount.textContent = `${length} characters`;
+    }
+    
+    saveToLocalStorage() {
+        localStorage.setItem('dibesh_notes', JSON.stringify(this.notes));
+        this.updateStorageInfo();
     }
     
     formatDate(dateString) {
@@ -374,6 +533,7 @@ class SimpleNotesApp {
                     <div class="note-item-title">${note.title || 'Untitled Note'}</div>
                     <div class="note-item-preview">${this.stripHtml(note.content).substring(0, 100)}</div>
                     <div class="note-item-date">${this.formatDate(note.updatedAt)}</div>
+                    ${this.useFirestore ? '<div class="firestore-badge" title="Synced to Cloud"><i class="fas fa-cloud"></i></div>' : ''}
                 </div>
             `).join('');
             
@@ -549,7 +709,8 @@ class SimpleNotesApp {
         const exportData = {
             notes: this.notes,
             exportedAt: new Date().toISOString(),
-            version: '1.0'
+            version: '1.0',
+            storageType: this.useFirestore ? 'firestore' : 'localstorage'
         };
         
         this.downloadFile(
@@ -705,6 +866,8 @@ class SimpleNotesApp {
                 const note = this.createNoteFromFile(file, content);
                 
                 if (note) {
+                    // Save to both storages
+                    await this.saveNoteToAllStorages(note);
                     this.notes.unshift(note);
                     importedCount++;
                 }
@@ -714,7 +877,7 @@ class SimpleNotesApp {
         }
         
         if (importedCount > 0) {
-            this.saveToStorage();
+            this.saveToLocalStorage();
             this.renderNotes();
             alert(`Successfully imported ${importedCount} note${importedCount !== 1 ? 's' : ''}`);
         }
@@ -785,7 +948,8 @@ class SimpleNotesApp {
                 const backupData = {
                     notes: this.notes,
                     exportedAt: new Date().toISOString(),
-                    version: '1.0'
+                    version: '1.0',
+                    storageType: this.useFirestore ? 'firestore' : 'localstorage'
                 };
                 
                 const content = JSON.stringify(backupData, null, 2);
@@ -813,7 +977,8 @@ class SimpleNotesApp {
         const backupData = {
             notes: this.notes,
             exportedAt: new Date().toISOString(),
-            version: '1.0'
+            version: '1.0',
+            storageType: this.useFirestore ? 'firestore' : 'localstorage'
         };
         
         const content = JSON.stringify(backupData, null, 2);
@@ -824,15 +989,12 @@ class SimpleNotesApp {
         alert(`📥 Backup downloaded as: ${filename}\n\n💡 Save it to your preferred location.`);
     }
     
-    saveToStorage() {
-        localStorage.setItem('dibesh_notes', JSON.stringify(this.notes));
-        this.updateStorageInfo();
-    }
-    
     updateStorageInfo() {
         const notesSize = JSON.stringify(this.notes).length;
         const totalSize = (notesSize / 1024).toFixed(2);
-        this.storageInfo.textContent = `Storage: ${totalSize} KB`;
+        const storageType = this.useFirestore ? 'Firestore + Local' : 'LocalStorage';
+        this.storageInfo.textContent = `Storage: ${storageType} (${totalSize} KB)`;
+        this.autoSaveIndicator.textContent = `Auto-save (${storageType})`;
     }
     
     logout() {
@@ -847,11 +1009,11 @@ class SimpleNotesApp {
 
 // ===== INITIALIZE APP =====
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('📄 DOM fully loaded, initializing NotesApp...');
+    console.log('📄 DOM fully loaded, initializing HybridNotesApp...');
     try {
-        new SimpleNotesApp();
+        new HybridNotesApp();
     } catch (error) {
-        console.error('❌ Failed to initialize NotesApp:', error);
+        console.error('❌ Failed to initialize HybridNotesApp:', error);
         alert('Error loading notes application. Please refresh the page.');
     }
 });
