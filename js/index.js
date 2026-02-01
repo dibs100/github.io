@@ -277,7 +277,7 @@ function initializeZabbixButton() {
         zabbixBtn.addEventListener('click', () => {
             console.log("🌐 Redirecting to Zabbix website...");
             // Open in a new tab
-            window.open('https://www.zabbix.com', '_blank');
+            window.open('https://zabbix-web.5fpbvwltlg7opaq3.myfritz.net', '_blank');
         });
     } else {
         console.error("❌ Zabbix button not found!");
