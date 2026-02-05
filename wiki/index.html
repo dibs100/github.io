@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiki | Dibesh Shrestha - IT Documentation</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Markdown Editor & Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    
+    <!-- Wiki Styles -->
+    <link rel="stylesheet" href="../css/wiki.css">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+</head>
+<body>
+    <!-- Wiki App Container -->
+    <div id="wikiApp" class="wiki-app">
+        
+        <!-- Sidebar -->
+        <aside class="wiki-sidebar" id="wikiSidebar">
+            <div class="sidebar-header">
+                <a href="../" class="sidebar-logo">
+                    <i class="fas fa-satellite-dish"></i>
+                    <span>Dibesh Wiki</span>
+                </a>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-search">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="wikiSearch" placeholder="Search documentation...">
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav" id="sidebarNav">
+                <!-- Dynamic Navigation -->
+                <div class="nav-loading">
+                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-sun"></i>
+                    <span>Light Mode</span>
+                </button>
+                <a href="../" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Site
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="wiki-main">
+            <!-- Top Bar -->
+            <header class="wiki-header">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="header-breadcrumbs" id="breadcrumbs">
+                    <span class="bc-root"><i class="fas fa-home"></i></span>
+                    <span class="bc-separator">/</span>
+                    <span class="bc-current">Welcome</span>
+                </div>
+                
+                <div class="header-actions">
+                    <button class="action-btn" id="newPageBtn" title="New Page">
+                        <i class="fas fa-plus"></i>
+                        <span>New</span>
+                    </button>
+                    <button class="action-btn" id="editPageBtn" title="Edit Page">
+                        <i class="fas fa-edit"></i>
+                        <span>Edit</span>
+                    </button>
+                    <button class="action-btn danger" id="deletePageBtn" title="Delete Page" style="display: none;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <button class="action-btn admin-only" id="adminBtn" title="Admin Login">
+                        <i class="fas fa-lock"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="wiki-content-wrapper">
+                <!-- View Mode -->
+                <article class="wiki-content" id="wikiContent">
+                    <div class="content-loading">
+                        <div class="spinner"></div>
+                        <p>Loading documentation...</p>
+                    </div>
+                </article>
+
+                <!-- Edit Mode -->
+                <div class="wiki-editor" id="wikiEditor" style="display: none;">
+                    <div class="editor-header">
+                        <input type="text" id="pageTitleInput" placeholder="Page Title" class="page-title-input">
+                        <div class="editor-path">
+                            <label>Path:</label>
+                            <input type="text" id="pagePathInput" placeholder="category/subpage" class="page-path-input">
+                        </div>
+                    </div>
+                    <textarea id="markdownEditor"></textarea>
+                    <div class="editor-actions">
+                        <button class="btn btn-secondary" id="cancelEdit">Cancel</button>
+                        <button class="btn btn-primary" id="savePage">
+                            <i class="fas fa-save"></i> Save Page
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Mobile Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    </div>
+
+    <!-- New Page Modal -->
+    <div class="modal" id="newPageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Page</h3>
+                <button class="modal-close" id="closeNewPageModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Page Title</label>
+                    <input type="text" id="newPageTitle" placeholder="Enter page title">
+                </div>
+                <div class="form-group">
+                    <label>Category/Path (optional)</label>
+                    <input type="text" id="newPageCategory" placeholder="e.g., zabbix/installation">
+                    <small>Use slashes for subfolders (e.g., monitoring/zabbix/setup)</small>
+                </div>
+                <div class="form-group">
+                    <label>Template</label>
+                    <select id="pageTemplate">
+                        <option value="blank">Blank Page</option>
+                        <option value="guide">Step-by-Step Guide</option>
+                        <option value="reference">Quick Reference</option>
+                        <option value="troubleshooting">Troubleshooting</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelNewPage">Cancel</button>
+                <button class="btn btn-primary" id="createNewPage">Create Page</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h3>Delete Page</h3>
+                <button class="modal-close" id="closeDeleteModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete <strong id="deletePageName">this page</strong>?</p>
+                <p class="text-muted">This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelDelete">Cancel</button>
+                <button class="btn btn-danger" id="confirmDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h3>Admin Access</h3>
+                <button class="modal-close" id="closeAdminModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="adminPassword" placeholder="Enter admin password">
+                    <small class="error-msg" id="adminError" style="display: none; color: #ef4444;">Invalid password</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelAdmin">Cancel</button>
+                <button class="btn btn-primary" id="loginAdmin">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+    <script src="../js/wiki.js"></script>
+</body>
+</html>
