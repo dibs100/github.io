@@ -311,3 +311,238 @@ function renderNavigation() {
         if (!tree[folder]) tree[folder] = [];
         tree[folder].push(page);
     });
+    
+    let html = '';
+    
+    // Sort folders
+    const folders = Object.keys(tree).sort();
+    
+    folders.forEach(folder => {
+        const isActive = state.currentPage && state.currentPage.startsWith(folder + '/');
+        html += `
+            <div class="nav-section">
+                <div class="nav-title">${formatTitle(folder)}</div>
+                <ul class="nav-list">
+                    ${tree[folder].map(page => `
+                        <li class="nav-item ${page.path === state.currentPage ? 'active' : ''}" 
+                            data-path="${page.path}" onclick="navigateToPage('${page.path}')">
+                            <i class="fas fa-file-alt"></i>
+                            <span>${page.title}</span>
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+        `;
+    });
+    
+    nav.innerHTML = html;
+}
+
+function navigateToPage(path) {
+    const page = getPage(path);
+    if (!page) {
+        render404();
+        return;
+    }
+    
+    state.currentPage = path;
+    window.location.hash = path;
+    
+    // Update UI
+    document.querySelectorAll('.nav-item').forEach(el => {
+        el.classList.toggle('active', el.dataset.path === path);
+    });
+    
+    document.getElementById('pageTitle').textContent = page.title;
+    document.getElementById('pageDate').textContent = 'Updated: ' + new Date(page.updated).toLocaleDateString();
+    document.getElementById('pageReadTime').textContent = Math.ceil(page.content.split(' ').length / 200) + ' min read';
+    
+    // Render markdown
+    document.getElementById('contentBody').innerHTML = marked.parse(page.content);
+    
+    // Render tags
+    const tagsContainer = document.getElementById('pageTags');
+    tagsContainer.innerHTML = page.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+    
+    // Highlight code
+    document.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightElement(block);
+    });
+    
+    // Exit edit mode
+    if (state.isEditing) {
+        toggleEditMode(false);
+    }
+}
+
+function render404() {
+    document.getElementById('pageTitle').textContent = 'Page Not Found';
+    document.getElementById('contentBody').innerHTML = `
+        <p>The page "${state.currentPage}" does not exist.</p>
+        <button class="btn btn-primary" onclick="createPageFromCurrent()">
+            <i class="fas fa-plus"></i> Create this page
+        </button>
+    `;
+    document.getElementById('pageTags').innerHTML = '';
+}
+
+// ===== EDITING =====
+function toggleEditMode(enable = !state.isEditing) {
+    state.isEditing = enable;
+    
+    const viewEl = document.getElementById('wikiContent');
+    const editEl = document.getElementById('wikiEditor');
+    const editBtn = document.getElementById('editToggleBtn');
+    
+    if (enable) {
+        viewEl.style.display = 'none';
+        editEl.style.display = 'flex';
+        editBtn.innerHTML = '<i class="fas fa-eye"></i> View';
+        editBtn.classList.add('active');
+        
+        const page = getPage(state.currentPage) || {
+            path: state.currentPage,
+            title: 'New Page',
+            content: ''
+        };
+        
+        document.getElementById('editTitle').value = page.title;
+        document.getElementById('editPath').value = page.path;
+        
+        if (!state.editor) {
+            state.editor = new EasyMDE({
+                element: document.getElementById('markdownEditor'),
+                spellChecker: false,
+                status: ['lines', 'words'],
+                toolbar: [
+                    'bold', 'italic', 'heading', '|',
+                    'quote', 'unordered-list', 'ordered-list', '|',
+                    'link', 'image', 'code', 'table', '|',
+                    'preview', 'side-by-side', 'fullscreen', '|',
+                    'guide'
+                ]
+            });
+        }
+        
+        state.editor.value(page.content);
+        setTimeout(() => state.editor.codemirror.refresh(), 100);
+    } else {
+        viewEl.style.display = 'block';
+        editEl.style.display = 'none';
+        editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit';
+        editBtn.classList.remove('active');
+    }
+}
+
+function saveCurrentPage() {
+    const title = document.getElementById('editTitle').value;
+    const path = document.getElementById('editPath').value;
+    const content = state.editor.value();
+    
+    if (!title || !path) {
+        showToast('Title and path are required', 'error');
+        return;
+    }
+    
+    const page = savePage(path, title, content, ['Documentation']);
+    navigateToPage(path);
+    showToast('Page saved successfully');
+}
+
+function deleteCurrentPage() {
+    deletePage(state.currentPage);
+}
+
+function createNewPage() {
+    const title = document.getElementById('newPageTitle').value;
+    const path = document.getElementById('newPagePath').value || title.toLowerCase().replace(/\s+/g, '-');
+    
+    if (!title) {
+        showToast('Please enter a title', 'error');
+        return;
+    }
+    
+    const fullPath = path.startsWith('/') ? path.slice(1) : path;
+    
+    savePage(fullPath, title, `# ${title}\n\nStart writing...`, ['New']);
+    closeModal('newPageModal');
+    navigateToPage(fullPath);
+    toggleEditMode(true);
+    
+    document.getElementById('newPageTitle').value = '';
+    document.getElementById('newPagePath').value = '';
+}
+
+function createPageFromCurrent() {
+    const path = state.currentPage;
+    const title = path.split('/').pop().replace(/-/g, ' ');
+    savePage(path, title, `# ${title}\n\n`, []);
+    navigateToPage(path);
+    toggleEditMode(true);
+}
+
+// ===== SEARCH =====
+function searchPages(query) {
+    if (!query) {
+        renderNavigation();
+        return;
+    }
+    
+    const pages = Array.from(state.pages.values());
+    const results = pages.filter(p => 
+        p.title.toLowerCase().includes(query.toLowerCase()) ||
+        p.content.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    const nav = document.getElementById('sidebarNav');
+    nav.innerHTML = `
+        <div class="nav-section">
+            <div class="nav-title">Search Results (${results.length})</div>
+            <ul class="nav-list">
+                ${results.map(page => `
+                    <li class="nav-item" data-path="${page.path}" onclick="navigateToPage('${page.path}')">
+                        <i class="fas fa-search"></i>
+                        <span>${page.title}</span>
+                    </li>
+                `).join('')}
+            </ul>
+        </div>
+    `;
+}
+
+// ===== UTILITIES =====
+function formatTitle(str) {
+    return str.split('-').map(word => 
+        word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+}
+
+function openModal(id) {
+    document.getElementById(id).classList.add('active');
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+}
+
+function closeAllModals() {
+    document.querySelectorAll('.modal.active').forEach(modal => {
+        modal.classList.remove('active');
+    });
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    const msgEl = document.getElementById('toastMessage');
+    
+    msgEl.textContent = message;
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
+
+// Expose for onclick handlers
+window.navigateToPage = navigateToPage;
+window.createPageFromCurrent = createPageFromCurrent;
