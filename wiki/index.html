@@ -14,31 +14,36 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
 </head>
 <body>
-    <!-- Login Overlay -->
-    <div id="loginOverlay" class="login-overlay">
-        <div class="login-box">
-            <div class="login-logo">
-                <i class="fas fa-satellite-dish"></i>
-                <span>Dibesh Shrestha</span>
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h3>Admin Login</h3>
+                <button class="modal-close" id="closeLoginModal">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            <h2>Wiki Access</h2>
-            <p>Enter admin password to edit documentation</p>
-            <div class="login-error" id="loginError">
-                <i class="fas fa-exclamation-circle"></i>
-                <span>Invalid password</span>
+            <div class="modal-body">
+                <div class="login-error" id="loginError">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Invalid password</span>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="passwordInput" placeholder="Enter admin password">
+                </div>
             </div>
-            <input type="password" id="passwordInput" placeholder="Password" autocomplete="current-password">
-            <button id="loginBtn" class="btn btn-primary">
-                <i class="fas fa-lock"></i> Login
-            </button>
-            <a href="../" class="back-link">
-                <i class="fas fa-arrow-left"></i> Back to Website
-            </a>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelLogin">Cancel</button>
+                <button class="btn btn-primary" id="submitLogin">
+                    <i class="fas fa-lock"></i> Login
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- Wiki App -->
-    <div id="wikiApp" class="wiki-app" style="display: none;">
+    <div id="wikiApp" class="wiki-app">
         <!-- Header -->
         <header class="wiki-header">
             <div class="header-left">
@@ -58,17 +63,23 @@
             </div>
             
             <div class="header-right">
-                <button id="newPageBtn" class="btn btn-primary btn-sm">
+                <button id="newPageBtn" class="btn btn-primary btn-sm" style="display: none;">
                     <i class="fas fa-plus"></i> New Page
                 </button>
-                <button id="editToggleBtn" class="btn btn-secondary btn-sm">
+                <button id="editToggleBtn" class="btn btn-secondary btn-sm" style="display: none;">
                     <i class="fas fa-edit"></i> Edit
                 </button>
-                <div class="user-menu">
+                <button id="loginBtn" class="btn btn-secondary btn-sm">
+                    <i class="fas fa-lock"></i> Login
+                </button>
+                <div class="user-menu" id="userMenu" style="display: none;">
                     <button id="userBtn" class="btn btn-icon">
                         <i class="fas fa-user"></i>
                     </button>
                     <div class="dropdown-menu" id="userDropdown">
+                        <a href="#" id="changePasswordLink">
+                            <i class="fas fa-key"></i> Change Password
+                        </a>
                         <a href="#" id="logoutBtn">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
@@ -154,6 +165,40 @@
         </div>
     </div>
 
+    <!-- Change Password Modal -->
+    <div class="modal" id="changePasswordModal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h3>Change Password</h3>
+                <button class="modal-close" id="closePasswordModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Current Password</label>
+                    <input type="password" id="currentPassword" placeholder="Current password">
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" id="newPassword" placeholder="New password">
+                </div>
+                <div class="form-group">
+                    <label>Confirm New Password</label>
+                    <input type="password" id="confirmNewPassword" placeholder="Confirm new password">
+                </div>
+                <div class="password-error" id="passwordError" style="display: none; color: #ea4335; font-size: 13px; margin-top: 8px;"></div>
+                <div class="password-success" id="passwordSuccess" style="display: none; color: #34a853; font-size: 13px; margin-top: 8px;">
+                    <i class="fas fa-check-circle"></i> Password changed successfully!
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelPassword">Cancel</button>
+                <button class="btn btn-primary" id="savePassword">Save Password</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle"></i>
@@ -161,6 +206,10 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="../js/firebase-config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
