@@ -1,130 +1,130 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wiki | Dibesh Shrestha - IT Documentation</title>
-    
-    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Markdown Editor & Syntax Highlighting -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
-    
-    <!-- Wiki Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
     <link rel="stylesheet" href="../css/wiki.css">
-    
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
 </head>
 <body>
-    <!-- Wiki App Container -->
-    <div id="wikiApp" class="wiki-app">
-        
-        <!-- Sidebar -->
-        <aside class="wiki-sidebar" id="wikiSidebar">
-            <div class="sidebar-header">
-                <a href="../" class="sidebar-logo">
+    <!-- Login Overlay -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-box">
+            <div class="login-logo">
+                <i class="fas fa-satellite-dish"></i>
+                <span>Dibesh Shrestha</span>
+            </div>
+            <h2>Wiki Access</h2>
+            <p>Enter admin password to edit documentation</p>
+            <div class="login-error" id="loginError">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>Invalid password</span>
+            </div>
+            <input type="password" id="passwordInput" placeholder="Password" autocomplete="current-password">
+            <button id="loginBtn" class="btn btn-primary">
+                <i class="fas fa-lock"></i> Login
+            </button>
+            <a href="../" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Website
+            </a>
+        </div>
+    </div>
+
+    <!-- Wiki App -->
+    <div id="wikiApp" class="wiki-app" style="display: none;">
+        <!-- Header -->
+        <header class="wiki-header">
+            <div class="header-left">
+                <a href="../" class="logo">
                     <i class="fas fa-satellite-dish"></i>
-                    <span>Dibesh Wiki</span>
+                    <span>Dibesh Shrestha</span>
                 </a>
-                <button class="sidebar-close" id="sidebarClose">
-                    <i class="fas fa-times"></i>
-                </button>
+                <span class="header-divider">|</span>
+                <span class="wiki-title">Documentation Wiki</span>
             </div>
             
-            <div class="sidebar-search">
+            <div class="header-center">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="wikiSearch" placeholder="Search documentation...">
+                    <input type="text" id="searchInput" placeholder="Search documentation...">
                 </div>
             </div>
             
-            <nav class="sidebar-nav" id="sidebarNav">
-                <!-- Dynamic Navigation -->
-                <div class="nav-loading">
-                    <i class="fas fa-spinner fa-spin"></i> Loading...
-                </div>
-            </nav>
-            
-            <div class="sidebar-footer">
-                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
-                    <i class="fas fa-sun"></i>
-                    <span>Light Mode</span>
+            <div class="header-right">
+                <button id="newPageBtn" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i> New Page
                 </button>
-                <a href="../" class="back-link">
-                    <i class="fas fa-arrow-left"></i> Back to Site
-                </a>
+                <button id="editToggleBtn" class="btn btn-secondary btn-sm">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+                <div class="user-menu">
+                    <button id="userBtn" class="btn btn-icon">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="dropdown-menu" id="userDropdown">
+                        <a href="#" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
             </div>
-        </aside>
+        </header>
 
-        <!-- Main Content -->
-        <main class="wiki-main">
-            <!-- Top Bar -->
-            <header class="wiki-header">
-                <button class="sidebar-toggle" id="sidebarToggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-                
-                <div class="header-breadcrumbs" id="breadcrumbs">
-                    <span class="bc-root"><i class="fas fa-home"></i></span>
-                    <span class="bc-separator">/</span>
-                    <span class="bc-current">Welcome</span>
-                </div>
-                
-                <div class="header-actions">
-                    <button class="action-btn" id="newPageBtn" title="New Page">
-                        <i class="fas fa-plus"></i>
-                        <span>New</span>
-                    </button>
-                    <button class="action-btn" id="editPageBtn" title="Edit Page">
-                        <i class="fas fa-edit"></i>
-                        <span>Edit</span>
-                    </button>
-                    <button class="action-btn danger" id="deletePageBtn" title="Delete Page" style="display: none;">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                    <button class="action-btn admin-only" id="adminBtn" title="Admin Login">
-                        <i class="fas fa-lock"></i>
-                    </button>
-                </div>
-            </header>
+        <!-- Main Layout -->
+        <div class="wiki-layout">
+            <!-- Sidebar -->
+            <aside class="wiki-sidebar" id="sidebar">
+                <nav class="sidebar-nav" id="sidebarNav">
+                    <!-- Dynamic navigation -->
+                </nav>
+            </aside>
 
-            <!-- Content Area -->
-            <div class="wiki-content-wrapper">
+            <!-- Content -->
+            <main class="wiki-main">
                 <!-- View Mode -->
                 <article class="wiki-content" id="wikiContent">
-                    <div class="content-loading">
-                        <div class="spinner"></div>
-                        <p>Loading documentation...</p>
+                    <div class="content-header">
+                        <h1 id="pageTitle">Welcome</h1>
+                        <div class="page-meta">
+                            <span id="pageDate">Last updated: Today</span>
+                            <span class="meta-divider">•</span>
+                            <span id="pageReadTime">2 min read</span>
+                        </div>
+                    </div>
+                    <div class="content-body" id="contentBody">
+                        <!-- Markdown content rendered here -->
+                    </div>
+                    <div class="page-tags" id="pageTags">
+                        <!-- Tags -->
                     </div>
                 </article>
 
                 <!-- Edit Mode -->
                 <div class="wiki-editor" id="wikiEditor" style="display: none;">
                     <div class="editor-header">
-                        <input type="text" id="pageTitleInput" placeholder="Page Title" class="page-title-input">
-                        <div class="editor-path">
-                            <label>Path:</label>
-                            <input type="text" id="pagePathInput" placeholder="category/subpage" class="page-path-input">
-                        </div>
+                        <input type="text" id="editTitle" placeholder="Page Title" class="title-input">
+                        <input type="text" id="editPath" placeholder="Page path (e.g., zabbix/install)" class="path-input">
                     </div>
                     <textarea id="markdownEditor"></textarea>
                     <div class="editor-actions">
-                        <button class="btn btn-secondary" id="cancelEdit">Cancel</button>
-                        <button class="btn btn-primary" id="savePage">
+                        <button id="cancelEdit" class="btn btn-secondary">Cancel</button>
+                        <button id="savePage" class="btn btn-primary">
                             <i class="fas fa-save"></i> Save Page
+                        </button>
+                        <button id="deletePage" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Delete
                         </button>
                     </div>
                 </div>
-            </div>
-        </main>
-
-        <!-- Mobile Overlay -->
-        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+            </main>
+        </div>
     </div>
 
     <!-- New Page Modal -->
@@ -132,82 +132,33 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Create New Page</h3>
-                <button class="modal-close" id="closeNewPageModal">
+                <button class="modal-close" id="closeNewModal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <label>Page Title</label>
-                    <input type="text" id="newPageTitle" placeholder="Enter page title">
+                    <input type="text" id="newPageTitle" placeholder="Enter title">
                 </div>
                 <div class="form-group">
-                    <label>Category/Path (optional)</label>
-                    <input type="text" id="newPageCategory" placeholder="e.g., zabbix/installation">
-                    <small>Use slashes for subfolders (e.g., monitoring/zabbix/setup)</small>
-                </div>
-                <div class="form-group">
-                    <label>Template</label>
-                    <select id="pageTemplate">
-                        <option value="blank">Blank Page</option>
-                        <option value="guide">Step-by-Step Guide</option>
-                        <option value="reference">Quick Reference</option>
-                        <option value="troubleshooting">Troubleshooting</option>
-                    </select>
+                    <label>Path (optional)</label>
+                    <input type="text" id="newPagePath" placeholder="category/subpage">
+                    <small>Use slashes for subfolders</small>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" id="cancelNewPage">Cancel</button>
-                <button class="btn btn-primary" id="createNewPage">Create Page</button>
+                <button class="btn btn-secondary" id="cancelNew">Cancel</button>
+                <button class="btn btn-primary" id="createPage">Create</button>
             </div>
         </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
-    <div class="modal" id="deleteModal">
-        <div class="modal-content modal-small">
-            <div class="modal-header">
-                <h3>Delete Page</h3>
-                <button class="modal-close" id="closeDeleteModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to delete <strong id="deletePageName">this page</strong>?</p>
-                <p class="text-muted">This action cannot be undone.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="cancelDelete">Cancel</button>
-                <button class="btn btn-danger" id="confirmDelete">Delete</button>
-            </div>
-        </div>
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Saved successfully</span>
     </div>
-
-    <!-- Admin Login Modal -->
-    <div class="modal" id="adminModal">
-        <div class="modal-content modal-small">
-            <div class="modal-header">
-                <h3>Admin Access</h3>
-                <button class="modal-close" id="closeAdminModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="adminPassword" placeholder="Enter admin password">
-                    <small class="error-msg" id="adminError" style="display: none; color: #ef4444;">Invalid password</small>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="cancelAdmin">Cancel</button>
-                <button class="btn btn-primary" id="loginAdmin">Login</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Notifications -->
-    <div class="toast-container" id="toastContainer"></div>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.js"></script>
