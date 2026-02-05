@@ -10,33 +10,28 @@ const firebaseConfig = {
 };
 
 // ===== FIREBASE INITIALIZATION =====
-console.log("🚀 Initializing Firebase...");
-
-// Wait for page to load
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         if (typeof firebase !== 'undefined') {
             try {
                 // Check if already initialized
                 if (!firebase.apps.length) {
-                    const app = firebase.initializeApp(firebaseConfig);
-                    console.log("✅ Firebase initialized successfully!");
+                    firebase.initializeApp(firebaseConfig);
+                    console.log("Firebase initialized successfully!");
                     
                     // Initialize services
                     window.firebaseAuth = firebase.auth();
                     window.firebaseDB = firebase.firestore();
-                    
-                    console.log("✅ Firebase services ready!");
                 } else {
-                    console.log("✅ Firebase already initialized");
+                    console.log("Firebase already initialized");
                     window.firebaseAuth = firebase.auth();
                     window.firebaseDB = firebase.firestore();
                 }
             } catch (error) {
-                console.error("❌ Firebase initialization failed:", error);
+                console.error("Firebase initialization failed:", error);
             }
         } else {
-            console.error("❌ Firebase SDK not loaded!");
+            console.log("Firebase SDK not loaded - using local storage mode");
         }
     }, 100);
 });
