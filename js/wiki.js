@@ -1,7 +1,11 @@
-// ===== WIKI CONFIGURATION =====
+/**
+ * Dibesh Shrestha Wiki - Public Documentation with Admin Editing
+ * Location: js/wiki.js
+ */
+
+// ===== CONFIGURATION =====
 const CONFIG = {
     storageKey: 'wiki_pages',
-    authKey: 'isAuthenticated',
     passwordKey: 'admin_password',
     defaultPassword: 'admin123',
     defaultPage: 'welcome'
@@ -13,74 +17,130 @@ const state = {
     isEditing: false,
     isAuthenticated: false,
     pages: new Map(),
-    editor: null,
-    searchQuery: ''
+    editor: null
 };
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
-    checkAuth();
-    initEventListeners();
-    loadPages();
-    
-    if (state.isAuthenticated) {
-        showWiki();
-        const path = window.location.hash.slice(1) || CONFIG.defaultPage;
-        navigateToPage(path);
-    }
-});
-
-// ===== AUTHENTICATION =====
-function checkAuth() {
-    // Set default password if none exists
+    // Set default password if not exists
     if (!localStorage.getItem(CONFIG.passwordKey)) {
         localStorage.setItem(CONFIG.passwordKey, CONFIG.defaultPassword);
     }
     
-    state.isAuthenticated = localStorage.getItem(CONFIG.authKey) === 'true';
-}
+    initEventListeners();
+    loadPages();
+    
+    // Route to page from URL
+    const path = window.location.hash.slice(1) || CONFIG.defaultPage;
+    navigateToPage(path);
+});
 
+// ===== AUTHENTICATION (Same as original site) =====
 function login(password) {
     const storedPassword = localStorage.getItem(CONFIG.passwordKey);
     
     if (password === storedPassword) {
-        localStorage.setItem(CONFIG.authKey, 'true');
         state.isAuthenticated = true;
-        showWiki();
-        loadPages();
-        navigateToPage(CONFIG.defaultPage);
-        showToast('Welcome back!');
+        updateAuthUI();
+        closeModal('loginModal');
+        showToast('Login successful');
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('loginError').style.display = 'none';
         return true;
     }
     
-    document.getElementById('loginError').classList.add('show');
+    document.getElementById('loginError').style.display = 'flex';
     return false;
 }
 
 function logout() {
-    localStorage.removeItem(CONFIG.authKey);
     state.isAuthenticated = false;
-    location.reload();
+    if (state.isEditing) {
+        toggleEditMode(false);
+    }
+    updateAuthUI();
+    showToast('Logged out');
 }
 
-function showWiki() {
-    document.getElementById('loginOverlay').style.display = 'none';
-    document.getElementById('wikiApp').style.display = 'flex';
+function changePassword(current, newPass, confirm) {
+    const storedPassword = localStorage.getItem(CONFIG.passwordKey);
+    const errorEl = document.getElementById('passwordError');
+    const successEl = document.getElementById('passwordSuccess');
+    
+    errorEl.style.display = 'none';
+    successEl.style.display = 'none';
+    
+    if (current !== storedPassword) {
+        errorEl.textContent = 'Current password is incorrect';
+        errorEl.style.display = 'block';
+        return false;
+    }
+    
+    if (newPass.length < 4) {
+        errorEl.textContent = 'Password must be at least 4 characters';
+        errorEl.style.display = 'block';
+        return false;
+    }
+    
+    if (newPass !== confirm) {
+        errorEl.textContent = 'New passwords do not match';
+        errorEl.style.display = 'block';
+        return false;
+    }
+    
+    localStorage.setItem(CONFIG.passwordKey, newPass);
+    successEl.style.display = 'block';
+    
+    setTimeout(() => {
+        closeModal('changePasswordModal');
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmNewPassword').value = '';
+        successEl.style.display = 'none';
+    }, 1500);
+    
+    return true;
+}
+
+function updateAuthUI() {
+    const loginBtn = document.getElementById('loginBtn');
+    const userMenu = document.getElementById('userMenu');
+    const newPageBtn = document.getElementById('newPageBtn');
+    const editToggleBtn = document.getElementById('editToggleBtn');
+    
+    if (state.isAuthenticated) {
+        loginBtn.style.display = 'none';
+        userMenu.style.display = 'block';
+        newPageBtn.style.display = 'inline-flex';
+        editToggleBtn.style.display = 'inline-flex';
+        document.body.classList.add('is-authenticated');
+    } else {
+        loginBtn.style.display = 'inline-flex';
+        userMenu.style.display = 'none';
+        newPageBtn.style.display = 'none';
+        editToggleBtn.style.display = 'none';
+        document.body.classList.remove('is-authenticated');
+    }
 }
 
 // ===== EVENT LISTENERS =====
 function initEventListeners() {
-    // Login
+    // Login modal
     document.getElementById('loginBtn').addEventListener('click', () => {
-        const password = document.getElementById('passwordInput').value;
-        login(password);
+        openModal('loginModal');
+        setTimeout(() => document.getElementById('passwordInput').focus(), 100);
+    });
+    
+    document.getElementById('submitLogin').addEventListener('click', () => {
+        login(document.getElementById('passwordInput').value);
     });
     
     document.getElementById('passwordInput').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            document.getElementById('loginBtn').click();
-        }
+        if (e.key === 'Enter') login(document.getElementById('passwordInput').value);
     });
+    
+    document.getElementById('cancelLogin').addEventListener('click', () => closeModal('loginModal'));
+    document.getElementById('closeLoginModal').addEventListener('click', () => closeModal('loginModal'));
     
     // Logout
     document.getElementById('logoutBtn').addEventListener('click', (e) => {
@@ -90,21 +150,58 @@ function initEventListeners() {
     
     // User menu toggle
     document.getElementById('userBtn').addEventListener('click', () => {
-        document.querySelector('.user-menu').classList.toggle('active');
+        document.getElementById('userMenu').classList.toggle('active');
     });
     
-    // Close user menu on outside click
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.user-menu')) {
-            document.querySelector('.user-menu').classList.remove('active');
+        if (!e.target.closest('#userMenu')) {
+            document.getElementById('userMenu').classList.remove('active');
         }
     });
     
+    // Change password
+    document.getElementById('changePasswordLink').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('userMenu').classList.remove('active');
+        openModal('changePasswordModal');
+    });
+    
+    document.getElementById('savePassword').addEventListener('click', () => {
+        changePassword(
+            document.getElementById('currentPassword').value,
+            document.getElementById('newPassword').value,
+            document.getElementById('confirmNewPassword').value
+        );
+    });
+    
+    document.getElementById('cancelPassword').addEventListener('click', () => {
+        closeModal('changePasswordModal');
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmNewPassword').value = '';
+        document.getElementById('passwordError').style.display = 'none';
+        document.getElementById('passwordSuccess').style.display = 'none';
+    });
+    
+    document.getElementById('closePasswordModal').addEventListener('click', () => {
+        closeModal('changePasswordModal');
+    });
+    
     // Edit toggle
-    document.getElementById('editToggleBtn').addEventListener('click', toggleEditMode);
+    document.getElementById('editToggleBtn').addEventListener('click', () => {
+        if (!state.isAuthenticated) {
+            openModal('loginModal');
+            return;
+        }
+        toggleEditMode();
+    });
     
     // New page
     document.getElementById('newPageBtn').addEventListener('click', () => {
+        if (!state.isAuthenticated) {
+            openModal('loginModal');
+            return;
+        }
         openModal('newPageModal');
     });
     
@@ -124,11 +221,13 @@ function initEventListeners() {
     
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
-        if (!state.isAuthenticated) return;
-        
         if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
             e.preventDefault();
-            toggleEditMode();
+            if (state.isAuthenticated) {
+                toggleEditMode();
+            } else {
+                openModal('loginModal');
+            }
         }
         
         if ((e.ctrlKey || e.metaKey) && e.key === 's' && state.isEditing) {
@@ -138,15 +237,14 @@ function initEventListeners() {
         
         if (e.key === 'Escape') {
             closeAllModals();
-            if (state.isEditing) {
-                toggleEditMode(false);
-            }
+            if (state.isEditing) toggleEditMode(false);
         }
     });
 }
 
 // ===== PAGE MANAGEMENT =====
 function loadPages() {
+    // Try to load from localStorage first, then fallback to defaults
     const stored = localStorage.getItem(CONFIG.storageKey);
     let pages = [];
     
@@ -185,8 +283,13 @@ Browse the sidebar to explore documentation topics:
 
 ## Contributing
 
-Login to create and edit pages. All changes are stored locally in your browser.`,
+Click "Login" in the top right to create and edit pages. All changes are stored locally in your browser.
+
+---
+
+*This documentation is maintained by Dibesh Shrestha, Enterprise Monitoring Expert.*`,
             tags: ['Welcome', 'Documentation'],
+            created: new Date().toISOString(),
             updated: new Date().toISOString()
         },
         {
@@ -222,7 +325,7 @@ dnf install zabbix-server-mysql zabbix-web-mysql zabbix-apache-conf zabbix-sql-s
 
 \`\`\`sql
 create database zabbix character set utf8mb4 collate utf8mb4_bin;
-create user zabbix@localhost identified by 'password';
+ncreate user zabbix@localhost identified by 'password';
 grant all privileges on zabbix.* to zabbix@localhost;
 \`\`\`
 
@@ -253,6 +356,74 @@ Access the web interface at \`http://your-server/zabbix\` and complete the setup
 
 Check logs at \`/var/log/zabbix/zabbix_server.log\` for any issues.`,
             tags: ['Zabbix', 'Monitoring', 'Installation'],
+            created: new Date().toISOString(),
+            updated: new Date().toISOString()
+        },
+        {
+            path: 'proxmox/installation',
+            title: 'Proxmox VE Installation',
+            content: `# Proxmox VE Installation Guide
+
+Step-by-step guide for installing Proxmox Virtual Environment.
+
+## Requirements
+
+- 64-bit processor with Intel VT/AMD-V support
+- Minimum 4GB RAM (8GB recommended)
+- Fast storage (SSD recommended)
+- Network interface
+
+## Download
+
+Download ISO from [proxmox.com](https://www.proxmox.com/en/downloads)
+
+## Installation Steps
+
+1. **Create bootable USB** using Rufus or Etcher
+2. **Boot from USB** and select "Install Proxmox VE"
+3. **Configure network** - Set static IP recommended
+4. **Complete installation** - System will reboot automatically
+
+## First Login
+
+Access web interface at \`https://your-server-ip:8006\`
+
+Default credentials:
+- Username: root
+- Password: (set during installation)
+
+## Post-Install Tasks
+
+### Update System
+\`\`\`bash
+apt update && apt upgrade -y
+\`\`\`
+
+### Configure Storage
+Navigate to Datacenter > Storage to add additional storage.
+
+### Create First VM
+1. Click "Create VM" in top right
+2. Follow the wizard
+3. Start VM and install OS
+
+## Useful Commands
+
+\`\`\`bash
+# Check node status
+pveperf
+
+# List VMs
+qm list
+
+# Start VM
+qm start <vmid>
+
+# Stop VM
+qm stop <vmid>
+\`\`\``,
+            tags: ['Proxmox', 'Virtualization', 'Installation'],
+            created: new Date().toISOString(),
             updated: new Date().toISOString()
         }
     ];
@@ -273,7 +444,7 @@ function savePage(path, title, content, tags = []) {
         path,
         title,
         content,
-        tags,
+        tags: tags.length ? tags : (existing ? existing.tags : ['Documentation']),
         updated: new Date().toISOString(),
         created: existing ? existing.created : new Date().toISOString()
     };
@@ -312,20 +483,29 @@ function renderNavigation() {
         tree[folder].push(page);
     });
     
+    // Sort folders (General first, then alphabetically)
+    const folders = Object.keys(tree).sort((a, b) => {
+        if (a === 'General') return -1;
+        if (b === 'General') return 1;
+        return a.localeCompare(b);
+    });
+    
     let html = '';
     
-    // Sort folders
-    const folders = Object.keys(tree).sort();
-    
     folders.forEach(folder => {
-        const isActive = state.currentPage && state.currentPage.startsWith(folder + '/');
+        const isActive = state.currentPage && (
+            state.currentPage === folder || 
+            state.currentPage.startsWith(folder + '/')
+        );
+        
         html += `
             <div class="nav-section">
                 <div class="nav-title">${formatTitle(folder)}</div>
                 <ul class="nav-list">
                     ${tree[folder].map(page => `
                         <li class="nav-item ${page.path === state.currentPage ? 'active' : ''}" 
-                            data-path="${page.path}" onclick="navigateToPage('${page.path}')">
+                            data-path="${page.path}" 
+                            onclick="window.navigateToPage('${page.path}')">
                             <i class="fas fa-file-alt"></i>
                             <span>${page.title}</span>
                         </li>
@@ -341,7 +521,7 @@ function renderNavigation() {
 function navigateToPage(path) {
     const page = getPage(path);
     if (!page) {
-        render404();
+        render404(path);
         return;
     }
     
@@ -375,19 +555,32 @@ function navigateToPage(path) {
     }
 }
 
-function render404() {
+function render404(path) {
     document.getElementById('pageTitle').textContent = 'Page Not Found';
     document.getElementById('contentBody').innerHTML = `
-        <p>The page "${state.currentPage}" does not exist.</p>
-        <button class="btn btn-primary" onclick="createPageFromCurrent()">
-            <i class="fas fa-plus"></i> Create this page
-        </button>
+        <p>The page "${path}" does not exist.</p>
+        ${state.isAuthenticated ? `
+            <button class="btn btn-primary" onclick="window.createPageFromCurrent()">
+                <i class="fas fa-plus"></i> Create this page
+            </button>
+        ` : `
+            <p><button class="btn btn-primary" onclick="openModal('loginModal')">
+                <i class="fas fa-lock"></i> Login
+            </button> to create this page.</p>
+        `}
     `;
     document.getElementById('pageTags').innerHTML = '';
+    document.getElementById('pageDate').textContent = '';
+    document.getElementById('pageReadTime').textContent = '';
 }
 
 // ===== EDITING =====
 function toggleEditMode(enable = !state.isEditing) {
+    if (!state.isAuthenticated && enable) {
+        openModal('loginModal');
+        return;
+    }
+    
     state.isEditing = enable;
     
     const viewEl = document.getElementById('wikiContent');
@@ -444,13 +637,18 @@ function saveCurrentPage() {
         return;
     }
     
-    const page = savePage(path, title, content, ['Documentation']);
+    const page = savePage(path, title, content);
     navigateToPage(path);
     showToast('Page saved successfully');
 }
 
 function deleteCurrentPage() {
+    if (!state.isAuthenticated) {
+        openModal('loginModal');
+        return;
+    }
     deletePage(state.currentPage);
+    toggleEditMode(false);
 }
 
 function createNewPage() {
@@ -464,7 +662,16 @@ function createNewPage() {
     
     const fullPath = path.startsWith('/') ? path.slice(1) : path;
     
-    savePage(fullPath, title, `# ${title}\n\nStart writing...`, ['New']);
+    // Check if page exists
+    if (state.pages.has(fullPath)) {
+        if (!confirm('Page already exists. Open for editing?')) return;
+        closeModal('newPageModal');
+        navigateToPage(fullPath);
+        toggleEditMode(true);
+        return;
+    }
+    
+    savePage(fullPath, title, `# ${title}\n\nStart writing your documentation here...`, ['New']);
     closeModal('newPageModal');
     navigateToPage(fullPath);
     toggleEditMode(true);
@@ -476,7 +683,7 @@ function createNewPage() {
 function createPageFromCurrent() {
     const path = state.currentPage;
     const title = path.split('/').pop().replace(/-/g, ' ');
-    savePage(path, title, `# ${title}\n\n`, []);
+    savePage(path, title, `# ${title}\n\n`, ['New']);
     navigateToPage(path);
     toggleEditMode(true);
 }
@@ -500,7 +707,9 @@ function searchPages(query) {
             <div class="nav-title">Search Results (${results.length})</div>
             <ul class="nav-list">
                 ${results.map(page => `
-                    <li class="nav-item" data-path="${page.path}" onclick="navigateToPage('${page.path}')">
+                    <li class="nav-item ${page.path === state.currentPage ? 'active' : ''}" 
+                        data-path="${page.path}" 
+                        onclick="window.navigateToPage('${page.path}')">
                         <i class="fas fa-search"></i>
                         <span>${page.title}</span>
                     </li>
@@ -534,8 +743,12 @@ function closeAllModals() {
 function showToast(message, type = 'success') {
     const toast = document.getElementById('toast');
     const msgEl = document.getElementById('toastMessage');
+    const icon = toast.querySelector('i');
     
     msgEl.textContent = message;
+    icon.className = type === 'error' ? 'fas fa-exclamation-circle' : 'fas fa-check-circle';
+    toast.style.borderLeftColor = type === 'error' ? '#ea4335' : '#34a853';
+    
     toast.classList.add('show');
     
     setTimeout(() => {
@@ -546,3 +759,4 @@ function showToast(message, type = 'success') {
 // Expose for onclick handlers
 window.navigateToPage = navigateToPage;
 window.createPageFromCurrent = createPageFromCurrent;
+window.openModal = openModal;
