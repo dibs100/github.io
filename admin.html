@@ -1,275 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ===== HEAD META & LINKS ===== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Notes - Dibesh Shrestha</title>
+    <title>Admin Notes - Dibesh Shrestha</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>">
-    
-    <!-- ===== ADMIN CSS ===== -->
     <link rel="stylesheet" href="css/admin.css">
-    
-    <!-- Firebase loading styles -->
-    <style>
-        .firebase-loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--darker);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            color: var(--light);
-        }
-        
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid var(--gray);
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .firebase-error {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--darker);
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            color: var(--light);
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .firebase-error i {
-            font-size: 3rem;
-            color: #f43f5e;
-            margin-bottom: 1.5rem;
-        }
-        
-        .firebase-error h2 {
-            color: var(--light);
-            margin-bottom: 1rem;
-        }
-        
-        .firebase-error p {
-            color: var(--secondary);
-            margin-bottom: 2rem;
-            max-width: 500px;
-        }
-    </style>
+<base target="_blank">
 </head>
 <body>
-    <!-- Firebase Loading Screen -->
-    <div class="firebase-loading" id="firebaseLoading">
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
         <div class="loading-spinner"></div>
-        <p>Connecting to Firebase...</p>
-    </div>
-    
-    <!-- Firebase Error Screen -->
-    <div class="firebase-error" id="firebaseError">
-        <i class="fas fa-exclamation-triangle"></i>
-        <h2>Firebase Connection Error</h2>
-        <p>Unable to connect to Firebase services. Please check your internet connection and refresh the page.</p>
-        <button class="btn btn-primary" onclick="window.location.reload()">
-            <i class="fas fa-redo"></i> Refresh Page
-        </button>
+        <p>Loading Notes...</p>
     </div>
 
-    <!-- ===== AUTHENTICATION CHECK ===== -->
+    <!-- Auth Error -->
     <div class="auth-error" id="authError">
         <div class="error-box">
-            <i class="fas fa-exclamation-triangle"></i>
+            <i class="fas fa-lock"></i>
             <h2>Access Denied</h2>
-            <p>You need to be logged in to access the notes system.</p>
+            <p>Please login to access your notes</p>
             <a href="index.html" class="btn btn-primary">
-                <i class="fas fa-sign-in-alt"></i>
-                Go to Login
+                <i class="fas fa-sign-in-alt"></i> Go to Login
             </a>
         </div>
     </div>
 
-    <!-- ===== MAIN INTERFACE ===== -->
-    <div id="mainApp">
-        <!-- HEADER -->
-        <header class="header">
-            <div class="header-left">
-                <div class="logo">📝 My Notes</div>
-                <div class="note-count" id="noteCount">0 notes</div>
-                <div class="user-info" id="userInfo" style="font-size: 0.85rem; color: var(--secondary);"></div>
+    <!-- Main App -->
+    <div id="mainApp" class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-satellite-dish"></i>
+                    <span>Dibesh Shrestha</span>
+                </a>
+                <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
             </div>
-            <div class="header-actions">
-                <button class="btn" id="newNoteBtn" title="Create new note">
+
+            <div class="sidebar-actions">
+                <button class="btn btn-primary btn-new" id="newNoteBtn">
                     <i class="fas fa-plus"></i>
-                    New
+                    <span>New Note</span>
                 </button>
-                <div style="position: relative;">
-                    <button class="btn" id="exportBtn" title="Export notes">
-                        <i class="fas fa-download"></i>
-                        Export
-                    </button>
-                    <div class="export-options" id="exportOptions">
-                        <div class="export-option" data-format="txt">
-                            <i class="fas fa-file-alt"></i>
-                            Export All as TXT
-                        </div>
-                        <div class="export-option" data-format="json">
-                            <i class="fas fa-code"></i>
-                            Export All as JSON
-                        </div>
-                        <div class="export-option" data-format="html">
-                            <i class="fas fa-file-code"></i>
-                            Export All as HTML
-                        </div>
-                        <div class="export-option" data-format="markdown">
-                            <i class="fab fa-markdown"></i>
-                            Export All as Markdown
-                        </div>
-                        <div class="export-option" data-format="single-txt">
-                            <i class="fas fa-file"></i>
-                            Export Current as TXT
-                        </div>
-                        <div class="export-option" data-format="single-html">
-                            <i class="fas fa-file-code"></i>
-                            Export Current as HTML
-                        </div>
-                    </div>
+            </div>
+
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchBox" placeholder="Search notes...">
+            </div>
+
+            <div class="notes-list" id="notesList">
+                <!-- Notes populated by JS -->
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="storage-info" id="storageInfo">
+                    <i class="fas fa-database"></i>
+                    <span>Local Storage</span>
                 </div>
-                <button class="btn" id="importBtn" title="Import notes from files">
-                    <i class="fas fa-upload"></i>
-                    Import
-                </button>
-                <button class="btn" id="saveToFolderBtn" title="Save backup to folder">
-                    <i class="fas fa-folder-open"></i>
-                    Backup
-                </button>
-                <button class="btn" id="logoutBtn" title="Logout">
+                <button class="btn btn-icon" id="logoutBtn" title="Logout">
                     <i class="fas fa-sign-out-alt"></i>
-                    Logout
                 </button>
             </div>
-        </header>
+        </aside>
 
-        <!-- MAIN CONTENT -->
-        <div class="main-container">
-            <!-- SIDEBAR -->
-            <div class="sidebar">
-                <div class="sidebar-header">
-                    <input type="text" class="search-box" id="searchBox" placeholder="Search notes...">
-                </div>
-                <div class="notes-list" id="notesList">
-                    <!-- Notes will be loaded here -->
-                </div>
-            </div>
-
-            <!-- EDITOR -->
-            <div class="editor-container">
-                <!-- TOOLBAR -->
-                <div class="editor-toolbar">
-                    <div class="toolbar-group">
-                        <button class="toolbar-btn" data-command="formatBlock" data-value="h1" title="Heading 1">
-                            <i class="fas fa-heading"></i>1
-                        </button>
-                        <button class="toolbar-btn" data-command="formatBlock" data-value="h2" title="Heading 2">
-                            <i class="fas fa-heading"></i>2
-                        </button>
-                        <button class="toolbar-btn" data-command="formatBlock" data-value="h3" title="Heading 3">
-                            <i class="fas fa-heading"></i>3
-                        </button>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Toolbar -->
+            <header class="toolbar">
+                <div class="toolbar-left">
+                    <div class="note-title-wrapper">
+                        <input type="text" id="noteTitle" class="note-title" placeholder="Untitled Note" maxlength="200">
+                        <span class="last-saved" id="lastSaved">Auto-saved</span>
                     </div>
-                    
-                    <div class="toolbar-group">
-                        <button class="toolbar-btn" data-command="bold" title="Bold">
+                </div>
+
+                <div class="toolbar-center">
+                    <div class="format-group">
+                        <button class="format-btn" data-command="bold" title="Bold (Ctrl+B)">
                             <i class="fas fa-bold"></i>
                         </button>
-                        <button class="toolbar-btn" data-command="italic" title="Italic">
+                        <button class="format-btn" data-command="italic" title="Italic (Ctrl+I)">
                             <i class="fas fa-italic"></i>
                         </button>
-                        <button class="toolbar-btn" data-command="underline" title="Underline">
+                        <button class="format-btn" data-command="underline" title="Underline (Ctrl+U)">
                             <i class="fas fa-underline"></i>
                         </button>
+                        <button class="format-btn" data-command="strikeThrough" title="Strikethrough">
+                            <i class="fas fa-strikethrough"></i>
+                        </button>
                     </div>
-                    
-                    <div class="toolbar-group">
-                        <button class="toolbar-btn" data-command="insertUnorderedList" title="Bullet List">
+
+                    <div class="format-divider"></div>
+
+                    <div class="format-group">
+                        <button class="format-btn" data-command="formatBlock" data-value="H1" title="Heading 1">
+                            <i class="fas fa-heading"></i><span>1</span>
+                        </button>
+                        <button class="format-btn" data-command="formatBlock" data-value="H2" title="Heading 2">
+                            <i class="fas fa-heading"></i><span>2</span>
+                        </button>
+                        <button class="format-btn" data-command="formatBlock" data-value="H3" title="Heading 3">
+                            <i class="fas fa-heading"></i><span>3</span>
+                        </button>
+                    </div>
+
+                    <div class="format-divider"></div>
+
+                    <div class="format-group">
+                        <button class="format-btn" data-command="insertUnorderedList" title="Bullet List">
                             <i class="fas fa-list-ul"></i>
                         </button>
-                        <button class="toolbar-btn" data-command="insertOrderedList" title="Numbered List">
+                        <button class="format-btn" data-command="insertOrderedList" title="Numbered List">
                             <i class="fas fa-list-ol"></i>
                         </button>
                     </div>
-                    
-                    <div class="toolbar-group">
-                        <button class="toolbar-btn" data-command="createLink" title="Insert Link">
+
+                    <div class="format-divider"></div>
+
+                    <div class="format-group">
+                        <button class="format-btn" id="insertImageBtn" title="Insert Image">
+                            <i class="fas fa-image"></i>
+                        </button>
+                        <button class="format-btn" data-command="createLink" title="Insert Link">
                             <i class="fas fa-link"></i>
                         </button>
-                        <button class="toolbar-btn" id="insertTableBtn" title="Insert Table">
+                        <button class="format-btn" id="insertTableBtn" title="Insert Table">
                             <i class="fas fa-table"></i>
                         </button>
-                    </div>
-                    
-                    <div class="toolbar-group">
-                        <button class="toolbar-btn" id="saveNoteBtn" title="Save Note (Ctrl+S)">
-                            <i class="fas fa-save"></i> Save
-                        </button>
-                        <button class="toolbar-btn" id="deleteNoteBtn" title="Delete Note">
-                            <i class="fas fa-trash"></i>
+                        <button class="format-btn" data-command="removeFormat" title="Clear Formatting">
+                            <i class="fas fa-eraser"></i>
                         </button>
                     </div>
                 </div>
 
-                <!-- NOTE TITLE -->
-                <input type="text" class="note-title-input" id="noteTitle" placeholder="Note Title" maxlength="200">
+                <div class="toolbar-right">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary" id="exportBtn">
+                            <i class="fas fa-download"></i>
+                            <span>Export</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu" id="exportMenu">
+                            <div class="dropdown-item" data-action="export-txt">
+                                <i class="fas fa-file-alt"></i>
+                                <span>Export as TXT</span>
+                            </div>
+                            <div class="dropdown-item" data-action="export-html">
+                                <i class="fas fa-file-code"></i>
+                                <span>Export as HTML</span>
+                            </div>
+                            <div class="dropdown-item" data-action="export-json">
+                                <i class="fas fa-code"></i>
+                                <span>Export as JSON</span>
+                            </div>
+                            <div class="dropdown-item" data-action="export-md">
+                                <i class="fab fa-markdown"></i>
+                                <span>Export as Markdown</span>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-item" data-action="export-all">
+                                <i class="fas fa-archive"></i>
+                                <span>Export All Notes</span>
+                            </div>
+                        </div>
+                    </div>
 
-                <!-- RICH TEXT EDITOR -->
-                <div class="editor-content">
-                    <div id="noteEditor" contenteditable="true" placeholder="Start typing your note here... Press Ctrl+V to paste images"></div>
+                    <button class="btn btn-secondary" id="importBtn">
+                        <i class="fas fa-upload"></i>
+                        <span>Import</span>
+                    </button>
+
+                    <button class="btn btn-danger" id="deleteNoteBtn" title="Delete Note">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Editor Area -->
+            <div class="editor-wrapper">
+                <div class="editor-container">
+                    <div id="noteEditor" class="note-editor" contenteditable="true" spellcheck="false">
+                        <p>Start typing your note here...</p>
+                    </div>
+                </div>
+
+                <!-- Image Resize Overlay -->
+                <div class="image-resize-overlay" id="imageResizeOverlay">
+                    <div class="resize-info">
+                        <span id="resizeDimensions">300 x 200</span>
+                        <span>Drag to resize • Click outside to save</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- STATUS BAR -->
-        <div class="status-bar">
-            <div id="charCount">0 characters</div>
-            <div class="auto-save-indicator" id="autoSaveIndicator">Auto-save enabled</div>
-            <div id="storageInfo">Firestore Database</div>
-        </div>
-
-        <!-- HIDDEN FILE INPUTS -->
-        <input type="file" id="importFileInput" multiple accept=".md,.txt,.html,.json,.rtf,.doc,.docx" style="display: none;">
+            <!-- Status Bar -->
+            <footer class="status-bar">
+                <div class="status-left">
+                    <span id="wordCount">0 words</span>
+                    <span class="status-divider">|</span>
+                    <span id="charCount">0 characters</span>
+                </div>
+                <div class="status-center">
+                    <span class="paste-hint">
+                        <i class="fas fa-paste"></i>
+                        Press Ctrl+V to paste images
+                    </span>
+                </div>
+                <div class="status-right">
+                    <span id="noteCount">0 notes</span>
+                </div>
+            </footer>
+        </main>
     </div>
 
-    <!-- Firebase SDKs - MUST BE BEFORE YOUR CUSTOM SCRIPTS -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
-    
-    <!-- Your Firebase Configuration -->
-    <script src="js/firebase-config.js"></script>
-    
-    <!-- ===== ADMIN JAVASCRIPT ===== -->
+    <!-- Hidden Inputs -->
+    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+    <input type="file" id="importInput" accept=".txt,.html,.json,.md" style="display: none;">
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Action completed</span>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div class="image-modal" id="imageModal">
+        <div class="image-modal-content">
+            <button class="image-modal-close" id="imageModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="previewImage" src="" alt="Preview">
+            <div class="image-modal-actions">
+                <button class="btn btn-secondary" id="imageModalCancel">Cancel</button>
+                <button class="btn btn-primary" id="imageModalInsert">Insert Image</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Insert Modal -->
+    <div class="modal" id="tableModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Insert Table</h3>
+                <button class="modal-close" id="tableModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Rows</label>
+                    <input type="number" id="tableRows" value="3" min="1" max="20">
+                </div>
+                <div class="form-group">
+                    <label>Columns</label>
+                    <input type="number" id="tableCols" value="3" min="1" max="10">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="tableModalCancel">Cancel</button>
+                <button class="btn btn-primary" id="tableModalInsert">Insert</button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/admin.js"></script>
 </body>
 </html>
