@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlLang">
+<head>
+    <!-- ===== HEAD META & LINKS ===== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dibesh Shrestha | Enterprise Monitoring Expert & IT Consultant </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SATELLITE FAVICON -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>">
+    
+    <!-- ===== MAIN CSS ===== -->
+    <link rel="stylesheet" href="css/index.css">
+    
+    <!-- Firebase Login Modal CSS -->
+    <style>
+        .login-modal, .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .login-box, .password-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+        }
+        
+        .login-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .login-box h3, .password-box h3 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+        
+        .login-input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .login-submit {
+            width: 100%;
+            padding: 0.8rem;
+            background: #0A66C2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        
+        .login-submit:hover {
+            background: #004182;
+        }
+        
+        .login-error, .password-success {
+            display: none;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .login-error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+        
+        .password-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+        
+        .login-footer {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            text-align: center;
+        }
+        
+        .change-password-btn {
+            background: none;
+            border: none;
+            color: #0A66C2;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
+        }
+        
+        .change-password-btn:hover {
+            color: #004182;
+        }
+        
+        /* Loading overlay */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10001;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p id="loadingText">Loading...</p>
+    </div>
+
+    <!-- ===== LOGIN MODAL ===== -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-box">
+            <button class="login-close" id="loginClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="lang-en">Admin Login</h3>
+            <h3 class="lang-de" style="display: none;">Admin Login</h3>
+            <div class="login-error" id="loginError">
+                <span class="lang-en">Invalid password</span>
+                <span class="lang-de" style="display: none;">Ungültiges Passwort</span>
+            </div>
+            <input type="password" class="login-input" id="passwordInput" placeholder="Enter admin password">
+            <button class="login-submit" id="loginSubmit">
+                <span class="lang-en">Login</span>
+                <span class="lang-de" style="display: none;">Anmelden</span>
+            </button>
+            <div class="login-footer">
+                <button class="change-password-btn" id="changePasswordBtn">
+                    <span class="lang-en">Change Password</span>
+                    <span class="lang-de" style="display: none;">Passwort ändern</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PASSWORD CHANGE MODAL ===== -->
+    <div class="password-modal" id="passwordModal">
+        <div class="password-box">
+            <button class="login-close" id="passwordClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="lang-en">Change Password</h3>
+            <h3 class="lang-de" style="display: none;">Passwort ändern</h3>
+            <div class="password-success" id="passwordSuccess">
+                <span class="lang-en">Password changed successfully!</span>
+                <span class="lang-de" style="display: none;">Passwort erfolgreich geändert!</span>
+            </div>
+            <input type="password" class="login-input" id="currentPassword" placeholder="Current password">
+            <input type="password" class="login-input" id="newPassword" placeholder="New password">
+            <input type="password" class="login-input" id="confirmPassword" placeholder="Confirm new password">
+            <button class="login-submit" id="changePasswordSubmit">
+                <span class="lang-en">Change Password</span>
+                <span class="lang-de" style="display: none;">Passwort ändern</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <!-- SATELLITE LOGO -->
+                    <div class="logo">
+                         Dibesh Shrestha
+                    </div>
+                    <div class="language-switcher">
+                        <button class="language-btn active" id="langEn">
+                            <div class="flag-icon en"></div>
+                            EN
+                        </button>
+                        <button class="language-btn" id="langDe">
+                            <div class="flag-icon de"></div>
+                            DE
+                        </button>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home" class="active" data-en="Home" data-de="Start">Home</a></li>
+                        <li><a href="#expertise" data-en="Expertise" data-de="Expertise">Expertise</a></li>
+                        <li><a href="#experience" data-en="Experience" data-de="Erfahrung">Experience</a></li>
+                        <li><a href="#certifications" data-en="Certifications" data-de="Zertifizierungen">Certifications</a></li>
+                        <li><a href="#reference" data-en="Reference" data-de="Referenz">Reference</a></li>
+                        <li><a href="#contact" data-en="Contact" data-de="Kontakt">Contact</a></li>
+                    </ul>
+                </nav>
+                <!-- ACTION BUTTONS -->
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <!-- ZABBIX LAB BUTTON -->
+                    <button class="zabbix-btn" id="zabbixBtn" title="Zabbix Lab">
+                        <span class="zabbix-icon">Z</span>
+                    </button>
+                    
+                    <!-- ADMIN LOGIN BUTTON -->
+                    <button class="login-btn" id="loginBtn" title="Admin Login">
+                        <i class="fas fa-lock"></i>
+                    </button>
+                    
+                    <!-- MOBILE MENU BUTTON -->
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== MOBILE NAVIGATION ===== -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul>
+            <li><a href="#home" class="active" data-en="Home" data-de="Start">Home</a></li>
+            <li><a href="#expertise" data-en="Expertise" data-de="Expertise">Expertise</a></li>
+            <li><a href="#experience" data-en="Experience" data-de="Erfahrung">Experience</a></li>
+            <li><a href="#certifications" data-en="Certifications" data-de="Zertifizierungen">Certifications</a></li>
+            <li><a href="#reference" data-en="Reference" data-de="Referenz">Reference</a></li>
+            <li><a href="#contact" data-en="Contact" data-de="Kontakt">Contact</a></li>
+        </ul>
+        <div class="mobile-language-switcher">
+            <button class="language-btn active" id="langEnMobile">
+                <div class="flag-icon en"></div>
+                English
+            </button>
+            <button class="language-btn" id="langDeMobile">
+                <div class="flag-icon de"></div>
+                Deutsch
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <p class="lang-en hero-description">
+                        This profile summarizes my expertise in enterprise monitoring, IT consulting, and customer escalation management, with a proven track record in leading complex migrations and resolving critical system issues.
+                    </p>
+                    <p class="lang-de hero-description" style="display: none;">
+                        Dieses Profil fasst meine Expertise im Enterprise-Monitoring, IT-Consulting und Kunden-Eskalationsmanagement zusammen, mit nachweislicher Erfahrung in der Leitung komplexer Migrationen und der Lösung kritischer Systemprobleme.
+                    </p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn lang-en">Get in Touch</a>
+                        <a href="#contact" class="btn lang-de" style="display: none;">Kontakt aufnehmen</a>
+                        <a href="#certifications" class="btn btn-outline lang-en">View Certifications</a>
+                        <a href="#certifications" class="btn btn-outline lang-de" style="display: none;">Zertifizierungen anzeigen</a>
+                    </div>
+                </div>
+                
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <!-- SATELLITE PROFILE ICON -->
+                        <div class="profile-icon">📡</div>
+                        <h2 class="lang-en">Dibesh Shrestha</h2>
+                        <h2 class="lang-de" style="display: none;">Dibesh Shrestha</h2>
+                        <h3 class="lang-en">Enterprise Monitoring Expert</h3>
+                        <h3 class="lang-de" style="display: none;">Enterprise-Monitoring-Experte</h3>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <h4 class="lang-en">Client Communication</h4>
+                        <h4 class="lang-de" style="display: none;">Kundenkommunikation</h4>
+                        <p class="lang-en">Escalation Management & Consulting</p>
+                        <p class="lang-de" style="display: none;">Eskalationsmanagement & Beratung</p>
+                        <div class="highlight-text lang-en">200+ Customers, 30,000+ Hosts, 46+ Clusters</div>
+                        <div class="highlight-text lang-de" style="display: none;">200+ Kunden, 30.000+ Hosts, 46+ Clusters</div>
+                        <ul>
+                            <li class="lang-en">Coached and mentored team members, improving incident resolution times</li>
+                            <li class="lang-de" style="display: none;">Trainierte und betreute Teammitglieder, verbesserte Incident-Lösungszeiten</li>
+                            <li class="lang-en">Recognized for calm and precise communication during high-pressure situations</li>
+                            <li class="lang-de" style="display: none;">Anerkannt für ruhige und präzise Kommunikation in Drucksituationen</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <h4 class="lang-en">Zabbix Certified Specialist</h4>
+                        <h4 class="lang-de" style="display: none;">Zabbix Zertifizierter Specialist</h4>
+                        <p class="lang-en">Validated expertise in enterprise monitoring</p>
+                        <p class="lang-de" style="display: none;">Validierte Expertise im Enterprise-Monitoring</p>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <h4 class="lang-en">13+ Years Experience</h4>
+                        <h4 class="lang-de" style="display: none;">13+ Jahre Erfahrung</h4>
+                        <p class="lang-en">Senior IT Administrator & Consultant</p>
+                        <p class="lang-de" style="display: none;">Senior IT Administrator & Berater</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== EXPERTISE SECTION ===== -->
+    <section class="section" id="expertise" style="background: var(--section-bg);">
+        <div class="container">
+            <h2 class="section-title lang-en">Technical Expertise</h2>
+            <h2 class="section-title lang-de" style="display: none;">Technische Expertise</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3 class="lang-en">Monitoring Infrastructure</h3>
+                    <h3 class="lang-de" style="display: none;">Monitoring-Infrastruktur</h3>
+                    <p class="lang-en">Deep expertise in enterprise monitoring solutions with hands-on experience managing large-scale infrastructures across multiple platforms.</p>
+                    <p class="lang-de" style="display: none;">Umfassende Expertise in Enterprise-Monitoring-Lösungen mit praktischer Erfahrung in der Verwaltung groß angelegter Infrastrukturen über mehrere Plattformen hinweg.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Nagios</span>
+                        <span class="tag">Zabbix</span>
+                        <span class="tag">Centreon</span>
+                        <span class="tag">Check MK</span>
+                        <span class="tag">Icinga</span>
+                        <span class="tag">App Dynamics</span>
+                        <span class="tag">CA APM</span>
+                        <span class="tag lang-en">200+ Servers</span>
+                        <span class="tag lang-de" style="display: none;">200+ Server</span>
+                        <span class="tag lang-en">46+ Clusters</span>
+                        <span class="tag lang-de" style="display: none;">46+ Cluster</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card">
+                    <h3 class="lang-en">Migration & Implementation</h3>
+                    <h3 class="lang-de" style="display: none;">Migration & Implementierung</h3>
+                    <p class="lang-en">Led complex migration projects from legacy systems to modern monitoring platforms for enterprise clients with minimal disruption.</p>
+                    <p class="lang-de" style="display: none;">Leitung komplexer Migrationsprojekte von Legacy-Systemen zu modernen Monitoring-Plattformen für Unternehmenskunden mit minimalen Unterbrechungen.</p>
+                    <div class="skill-tags">
+                        <span class="tag lang-en">Migration Planning</span>
+                        <span class="tag lang-de" style="display: none;">Migrationsplanung</span>
+                        <span class="tag lang-en">Zabbix Implementation</span>
+                        <span class="tag lang-de" style="display: none;">Zabbix-Implementierung</span>
+                        <span class="tag">30,000+ Hosts</span>
+                        <span class="tag lang-en">Cross-Platform</span>
+                        <span class="tag lang-de" style="display: none;">Plattformübergreifend</span>
+                        <span class="tag lang-en">Technical Leadership</span>
+                        <span class="tag lang-de" style="display: none;">Technische Leitung</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card">
+                    <h3 class="lang-en">Consulting & Escalation</h3>
+                    <h3 class="lang-de" style="display: none;">Beratung & Eskalation</h3>
+                    <p class="lang-en">Exceptional ability to communicate complex technical issues with clarity to any audience - from management to engineering teams.</p>
+                    <p class="lang-de" style="display: none;">Außergewöhnliche Fähigkeit, komplexe technische Probleme klar für jedes Publikum zu kommunizieren - vom Management bis zu Engineering-Teams.</p>
+                    <div class="skill-tags">
+                        <span class="tag lang-en">Escalation Management</span>
+                        <span class="tag lang-de" style="display: none;">Eskalationsmanagement</span>
+                        <span class="tag lang-en">Incident Resolution</span>
+                        <span class="tag lang-de" style="display: none;">Incident-Lösung</span>
+                        <span class="tag lang-en">Technical Consulting</span>
+                        <span class="tag lang-de" style="display: none;">Technische Beratung</span>
+                        <span class="tag lang-en">Team Coaching</span>
+                        <span class="tag lang-de" style="display: none;">Team-Coaching</span>
+                        <span class="tag">200+ Customers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== EXPERIENCE SECTION ===== -->
+    <section class="section" id="experience">
+        <div class="container">
+            <h2 class="section-title lang-en">Professional Experience</h2>
+            <h2 class="section-title lang-de" style="display: none;">Berufserfahrung</h2>
+            
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <h3 class="lang-en">Large-Scale Infrastructure Migrations</h3>
+                    <h3 class="lang-de" style="display: none;">Groß angelegte Infrastruktur-Migrationen</h3>
+                    <ul>
+                        <li class="lang-en">Technical lead for enterprise-wide migration from Nagios/Centreon/Icinga to Zabbix across 15+ organizations</li>
+                        <li class="lang-de" style="display: none;">Technischer Leiter für unternehmensweite Migration von Nagios/Centreon/Icinga zu Zabbix bei 15+ Organisationen</li>
+                        <li class="lang-en">Managed monitoring infrastructure supporting 30,000+ hosts across 200+ servers</li>
+                        <li class="lang-de" style="display: none;">Verwaltung der Monitoring-Infrastruktur für 30.000+ Hosts über 200+ Server</li>
+                        <li class="lang-en">Cross-platform expertise covering legacy and modern monitoring solutions</li>
+                        <li class="lang-de" style="display: none;">Plattformübergreifende Expertise für Legacy- und moderne Monitoring-Lösungen</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-card">
+                    <h3 class="lang-en">Client-Facing Leadership & Consulting</h3>
+                    <h3 class="lang-de" style="display: none;">Kundenorientierte Führung & Beratung</h3>
+                    <ul>
+                        <li class="lang-en">Direct escalation management with resolution of 30+ daily critical incidents</li>
+                        <li class="lang-de" style="display: none;">Direktes Eskalationsmanagement mit Lösung von 30+ täglichen kritischen Incidents</li>
+                        <li class="lang-en">Coached Service Desk teams, improving incident resolution times by 40%</li>
+                        <li class="lang-de" style="display: none;">Trainierte Service Desk Teams, verbesserte Incident-Lösungszeiten um 40%</li>
+                        <li class="lang-en">Recognized by enterprise clients for exceptional problem-solving during high-pressure situations</li>
+                        <li class="lang-de" style="display: none;">Von Unternehmenskunden anerkannt für außergewöhnliche Problemlösung in Drucksituationen</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-card">
+                    <h3 class="lang-en">Monitoring Infrastructure Expertise</h3>
+                    <h3 class="lang-de" style="display: none;">Monitoring-Infrastruktur-Expertise</h3>
+                    <ul>
+                        <li class="lang-en">Specialized in Nagios, Zabbix, Centreon, Check MK, App Dynamics, and CA APM</li>
+                        <li class="lang-de" style="display: none;">Spezialisierung auf Nagios, Zabbix, Centreon, Check MK, App Dynamics und CA APM</li>
+                        <li class="lang-en">Developed and optimized monitoring strategies for improved system reliability</li>
+                        <li class="lang-de" style="display: none;">Entwicklung und Optimierung von Monitoring-Strategien für verbesserte Systemzuverlässigkeit</li>
+                        <li class="lang-en">Built comprehensive monitoring solutions with ticketing system integration</li>
+                        <li class="lang-de" style="display: none;">Aufbau umfassender Monitoring-Lösungen mit Ticketing-System-Integration</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-card">
+                    <h3 class="lang-en">Strategic Consulting & Process Improvement</h3>
+                    <h3 class="lang-de" style="display: none;">Strategische Beratung & Prozessverbesserung</h3>
+                    <ul>
+                        <li class="lang-en">13+ years of progressive experience in enterprise monitoring and IT consulting</li>
+                        <li class="lang-de" style="display: none;">13+ Jahre progressive Erfahrung im Enterprise-Monitoring und IT-Beratung</li>
+                        <li class="lang-en">Consulted on monitoring solutions for diverse enterprise clients across industries</li>
+                        <li class="lang-de" style="display: none;">Beratung zu Monitoring-Lösungen für verschiedene Unternehmenskunden in verschiedenen Branchen</li>
+                        <li class="lang-en">Systematic approach to incident management and resolution process optimization</li>
+                        <li class="lang-de" style="display: none;">Systematischer Ansatz für Incident-Management und Optimierung des Lösungsprozesses</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="experience-note">
+                <p class="lang-en">For detailed employment history and specific roles, please visit my <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank">LinkedIn profile</a></p>
+                <p class="lang-de" style="display: none;">Für detaillierte Beschäftigungsgeschichte und spezifische Rollen, besuchen Sie bitte mein <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank">LinkedIn-Profil</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CERTIFICATIONS SECTION ===== -->
+    <section class="section" id="certifications" style="background: var(--section-bg);">
+        <div class="container">
+            <h2 class="section-title lang-en">Licenses & Certifications</h2>
+            <h2 class="section-title lang-de" style="display: none;">Lizenzen & Zertifizierungen</h2>
+            
+            <div class="certifications-grid">
+                <!-- ZABBIX CERTIFICATION -->
+                <div class="certification-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="lang-en">Zabbix Certified Specialist 7.0</h3>
+                        <h3 class="lang-de" style="display: none;">Zabbix Certified Specialist 7.0</h3>
+                        <div class="cert-issuer">
+                            <i class="fas fa-building"></i>
+                            <span>Zabbix</span>
+                        </div>
+                        <div class="cert-details">
+                            <span class="lang-en">Issued Dec 2024</span>
+                            <span class="lang-de" style="display: none;">Ausgestellt Dez 2024</span>
+                        </div>
+                        <div class="cert-id">Credential ID CS-2412-151</div>
+                    </div>
+                </div>
+                
+                <!-- ITIL CERTIFICATION -->
+                <div class="certification-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="lang-en">IT Information Library Foundations (ITIL)</h3>
+                        <h3 class="lang-de" style="display: none;">IT Information Library Foundations (ITIL)</h3>
+                        <div class="cert-issuer">
+                            <i class="fas fa-building"></i>
+                            <span>PeopleCert</span>
+                        </div>
+                        <div class="cert-details">
+                            <span class="lang-en">Issued Oct 2018</span>
+                            <span class="lang-de" style="display: none;">Ausgestellt Okt 2018</span>
+                        </div>
+                        <div class="cert-id">Credential ID GR750484175DS</div>
+                    </div>
+                </div>
+                
+                <!-- CA APM CERTIFICATION -->
+                <div class="certification-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="lang-en">CA APM 10.x Foundation for the Administrator 200</h3>
+                        <h3 class="lang-de" style="display: none;">CA APM 10.x Foundation for the Administrator 200</h3>
+                        <div class="cert-issuer">
+                            <i class="fas fa-building"></i>
+                            <span>CA EDUCATIONAL LTD</span>
+                        </div>
+                        <div class="cert-details">
+                            <span class="lang-en">Issued Jan 2019</span>
+                            <span class="lang-de" style="display: none;">Ausgestellt Jan 2019</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- APPDYNAMICS CERTIFICATIONS -->
+                <div class="certification-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="lang-en">AppDynamics Certified Implementer</h3>
+                        <h3 class="lang-de" style="display: none;">AppDynamics Zertifizierter Implementierer</h3>
+                        <div class="cert-issuer">
+                            <i class="fas fa-building"></i>
+                            <span>AppDynamics</span>
+                        </div>
+                        <div class="cert-details">
+                            <span class="lang-en">Issued Jun 2018</span>
+                            <span class="lang-de" style="display: none;">Ausgestellt Jun 2018</span>
+                        </div>
+                        <div class="cert-details">
+                            <span class="lang-en">Foundation Workshop 4.4 & Kickstarter Certificate</span>
+                            <span class="lang-de" style="display: none;">Foundation Workshop 4.4 & Kickstarter Zertifikat</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== REFERENCE SECTION ===== -->
+    <section class="section" id="reference">
+        <div class="container">
+            <h2 class="section-title lang-en">Professional Reference</h2>
+            <h2 class="section-title lang-de" style="display: none;">Berufliche Referenz</h2>
+            
+            <div class="reference-card">
+                <div class="reference-content">
+                    <p class="lang-en">To Whom It May Concern,</p>
+                    <p class="lang-de" style="display: none;">An alle, die es betrifft,</p>
+                    
+                    <p class="lang-en">I have had the pleasure of supervising Dibesh for several years in his role as Senior Administrator Monitoring. I am pleased to provide this letter of recommendation.</p>
+                    <p class="lang-de" style="display: none;">Ich hatte das Vergnügen, Herrn Shrestha mehrere Jahre in seiner Rolle als Senior Administrator Monitoring zu betreuen. Ich freue mich, dieses Empfehlungsschreiben zu verfassen.</p>
+                    
+                    <p class="lang-en">Dibesh was the technical owner and lead for our legacy Nagios monitoring infrastructure. He proactively expanded his responsibilities, taking over and stabilizing our Centreon platform following a team member's departure, and subsequently demonstrated deep expertise in Zabbix.</p>
+                    <p class="lang-de" style="display: none;">Herr Shrestha war der technische Eigentümer und Leiter unserer Legacy-Nagios-Monitoring-Infrastruktur. Er erweiterte proaktiv seine Verantwortlichkeiten, übernahm und stabilisierte unsere Centreon-Plattform nach dem Ausscheiden eines Teammitglieds und zeigte anschließend tiefgreifende Expertise in Zabbix.</p>
+                    
+                    <p class="highlight lang-en">His most significant contribution was serving as the technical lead for a large-scale, cross-platform migration project from Nagios to Zabbix.</p>
+                    <p class="highlight lang-de" style="display: none;">Sein bedeutendster Beitrag war die technische Leitung eines groß angelegten, plattformübergreifenden Migrationsprojekts von Nagios zu Zabbix.</p>
+                    
+                    <p class="lang-en">A key strength is his ability to communicate complex technical issues with clarity to any audience. This skill made him an invaluable consultant during client escalations and critical incidents, where his calm and precise communication consistently helped resolve issues and build trust.</p>
+                    <p class="lang-de" style="display: none;">Eine zentrale Stärke ist seine Fähigkeit, komplexe technische Probleme klar für jedes Publikum zu kommunizieren. Diese Fähigkeit machte ihn zu einem unschätzbaren Berater während Kundeneskalationen und kritischen Incidents, wo seine ruhige und präzise Kommunikation konsequent zur Problemlösung und Vertrauensbildung beitrug.</p>
+                    
+                    <div class="reference-author">
+                        <span class="lang-en">Former Supervisor </span>
+                        <span class="lang-de" style="display: none;">Ehemaliger Vorgesetzter </span>
+                        <br>
+                        <span class="lang-en">Senior Management</span>
+                        <span class="lang-de" style="display: none;">Senior Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT SECTION ===== -->
+    <section class="section" id="contact" style="background: var(--section-bg);">
+        <div class="container">
+            <h2 class="section-title lang-en">Get In Touch</h2>
+            <h2 class="section-title lang-de" style="display: none;">Kontakt aufnehmen</h2>
+            
+            <div>
+                <p class="lang-en contact-description">
+                  <!--  I'm available for consulting opportunities, escalation management, and infrastructure projects. Let's discuss how I can help your organization with monitoring solutions and technical leadership. -->
+                </p>
+                <p class="lang-de contact-description" style="display: none;">
+                   <!-- Ich stehe für Beratungsmöglichkeiten, Eskalationsmanagement und Infrastrukturprojekte zur Verfügung. Lassen Sie uns besprechen, wie ich Ihre Organisation mit Monitoring-Lösungen und technischer Leitung unterstützen kann. -->
+                </p>
+                
+                <div class="contact-buttons">
+                    <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank" class="btn btn-linkedin">
+                        <i class="fab fa-linkedin" style="margin-right: 0.7rem;"></i> 
+                        <span class="lang-en">Connect on LinkedIn</span>
+                        <span class="lang-de" style="display: none;">Auf LinkedIn verbinden</span>
+                    </a>
+                    <a href="https://www.xing.com/profile/Dibesh_Shrestha2/web_profiles?nwt_nav=profile&expandNeffi=true" target="_blank" class="btn btn-xing">
+                        <i class="fab fa-xing" style="margin-right: 0.7rem;"></i> 
+                        <span class="lang-en">Connect on XING</span>
+                        <span class="lang-de" style="display: none;">Auf XING verbinden</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <!-- SATELLITE FOOTER LOGO -->
+                <div class="footer-logo">
+                     Dibesh Shrestha
+                </div>
+                <p class="lang-en footer-tagline">
+                    Enterprise Monitoring Expert | IT Consultant | Zabbix Certified Specialist | ITIL | CA APM | App Dynamics
+                </p>
+                <p class="lang-de footer-tagline" style="display: none;">
+                    Enterprise-Monitoring-Experte | IT-Berater | Zabbix Certified Specialist | ITIL | CA APM | App Dynamics
+                </p>
+                
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/dibesh-shrestha-36541376/" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.xing.com/profile/Dibesh_Shrestha2/web_profiles?nwt_nav=profile&expandNeffi=true" target="_blank" title="XING">
+                        <i class="fab fa-xing"></i>
+                    </a>
+                </div>
+                
+                <div class="copyright">
+                    <span class="lang-en">&copy; 2025 Dibesh Shrestha. All rights reserved.</span>
+                    <span class="lang-de" style="display: none;">&copy; 2025 Dibesh Shrestha. Alle Rechte vorbehalten.</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase SDKs - MUST BE BEFORE YOUR CUSTOM SCRIPTS -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Your Firebase Configuration -->
+    <script src="js/firebase-config.js"></script>
+    
+    <!-- ===== MAIN JAVASCRIPT ===== -->
+    <script src="js/index.js"></script>
+</body>
+</html>
